@@ -1,0 +1,35 @@
+
+HECHO:
+1er etapa: juego funcional para un usuario
+
+* Mostrar status (en la Toolbar? o en otro lado)
+	(cantidad de fichas de cada jugador, y fichas en el pozo)
+	(que jugador esta jugando) 
+* Estrategia simple para juego de la computadora.
+* Pedir una ficha (cuando ninguna de las que tengo me sirve).
+* Pasar (cuando no puede poner ninguna ficha)
+
+2da etapa: juego con utilidad educativa
+* Proceso para substituir los numeros de las fichas por cuentas aleatoriamente generadas.
+	cuentas con distintas complejidades y operaciones.
+	imagenes con fracciones.
+
+i18n
+http://wiki.laptop.org/go/Internationalization_in_Sugar
+
+* DIbujar solo lo necesario.
+1) Dibujar las piezas fijas en una imagen estatica
+2) Pegarla en el context al redibujar y agregar la pieza que esta en movimiento
+
+ver http://blog.rastersoft.com/index.php/2007/06/20/trabajando-con-pycairo-y-gtk/
+
+
+TO DO:
+
+* Probar con distintos conceptos equivalentes:
+	numeros romanos?
+	letras mayusculas y minusculas?
+
+3era etapa: juego en la mesh
+
+

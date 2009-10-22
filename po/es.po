@@ -1,0 +1,118 @@
+# Spanish translations for PACKAGE package.
+# Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Gonzalo Odiard <godiard@gmail.com>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-22 22:23-0300\n"
+"PO-Revision-Date: 2009-09-22 22:25-0300\n"
+"Last-Translator: Gonzalo Odiard <godiard@gmail.com>\n"
+"Language-Team: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: activity/activity.info:2
+#: /home/gonzalo/Activities/Domino.activity/dominoactivity.py:123
+msgid "Domino"
+msgstr "Domino"
+
+#: /home/gonzalo/Activities/Domino.activity/dominogame.py:346
+msgid "Stack"
+msgstr "Pozo"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoplayer.py:29
+msgid "Player "
+msgstr "Jugador"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoplayer.py:87
+msgid "pieces"
+msgstr "piezas"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoplayer.py:89
+msgid "WIN"
+msgstr "Gano"
+
+#: /home/gonzalo/Activities/Domino.activity/dominopieceprocessor.py:29
+msgid "Simple"
+msgstr "Simple"
+
+#: /home/gonzalo/Activities/Domino.activity/dominopieceprocessor.py:75
+msgid "Table of"
+msgstr "Tabla del"
+
+#: /home/gonzalo/Activities/Domino.activity/dominopieceprocessor.py:135
+msgid "Fractions"
+msgstr "Fracciones"
+
+#: /home/gonzalo/Activities/Domino.activity/dominopieceprocessor.py:267
+msgid "Points"
+msgstr "Puntos"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:147
+msgid "Played"
+msgstr "Jugados"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:149
+msgid "Win"
+msgstr "Ganados"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:151
+msgid "Lost"
+msgstr "Perdidos"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:191
+msgid "You can select a piece with the arrow keys and use it with enter."
+msgstr "Puedes elegir una pieza con las flechas y utilizarla con enter."
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:195
+msgid "When you selected the piece, you can move it to the place "
+msgstr "Una vez elegida la pieza, la mueves hasta el lugar donde la pondras"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:199
+msgid "with the arrows , turn it with space and place it with enter."
+msgstr "con las flechas, puedes girarla con la tecla espacio y ponerla con enter."
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:203
+msgid "If you want use another piece, press escape."
+msgstr "Si quieres utilizar otra ficha, presiona escape."
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:207
+msgid "You can use the cursors to move too."
+msgstr "Tambien puedes usar los cursores"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:211
+msgid "And use triangle to select, circle to rotate"
+msgstr "El triangulo para seleccionar, el circulo para girar"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:215
+msgid "and X to use another piece."
+msgstr "y la X para usar otra pieza"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:243
+msgid "You win!!!"
+msgstr "Ganaste!!!"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:246
+msgid "Sorry, you lost"
+msgstr "Lo siento, perdiste"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoactivity.py:100
+msgid "Start"
+msgstr "Comenzar"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoactivity.py:106
+msgid "Get piece"
+msgstr "Pedir pieza"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoactivity.py:112
+msgid "Pass"
+msgstr "Pasar"
+
+#: /home/gonzalo/Activities/Domino.activity/dominoactivity.py:118
+msgid "Scores"
+msgstr "Puntajes"

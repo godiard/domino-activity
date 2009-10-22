@@ -1,0 +1,7 @@
+[Activity]
+name = Domino
+service_name = org.laptop.Domino
+icon = domino-icon
+class = dominoactivity.Domino
+activity_version = 7
+host_version = 1

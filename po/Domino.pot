@@ -1,0 +1,118 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-22 22:23-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: activity/activity.info:2
+#: /home/gonzalo/Activities/Domino.activity/dominoactivity.py:123
+msgid "Domino"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominogame.py:346
+msgid "Stack"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoplayer.py:29
+msgid "Player "
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoplayer.py:87
+msgid "pieces"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoplayer.py:89
+msgid "WIN"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominopieceprocessor.py:29
+msgid "Simple"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominopieceprocessor.py:75
+msgid "Table of"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominopieceprocessor.py:135
+msgid "Fractions"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominopieceprocessor.py:267
+msgid "Points"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:147
+msgid "Played"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:149
+msgid "Win"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:151
+msgid "Lost"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:191
+msgid "You can select a piece with the arrow keys and use it with enter."
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:195
+msgid "When you selected the piece, you can move it to the place "
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:199
+msgid "with the arrows , turn it with space and place it with enter."
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:203
+msgid "If you want use another piece, press escape."
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:207
+msgid "You can use the cursors to move too."
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:211
+msgid "And use triangle to select, circle to rotate"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:215
+msgid "and X to use another piece."
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:243
+msgid "You win!!!"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoview.py:246
+msgid "Sorry, you lost"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoactivity.py:100
+msgid "Start"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoactivity.py:106
+msgid "Get piece"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoactivity.py:112
+msgid "Pass"
+msgstr ""
+
+#: /home/gonzalo/Activities/Domino.activity/dominoactivity.py:118
+msgid "Scores"
+msgstr ""
