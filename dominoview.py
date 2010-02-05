@@ -208,7 +208,7 @@ class DominoTableView():
 
 		y = y + altoRenglon
 		ctx.move_to (x+80,y)
-		ctx.show_text (_("And use triangle to select, circle to rotate"))
+		ctx.show_text (_("And use check to select, circle to rotate"))
 
 		y = y + altoRenglon  
 		ctx.move_to (x+80,y)

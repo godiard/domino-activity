@@ -313,15 +313,15 @@ class Domino(activity.Activity):
     def on_keypress(self, widget, event):
         key = gtk.gdk.keyval_name(event.keyval)
 
-        # Agrego las teclas de juego de la XO (Triangulo arriba = KP_Page_Up , X  = KP_Page_Down, Circulo = KP_End
+        # Agrego las teclas de juego de la XO (Circulo arriba = KP_Page_Up , X  = KP_Page_Down, Check = KP_End
 
         if key in ('KP_Up','KP_Right','KP_Down','KP_Left','KP_Page_Up','KP_Page_Down','KP_End', 'space','KP_8','KP_6','KP_2','KP_4','Escape','Return','Up','Down','Left','Right'):
             if (key in ('KP_Page_Up')):
-                key = 'Return'
+                key = 'space'
             if (key in ('KP_Page_Down')):
                 key = 'Escape'
             if (key in ('KP_End')):
-                key = 'space'
+                key = 'Return'
 
             if (key in ('Up', 'KP_8')):
                 key = 'KP_Up'
@@ -486,7 +486,6 @@ class Domino(activity.Activity):
                 fd.close()
         
         
-
 
 
 

@@ -86,8 +86,8 @@ msgid "You can use the cursors to move too."
 msgstr "Tambien puedes usar los cursores"
 
 #: /home/gonzalo/Activities/Domino.activity/dominoview.py:211
-msgid "And use triangle to select, circle to rotate"
-msgstr "El triangulo para seleccionar, el circulo para girar"
+msgid "And use check to select, circle to rotate"
+msgstr "El tilde para seleccionar, el circulo para girar"
 
 #: /home/gonzalo/Activities/Domino.activity/dominoview.py:215
 msgid "and X to use another piece."
