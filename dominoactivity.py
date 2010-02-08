@@ -48,7 +48,7 @@ class Domino(activity.Activity):
     """
 
     def __init__(self, handle):
-        activity.Activity.__init__(self, handle)
+        activity.Activity.__init__(self, handle, create_jobject=False)
     
         # Creo la toolbar y agrego los botones
 
@@ -485,7 +485,32 @@ class Domino(activity.Activity):
             finally:
                 fd.close()
         
+    # Reimplemento close con la correccion a http://bugs.sugarlabs.org/ticket/1714    
         
+    def close(self, skip_save=False):
+        """Request that the activity be stopped and saved to the Journal
+
+        Activities should not override this method, but should implement
+        write_file() to do any state saving instead. If the application wants
+        to control wether it can close, it should override can_close().
+        """
+        if not self.can_close():
+            return
+
+        #if skip_save or self.metadata.get('title_set_by_user', '0') == '1':
+        if skip_save or self._jobject is None or \
+            self.metadata.get('title_set_by_user', '0') == '1': 
+            if not self._closing:
+                if not self._prepare_close(skip_save):
+                    return
+
+            if not self._updating_jobject:
+                self._complete_close()
+        else:
+            title_alert = NamingAlert(self, get_bundle_path())
+            title_alert.set_transient_for(self.get_toplevel())
+            title_alert.show()
+            self.reveal()
 
 
 
