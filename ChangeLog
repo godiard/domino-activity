@@ -1,0 +1,34 @@
+16/08/2007 Gonzalo Odiard
+	* Actualizo la aplicacion para que funcione con los cambios en sugar
+
+19/06/2007 Gonzalo Odiard
+	* Muestro nombre del usuario
+	* El jugador automatico pide mas fichas cuando no tiene una que le sirva.
+	* Se muestra un mensaje cuando un ugador pone todas sus fichas. TO DO: terminar el juego
+
+24/05/2007 Gonzalo Odiard
+	* Las fichas del jugador humano se muestran con el color del buddy icon
+
+21/05/2007 Gonzalo Odiard
+	* Separo la actividad en distintos archivos para que sea mas facil de manejar
+	* Corrijo posicion de las piezas del jugador que no estan en juego
+	* Agrego comentarios para cada clase
+	* Agrego primer caso de PieceProcesor con cuentas simples
+	* Indento de la misma forma todo el archivo (tab con 8 caracteres)
+
+19/05/2007 Gonzalo Odiard
+	* Achico las piezas para que entren mas en el tablero
+
+18/05/2007 Gonzalo Odiard
+	* Subo el tablero para compensar el cambio de manejo de coordenadas con la nueba Toolbar
+
+15/05/2007 Gonzalo Odiard
+	* Redondeo el rectangulo de las piezas
+
+13/05/2007 Gonzalo Odiard
+	* Cambio las labels que muestra la cantidad de piezas de cada jugador.
+	* Agrego funcionamiento de pasar en el juego y pedir una ficha.
+
+05/05/2007 Gonzalo Odiard
+	* Agrego AUTHORS. TODO & ChangeLog
+  
