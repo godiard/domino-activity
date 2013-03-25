@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-12-18 01:10-0500\n"
-"PO-Revision-Date: 2012-12-31 04:33+0200\n"
+"PO-Revision-Date: 2013-03-25 04:23+0200\n"
 "Last-Translator: Chris <cjl@laptop.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pl\n"
@@ -71,7 +71,7 @@ msgstr "klocki"
 
 #: dominoplayer.py:89
 msgid "WIN"
-msgstr ""
+msgstr "WYGRANA"
 
 #: dominoview.py:147
 msgid "Played"
@@ -91,7 +91,7 @@ msgstr "Zaznacz klocek za pomocą klawiszy strzałek i wciśnij enter."
 
 #: dominoview.py:195
 msgid "When you selected the piece, you can move it to the place "
-msgstr "Po zaznaczeniu klocka możesz go przenieść"
+msgstr "Po zaznaczeniu klocka możesz go przenieść "
 
 #: dominoview.py:199
 msgid "with the arrows , turn it with space and place it with enter."
@@ -113,7 +113,7 @@ msgstr ""
 
 #: dominoview.py:215
 msgid "and X to use another piece."
-msgstr ""
+msgstr "oraz X aby wybrać inny klocek."
 
 #: dominoview.py:243
 msgid "You win!!!"
