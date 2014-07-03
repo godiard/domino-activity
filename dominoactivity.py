@@ -145,7 +145,7 @@ class Domino(activity.Activity):
         self.drawingarea = Gtk.DrawingArea()
         self.drawingarea.set_size_request(dominoview.SCREEN_WIDTH,dominoview.SCREEN_HEIGHT)
         self.drawingarea.show()
-        #self.drawingarea.connect('expose-event', self.on_drawing_area_exposed)
+        self.drawingarea.connect('draw', self.__draw_cb)
         self.connect('key-press-event',self.on_keypress)
         self.set_canvas(self.drawingarea)
 
@@ -173,24 +173,20 @@ class Domino(activity.Activity):
                     self.list_points[n].lost = self.list_points[n].lost +1
 
 
-    def on_drawing_area_exposed(self,drawingarea, event):
-        x, y, width, height = drawingarea.allocation
-        self.ctx = drawingarea.window.cairo_create()
-
+    def __draw_cb(self, drawingarea, ctx):
 
         if (self.show_scores): 
             table = DominoTableView()
-            table.show_scores(self.ctx,self.list_points)
+            table.show_scores(ctx,self.list_points)
             return
 
         if (self.game == None):
             table = DominoTableView()
-            table.help(self.ctx)
+            table.help(ctx)
             return
 
-        self.ctx.set_source_surface(self.surface)
-        self.ctx.paint()
-
+        ctx.set_source_surface(self.surface)
+        ctx.paint()
 
         # test end game (se puede poner en otro metodo)
         end_game = False
@@ -198,7 +194,7 @@ class Domino(activity.Activity):
 
         # Dibujo la pieza seleccionada
         player = self.game.ui_player
-        player.get_pieces()[player.order_piece_selected].draw(self.ctx,True)
+        player.get_pieces()[player.order_piece_selected].draw(ctx, True)
 
         for n in range(0,len(self.game.players)):
             # dibujo las piezas del jugador
@@ -235,12 +231,11 @@ class Domino(activity.Activity):
                 win = True
 
         if (self.game.table):
-            self.game.table.show_status(self.ctx,self.game.get_status())
+            self.game.table.show_status(ctx, self.game.get_status())
 
         if (end_game):
             self.add_points_by_name(self.game.processor.get_name(),win)
-            self.game.table.msg_end_game(self.ctx,win)            
-
+            self.game.table.msg_end_game(ctx, win)
 
     def draw_pieces(self):
         sys.stdout.write("DIBUJANDO \n")
