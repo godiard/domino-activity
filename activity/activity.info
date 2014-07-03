@@ -1,7 +1,7 @@
 [Activity]
 name = Domino
-service_name = org.laptop.Domino
+bundle_id = org.laptop.Domino
 icon = domino-icon
-class = dominoactivity.Domino
+exec = sugar-activity dominoactivity.Domino
 activity_version = 8
 host_version = 1

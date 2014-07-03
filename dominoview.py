@@ -5,19 +5,18 @@
 ### GPL License - http://www.gnu.org/copyleft/gpl.html
 
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
+from gi.repository import Gdk
 import cairo
-import rsvg
+#import rsvg
 
-import pygtk
-pygtk.require('2.0')
 import getopt
 
 import logging
 from gettext import gettext as _
-import sugar
-from sugar.graphics.icon import Icon
+import sugar3
+from sugar3.graphics.icon import Icon
 
 import cairoutils
 
@@ -28,8 +27,8 @@ SIZE = 60
 # Si se quiere usar fichas mas grandes, se puede usar SIZE = 70 y cambiar _drawLabel el scale = 3
 
 
-SCREEN_HEIGHT = gtk.gdk.screen_height()
-SCREEN_WIDTH = gtk.gdk.screen_width()
+SCREEN_HEIGHT = Gdk.Screen.height()
+SCREEN_WIDTH = Gdk.Screen.width()
 
 
 class Tile:

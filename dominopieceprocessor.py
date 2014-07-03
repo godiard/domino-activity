@@ -1,18 +1,18 @@
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 import cairo
-import pango
+from gi.repository import Pango
 import math, random
 
-import pygtk
-pygtk.require('2.0')
+import gi
+gi.require_version('Gtk', '3.0')
 import getopt
 
 import logging
 from gettext import gettext as _
 
-import sugar
-from sugar.graphics import style
+import sugar3
+from sugar3.graphics import style
 import dominoview
 
 M_PI = 3.14159265358979323846 

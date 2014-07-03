@@ -1,5 +1,5 @@
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 import cairo
 
 

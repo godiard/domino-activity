@@ -11,24 +11,26 @@
 
 # Style guide : http://www.python.org/dev/peps/pep-0008/
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 import cairo
-import pango
+from gi.repository import Pango
 import math, random
 import os,sys
 
-import simplejson
+import json
 
-import pygtk
-pygtk.require('2.0')
 import getopt
 
 import logging
 from gettext import gettext as _
-import sugar
-from sugar.activity import activity
-from sugar.graphics.toolbutton import ToolButton
+import sugar3
+from sugar3.activity import activity
+from sugar3.graphics.toolbutton import ToolButton
+
+from sugar3.graphics.toolbarbox import ToolbarBox
+from sugar3.activity.widgets import ActivityToolbarButton
+from sugar3.activity.widgets import StopButton
 
 import dominoview
 from dominoview import DominoTableView
@@ -52,8 +54,14 @@ class Domino(activity.Activity):
     
         # Creo la toolbar y agrego los botones
 
-        toolbox = activity.ActivityToolbox(self)
-        self.toolbar = gtk.Toolbar()
+        toolbar_box = ToolbarBox()
+        self.set_toolbar_box(toolbar_box)
+
+        self._activity_toolbar_button = ActivityToolbarButton(self)
+
+        toolbar_box.toolbar.insert(self._activity_toolbar_button, 0)
+        self._activity_toolbar_button.show()
+
 
         # lista con los puntajes
         self.list_points = []
@@ -75,8 +83,8 @@ class Domino(activity.Activity):
 
 
         # agrego combo para tipo de juego
-        cmbItem = gtk.ToolItem()
-        self.cmbTipoPiezas = gtk.combo_box_new_text()
+        cmbItem = Gtk.ToolItem()
+        self.cmbTipoPiezas = Gtk.ComboBoxText()
 
         self.read_file()
 
@@ -90,7 +98,7 @@ class Domino(activity.Activity):
 
 
         cmbItem.add(self.cmbTipoPiezas)
-        self.toolbar.insert(cmbItem, -1)
+        toolbar_box.toolbar.insert(cmbItem, -1)
         self.cmbTipoPiezas.show()
         cmbItem.show()
         self.cmbTipoPiezas.set_active(0)
@@ -98,40 +106,46 @@ class Domino(activity.Activity):
         self.btnStart = ToolButton('dialog-ok')
         self.btnStart.connect('clicked', self._start_game)
         self.btnStart.set_tooltip(_('Start'))
-        self.toolbar.insert(self.btnStart, -1)
+        toolbar_box.toolbar.insert(self.btnStart, -1)
         self.btnStart.show()
 
         self.btnNew = ToolButton('list-add')
         self.btnNew.connect('clicked', self._add_piece)
         self.btnNew.set_tooltip(_('Get piece'))
-        self.toolbar.insert(self.btnNew, -1)
+        toolbar_box.toolbar.insert(self.btnNew, -1)
         self.btnNew.show()
 
         self.btnPass = ToolButton('go-next')
         self.btnPass.connect('clicked', self._pass_next_player)
         self.btnPass.set_tooltip(_('Pass'))
-        self.toolbar.insert(self.btnPass, -1)
+        toolbar_box.toolbar.insert(self.btnPass, -1)
         self.btnPass.show()
 
         self.btnScores = ToolButton('scores')
         self.btnScores.connect('clicked', self._show_scores)
         self.btnScores.set_tooltip(_('Scores'))
-        self.toolbar.insert(self.btnScores, -1)
+        toolbar_box.toolbar.insert(self.btnScores, -1)
         self.btnScores.show()
-        
 
-        toolbox.add_toolbar(_('Domino'), self.toolbar)
-        self.toolbar.show()
-        self.set_toolbox(toolbox)
-        toolbox.show()
 
-        toolbox.set_current_toolbar(1)
+        separator = Gtk.SeparatorToolItem()
+        separator.props.draw = False
+        separator.set_size_request(0, -1)
+        separator.set_expand(True)
+        toolbar_box.toolbar.insert(separator, -1)
+        separator.show()
+
+        stop_button = StopButton(self)
+        toolbar_box.toolbar.insert(stop_button, -1)
+        stop_button.show()
+
+        toolbar_box.show_all()
 
         # Creo el Canvas y el CanvasBox donde dibujaremos todo el tablero y las fichas
-        self.drawingarea = gtk.DrawingArea()
+        self.drawingarea = Gtk.DrawingArea()
         self.drawingarea.set_size_request(dominoview.SCREEN_WIDTH,dominoview.SCREEN_HEIGHT)
         self.drawingarea.show()
-        self.drawingarea.connect('expose-event', self.on_drawing_area_exposed)
+        #self.drawingarea.connect('expose-event', self.on_drawing_area_exposed)
         self.connect('key-press-event',self.on_keypress)
         self.set_canvas(self.drawingarea)
 
@@ -311,7 +325,7 @@ class Domino(activity.Activity):
 
 
     def on_keypress(self, widget, event):
-        key = gtk.gdk.keyval_name(event.keyval)
+        key = Gdk.keyval_name(event.keyval)
 
         # Agrego las teclas de juego de la XO (Circulo arriba = KP_Page_Up , X  = KP_Page_Down, Check = KP_End
 
@@ -334,7 +348,7 @@ class Domino(activity.Activity):
             self.key_action(key)
         # Para saber que codigo viene
         #else:
-        #    print gtk.gdk.keyval_name(event.keyval)
+        #    print Gdk.keyval_name(event.keyval)
         #    sys.stdout.write("keyval "+str(event.keyval)+" key "+key+"\n")
         #    sys.stdout.flush()
         return True
@@ -446,7 +460,7 @@ class Domino(activity.Activity):
             print "antes de abrir archivo"
             fd = open(file_name, 'wt')
             print "antes de json"
-            simplejson.dump(data_points, fd)
+            json.dump(data_points, fd)
             print "desppues de json"
             print "antes de cerrar"
             fd.close()
@@ -468,7 +482,7 @@ class Domino(activity.Activity):
             fd = open(file_name, 'rt')
             try:
                 # lo meto en una variable intermedia por si hay problemas
-                data_points = simplejson.load(fd)
+                data_points = json.load(fd)
                 
                 self.list_points = []
                 for data in data_points:
