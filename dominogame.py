@@ -269,9 +269,7 @@ class DominoGame:
 
     # para debug
     def print_value_pieces(self, pieceList):
-        print "printValues"
-        for n in range(0, len(pieceList)):
-            piece = pieceList[n]
+        for piece in pieceList:
             print piece.n, piece.p
 
     def start_game(self, numPlayers):
@@ -302,8 +300,7 @@ class DominoGame:
             x = separacion_x / 2
             y = self.table.limitTable + 5
 
-            for n in range(0, len(pieces)):
-                piece = pieces[n]
+            for piece in pieces:
                 piece.x = x
                 piece.y = y
                 piece.vertical = True
@@ -313,8 +310,7 @@ class DominoGame:
 
     def get_status(self):
         players_status = ''
-        for n in range(0, len(self.players)):
-            player = self.players[n]
+        for player in self.players:
             players_status = players_status + player.get_status()
 
         if len(self.pieces) > 0:

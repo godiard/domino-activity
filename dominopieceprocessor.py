@@ -21,8 +21,7 @@ class PieceProcessorMathSimple:
         return _("Simple")
 
     def alter_labels(self, pieces):
-        for n in range(0, len(pieces)):
-            piece = pieces[n]
+        for piece in pieces:
             # altero textA
             if random.random() > .5:
                 r = int(random.random() * 10)
@@ -75,8 +74,7 @@ class PieceProcessorProductTable:
     """
 
     def alter_labels(self, pieces):
-        for n in range(0, len(pieces)):
-            piece = pieces[n]
+        for piece in pieces:
             # altero textA
             if (random.random() > .5):
                 piece.textA = str((piece.a + 2) * self.product)
@@ -132,8 +130,7 @@ class PieceProcessorFractions:
         return _("Fractions")
 
     def alter_labels(self, pieces):
-        for n in range(0, len(pieces)):
-            piece = pieces[n]
+        for ppiece in pieces:
             # altero textA
             piece.textA = self.alter_label(piece.a)
             # pongo una G al comienzo para saber

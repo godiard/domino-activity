@@ -146,8 +146,7 @@ class DominoTableView():
         y = y + altoRenglon
         ctx.move_to(x, y)
 
-        for n in range(0, len(score_list)):
-            game_points = score_list[n]
+        for game_points in score_list:
             ctx.show_text(game_points.name)
             ctx.move_to(x + 350, y)
             ctx.show_text(str(game_points.played))

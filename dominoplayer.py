@@ -23,8 +23,7 @@ class DominoPlayer:
 
     def set_pieces(self, pieces):
         self._pieces = pieces
-        for n in range(0, len(self._pieces)):
-            piece = self._pieces[n]
+        for piece in self._pieces:
             piece.player = self
             piece.state = DominoPiece.PIECE_PLAYER
         self.order_piece_selected = 0
@@ -59,6 +58,7 @@ class DominoPlayer:
 
     def remove_piece(self, piece):
         cantPieces = len(self._pieces)
+        # TODO: there are a better way?
         for n in range(0, len(self._pieces)):
             p = self._pieces[n]
             if piece == p:
@@ -157,8 +157,7 @@ class SimpleAutoPlayer(DominoPlayer):
 
     # elige una pieza que tenga un valor
     def _get_piece_with_value(self, value):
-        for n in range(0, len(self._pieces)):
-            piece = self._pieces[n]
+        for piece in self._pieces:
             if piece.player == self:
                 # print "get_piece_with_value",piece.a, piece.b
                 if (piece.a == value) or (piece.b == value):

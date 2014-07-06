@@ -73,10 +73,10 @@ class Domino(activity.Activity):
 
         self.read_file()
 
-        for n in range(0, len(self.list_processors)):
-            self.cmbTipoPiezas.append_text(self.list_processors[n].get_name())
+        for processor in self.list_processors:
             # inicializo puntajes
-            name = self.list_processors[n].get_name()
+            name = processor.get_name()
+            self.cmbTipoPiezas.append_text(name)
             if self.get_points_by_name(name) is None:
                 game_points = DominoGamePoints()
                 game_points.name = name
@@ -139,19 +139,19 @@ class Domino(activity.Activity):
         self.drawingarea.queue_draw()
 
     def get_points_by_name(self, game_processor_name):
-        for n in range(0, len(self.list_points)):
-            if (self.list_points[n].name == game_processor_name):
-                return self.list_points[n]
+        for points in self.list_points:
+            if points == game_processor_name:
+                return points
         return None
 
     def add_points_by_name(self, game_processor_name, win):
-        for n in range(0, len(self.list_points)):
-            if (self.list_points[n].name == game_processor_name):
-                self.list_points[n].played = self.list_points[n].played + 1
+        for points in self.list_points:
+            if (points.name == game_processor_name):
+                points.played = points.played + 1
                 if win:
-                    self.list_points[n].win = self.list_points[n].win + 1
+                    points.win = points.win + 1
                 else:
-                    self.list_points[n].lost = self.list_points[n].lost + 1
+                    points.lost = points.lost + 1
 
     def __draw_cb(self, drawingarea, ctx):
 
@@ -176,9 +176,8 @@ class Domino(activity.Activity):
         player = self.game.ui_player
         player.get_pieces()[player.order_piece_selected].draw(ctx, True)
 
-        for n in range(0, len(self.game.players)):
+        for player in self.game.players:
             # dibujo las piezas del jugador
-            player = self.game.players[n]
             pieces = player.get_pieces()
             if len(pieces) == 0:
                 end_game = True
@@ -188,8 +187,7 @@ class Domino(activity.Activity):
         # Chequeo si todos los jugadores pasaron
 
         all_has_passed = True
-        for n in range(0, len(self.game.players)):
-            player = self.game.players[n]
+        for player in self.game.players:
             if (not player.has_passed):
                 all_has_passed = False
 
@@ -197,8 +195,7 @@ class Domino(activity.Activity):
         if all_has_passed:
             min_cant_pieces = 100
             player_with_minus_pieces = None
-            for n in range(0, len(self.game.players)):
-                player = self.game.players[n]
+            for player in self.game.players:
                 if len(player.get_pieces()) < min_cant_pieces:
                     min_cant_pieces = len(player.get_pieces())
                     player_with_minus_pieces = player
@@ -236,18 +233,18 @@ class Domino(activity.Activity):
             lambda pieceA,
             pieceB: pieceA.x - pieceB.x + pieceA.y * 100 - pieceB.y * 100)
 
-        for n in range(0, len(self.game.placed_pieces)):
-            piece = self.game.placed_pieces[n]
-            if (piece.visible):
+        for piece in self.game.placed_pieces:
+            if piece.visible:
                 piece.draw(surf_ctx, False)
 
         # for n in range(0,len(self.game.players)):
         # dibujo las piezas del jugador
         player = self.game.ui_player
         pieces = player.get_pieces()
+        # TODO: replace for m (m is needed below)
         for m in range(0, len(pieces)):
             piece = pieces[m]
-            if (piece.visible):
+            if piece.visible:
                 if self.game.game_state != DominoGame.GAME_STATE_LOCATE_PIECE \
                         or (m != self.game.ui_player.order_piece_selected):
                     piece.draw(surf_ctx, False)
