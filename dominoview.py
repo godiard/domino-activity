@@ -7,7 +7,7 @@
 
 from gi.repository import Gdk
 import cairo
-# import rsvg
+from gi.repository import Rsvg
 
 from gettext import gettext as _
 
@@ -208,7 +208,7 @@ class DominoTableView():
         self.show_svg(ctx, "icons/gamekeys.svg", x, y - (altoRenglon * 1.25))
 
     def show_svg(self, ctx, file_name, x, y):
-        h = rsvg.Handle(file_name)
+        h = Rsvg.Handle.new_from_file(file_name)
         surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, 100, 100)
         temp_ctx = cairo.Context(surf)
         h.render_cairo(temp_ctx)
