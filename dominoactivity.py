@@ -299,7 +299,7 @@ class Domino(activity.Activity):
 
     def on_keypress(self, widget, event):
         key = Gdk.keyval_name(event.keyval)
-
+        logging.error('keypress %s', key)
         # Agrego las teclas de juego de la XO (Circulo arriba = KP_Page_Up,
         # X  = KP_Page_Down, Check = KP_End
 
@@ -321,11 +321,6 @@ class Domino(activity.Activity):
             if key in ('Left', 'KP_4'):
                 key = 'KP_Left'
             self.key_action(key)
-        # Para saber que codigo viene
-        # else:
-        #    print Gdk.keyval_name(event.keyval)
-        #    sys.stdout.write("keyval "+str(event.keyval)+" key "+key+"\n")
-        #    sys.stdout.flush()
         return True
 
     def key_action(self, key):

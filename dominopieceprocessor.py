@@ -38,7 +38,6 @@ class PieceProcessorMathSimple:
                     piece.textB = str(r) + "-" + str(r - piece.b)
 
     def draw_label(self, ctx, piece, text, xIni, yIni):
-        # print "Dibujando ",text
         stroke_r, stroke_g, stroke_b = 0, 0, 0
         alpha = 1
         if piece.player.color is not None:
@@ -87,7 +86,6 @@ class PieceProcessorProductTable:
                 piece.textB = str((piece.b + 2)) + "*" + str(self.product)
 
     def draw_label(self, ctx, piece, text, xIni, yIni):
-        # print "Dibujando ",text
         stroke_r, stroke_g, stroke_b = 0, 0, 0
 
         alpha = 1
@@ -186,7 +184,6 @@ class PieceProcessorFractions:
         ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
 
         if (text[0] != "G"):
-            # print "Dibujando ",text
             ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL,
                                  cairo.FONT_WEIGHT_NORMAL)
             ctx.set_font_size(20)
@@ -221,7 +218,6 @@ class PieceProcessorFractions:
                 for n in range(0, numerador):
                     xIni = math.cos(angulo_inicial) * radio
                     yIni = math.sin(angulo_inicial) * radio
-                    # print "N",n,"xIni",xIni,"yIni",yIni
                     ctx.line_to(xCenter + xIni, yCenter + yIni)
                     ctx.arc(xCenter, yCenter, radio, angulo_inicial,
                             angulo_inicial + angulo_porcion)
@@ -239,7 +235,6 @@ class PieceProcessorFractions:
                 for n in range(0, denominador):
                     xIni = math.cos(angulo_inicial) * radio
                     yIni = math.sin(angulo_inicial) * radio
-                    # print "N",n,"xIni",xIni,"yIni",yIni
                     ctx.line_to(xCenter + xIni, yCenter + yIni)
                     ctx.arc(xCenter, yCenter, radio, angulo_inicial,
                             angulo_inicial + angulo_porcion)
@@ -261,7 +256,7 @@ class PieceProcessorPoints:
         return _("Points")
 
     def alter_labels(self, pieces):
-        print "No hace nada"
+        pass
 
     def draw_label(self, ctx, piece, text, xIni, yIni):
 

@@ -1,5 +1,5 @@
 import random
-
+import logging
 from gettext import gettext as _
 
 from sugar3 import profile
@@ -99,42 +99,40 @@ class DominoGame:
     def test_good_position(self, dominoPiece, n, p):
         try:
             if (n < 0) or (p < 0) or (n > self.cantX) or (p > self.cantY):
-                # print "Fuera de los limites"
+                # "Fuera de los limites"
                 return False
             if dominoPiece.vertical:
                 if (p + 1) > self.cantY:
-                    # print "Fuera de los limites"
+                    # "Fuera de los limites"
                     return False
             else:
                 if (n + 1) > self.cantX:
-                    # print "Fuera de los limites"
+                    # "Fuera de los limites"
                     return False
 
-            # print "testeando posicion correcta",n,p
+            # "testeando posicion correcta",n,p
             if self.start is None and self.end is None:
-                # print "No hay start o end"
+                # "No hay start o end"
                 return True
-            # print "# chequea que no este ocupada esa posicion"
+            # "chequea que no este ocupada esa posicion"
             if self.values[n][p].value != -1:
-                # print "N,P ocupada"
+                # "N,P ocupada"
                 return False
-            # print "# chequear la otra posicion ocupada por la pieza,
+            # "chequear la otra posicion ocupada por la pieza,
             # segun este vertical u horizontal"
             try:
                 if dominoPiece.vertical:
                     if self.values[n][p + 1].value != -1:
-                        # print "N,P+1 ocupada"
+                        # "N,P+1 ocupada"
                         return False
                 else:
                     if self.values[n + 1][p].value != -1:
-                        # print "N+1,P ocupada"
+                        # "N+1,P ocupada"
                         return False
 
             except IndexError:
-                # print "Fuera de rango * (1) test_good_position"
                 return False
 
-            # print "# chequear las posiciones laterales"
             valueA = dominoPiece.a
             valueB = dominoPiece.b
             if dominoPiece.reversed:
@@ -147,10 +145,10 @@ class DominoGame:
             else:
                 bad = bad or self._test_invalid(valueB, n + 1, p)
             if bad:
-                # print "BAD posiciones laterales"
+                # "BAD posiciones laterales"
                 return False
 
-            # print "# hago test contra start"
+            # "# hago test contra start"
             ok = self.test_valid(self.start, valueA, n, p)
             if ok:
                 n2, p2 = self._get_oposite_corner(dominoPiece, n, p, n, p)
@@ -164,7 +162,7 @@ class DominoGame:
                     n2, p2 = n, p
                     value2 = valueA
             if ok:
-                # print "Coincide start",n2,p2,value2
+                # "Coincide start",n2,p2,value2
                 if self.start is None:
                     self.start = Tile(n2, p2)
                 self.start.n, self.start.p = n2, p2
@@ -172,7 +170,7 @@ class DominoGame:
                 self.start.piece = dominoPiece
                 return True
 
-            # print "# hago test contra end"
+            # "# hago test contra end"
             ok = self.test_valid(self.end, valueA, n, p)
             if ok:
                 n2, p2 = self._get_oposite_corner(dominoPiece, n, p, n, p)
@@ -186,7 +184,7 @@ class DominoGame:
                     n2, p2 = n, p
                     value2 = valueA
             if ok:
-                # print "Coincide end",n2,p2,value2
+                # "Coincide end",n2,p2,value2
                 if self.end is None:
                     self.end = Tile(n2, p2)
                 self.end.n, self.end.p = n2, p2
@@ -194,7 +192,7 @@ class DominoGame:
                 self.end.piece = dominoPiece
                 return True
         except IndexError:
-            print "Fuera de rango * test_good_position"
+            logging.error("Fuera de rango * test_good_position")
 
         return False
 
@@ -208,7 +206,7 @@ class DominoGame:
             return nPiece, pPiece
 
     def _test_invalid(self, value, n, p):
-        # print "test invalid value",value,"n=",n,"p=",p
+        # "test invalid value",value,"n=",n,"p=",p
         try:
             if (self.values[n + 1][p].value != -1) and \
                     (self.values[n + 1][p].value != value):
@@ -223,15 +221,15 @@ class DominoGame:
                     (self.values[n][p - 1].value != value):
                 return True
         except IndexError:
-            print "index error _test_invalid"
+            logging.error("index error _test_invalid")
         return False
 
     def test_valid(self, tile, value, n, p):
         if tile is None:
             return False
         # no anda bien y hay que chequear contra start y end
-        # print "test valid n=",n,"p=",p,"value", value
-        # print "tile n",tile.n,"p",tile.p,"value",tile.value
+        # "test valid n=",n,"p=",p,"value", value
+        # "tile n",tile.n,"p",tile.p,"value",tile.value
 
         if (tile.n == n - 1) and (tile.p == p):
             return tile.value == value
@@ -270,7 +268,7 @@ class DominoGame:
     # para debug
     def print_value_pieces(self, pieceList):
         for piece in pieceList:
-            print piece.n, piece.p
+            logging.error('%s %s', piece.n, piece.p)
 
     def start_game(self, numPlayers):
         self._create_domino()
@@ -280,7 +278,6 @@ class DominoGame:
         auto_player.set_pieces(self.take_pieces(7))
         self.players.append(auto_player)
         for n in range(1, numPlayers):
-            # print "bucle creacion jugadores",n
             player = DominoPlayer(self, n)
             player.set_pieces(self.take_pieces(7))
             self.players.append(player)

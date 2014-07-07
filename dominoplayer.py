@@ -32,11 +32,11 @@ class DominoPlayer:
         return self._pieces
 
     def play(self):
-        # print "Play player",self.number
+        # "Play player",self.number
         self.playing = True
-        # print "Cant piezas",len(self._pieces)
+        # "Cant piezas",len(self._pieces)
         if self == self.game.ui_player:
-            # print "Abilitando botones"
+            # "Abilitando botones"
             self.game.game_state = self.game.GAME_STATE_SELECT_PIECE
             if len(self.game.pieces) > 0:
                 # si hay piezas puede pedir pero no pasar
@@ -49,10 +49,10 @@ class DominoPlayer:
 
     def end_play(self):
         if self == self.game.ui_player:
-            # print "Deshabilitando botones"
+            # "Deshabilitando botones"
             self.game.btnPass.props.sensitive = False
             self.game.btnNew.props.sensitive = False
-        # print "End player",self.number
+        # "End player",self.number
         self.playing = False
         self.game.next_player(self.number).play()
 
@@ -84,7 +84,7 @@ class SimpleAutoPlayer(DominoPlayer):
     """
 
     def play(self):
-        # print "Jugando automatico"
+        # "Jugando automatico"
         if self.game.start is None:
             # si no hay ninguna pieza en el tablero ponemos la primera
             piece = self._pieces[0]
@@ -103,7 +103,7 @@ class SimpleAutoPlayer(DominoPlayer):
             self.game.end = endTile
 
         else:
-            # print "automatica siguiente"
+            # "automatica siguiente"
             # buscamos si tenemos alguna ficha que corresponda
             # en el comienzo
             ok = False
@@ -125,7 +125,7 @@ class SimpleAutoPlayer(DominoPlayer):
                 # pido una hasta que sea valida o no hayan mas disponibles
                 # si no encontramos pedimos hasta que alguna sirva
                 while not ok:
-                    # print "Pido pieza"
+                    # "Pido pieza"
                     pieces = self.game.take_pieces(1)
                     if len(pieces) > 0:
                         piece = pieces[0]
@@ -159,7 +159,7 @@ class SimpleAutoPlayer(DominoPlayer):
     def _get_piece_with_value(self, value):
         for piece in self._pieces:
             if piece.player == self:
-                # print "get_piece_with_value",piece.a, piece.b
+                # "get_piece_with_value",piece.a, piece.b
                 if (piece.a == value) or (piece.b == value):
                     return piece
         return None
