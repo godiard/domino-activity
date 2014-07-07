@@ -299,26 +299,25 @@ class Domino(activity.Activity):
 
     def on_keypress(self, widget, event):
         key = Gdk.keyval_name(event.keyval)
-        logging.error('keypress %s', key)
         # Agrego las teclas de juego de la XO (Circulo arriba = KP_Page_Up,
         # X  = KP_Page_Down, Check = KP_End
 
         if key in ('KP_Up', 'KP_Right', 'KP_Down', 'KP_Left', 'KP_Page_Up',
                    'KP_Page_Down', 'KP_End', 'space', 'KP_8', 'KP_6', 'KP_2',
                    'KP_4', 'Escape', 'Return', 'Up', 'Down', 'Left', 'Right'):
-            if key in ('KP_Page_Up'):
+            if key == 'KP_Page_Up':
                 key = 'space'
-            if key in ('KP_Page_Down'):
+            elif key == 'KP_Page_Down':
                 key = 'Escape'
-            if key in ('KP_End'):
+            elif key == 'KP_End':
                 key = 'Return'
-            if key in ('Up', 'KP_8'):
+            elif key in ('Up', 'KP_8'):
                 key = 'KP_Up'
-            if key in ('Right', 'KP_6'):
-                key = 'KP_Rigth'
-            if key in ('Down', 'KP_2'):
+            elif key in ('Right', 'KP_6'):
+                key = 'KP_Right'
+            elif key in ('Down', 'KP_2'):
                 key = 'KP_Down'
-            if key in ('Left', 'KP_4'):
+            elif key in ('Left', 'KP_4'):
                 key = 'KP_Left'
             self.key_action(key)
         return True
@@ -374,15 +373,15 @@ class Domino(activity.Activity):
                 if p > 0:
                     p = p - 1
 
-            if key == 'KP_Down':
+            elif key == 'KP_Down':
                 if p < self.game.table.cantY:
                     p = p + 1
 
-            if key == 'KP_Left':
+            elif key == 'KP_Left':
                 if (n > 0):
                     n = n - 1
 
-            if key == 'KP_Right':
+            elif key == 'KP_Right':
                 if n < self.game.table.cantX:
                     n = n + 1
 
