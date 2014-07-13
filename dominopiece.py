@@ -32,6 +32,16 @@ class DominoPiece:
         self._itemA = None
         self._itemB = None
 
+    def check_touched(self, x, y):
+        # check if the x, y position touch the piece
+        if self.vertical:
+            width = dominoview.SIZE
+            height = dominoview.SIZE * 2
+        else:
+            width = dominoview.SIZE * 2
+            height = dominoview.SIZE
+        return (self.x < x < self.x + width) and (self.y < y < self.y + height)
+
     def draw(self, ctx, selected):
         SIZE = dominoview.SIZE
         # if self.vertical:

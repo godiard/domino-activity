@@ -129,7 +129,13 @@ class Domino(activity.Activity):
         self.drawingarea.set_size_request(dominoview.SCREEN_WIDTH,
                                           dominoview.SCREEN_HEIGHT)
         self.drawingarea.show()
+        self.drawingarea.set_events(Gdk.EventMask.BUTTON_PRESS_MASK |
+                                    Gdk.EventMask.EXPOSURE_MASK |
+                                    Gdk.EventMask.TOUCH_MASK)
+
         self.drawingarea.connect('draw', self.__draw_cb)
+        self.drawingarea.connect('event', self.__event_cb)
+
         self.connect('key-press-event', self.on_keypress)
         self.set_canvas(self.drawingarea)
 
@@ -215,9 +221,22 @@ class Domino(activity.Activity):
             self.add_points_by_name(self.game.processor.get_name(), win)
             self.game.table.msg_end_game(ctx, win)
 
+    def __event_cb(self, widget, event):
+        if event.type in (Gdk.EventType.TOUCH_BEGIN,
+                          Gdk.EventType.BUTTON_PRESS):
+            x = int(event.get_coords()[1])
+            y = int(event.get_coords()[2])
+
+            if self.game.game_state == DominoGame.GAME_STATE_SELECT_PIECE:
+                for player in self.game.players:
+                    i = 0
+                    for piece in player.get_pieces():
+                        if piece.visible and piece.check_touched(x, y):
+                            player.order_piece_selected = i
+                            self.drawingarea.queue_draw()
+                        i += 1
+
     def draw_pieces(self):
-        sys.stdout.write("DIBUJANDO \n")
-        sys.stdout.flush()
         self.surface = cairo.ImageSurface(
             cairo.FORMAT_ARGB32, dominoview.SCREEN_WIDTH,
             dominoview.SCREEN_HEIGHT)
