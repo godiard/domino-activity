@@ -368,15 +368,14 @@ class Domino(activity.Activity):
 
             if key == 'Return':
                 # Elegimos una pieza para jugar
-                self.game.game_state = DominoGame.GAME_STATE_LOCATE_PIECE
                 player = self.game.ui_player
                 piece = player.get_pieces()[player.order_piece_selected]
-                piece.rotate()
-                nIni = int(self.game.table.cantX / 2)
-                pIni = self.game.table.cantY - 2
-                piece.x, piece.y = self.game.table.get_tile_position(nIni,
-                                                                     pIni)
-                self.draw_pieces()
+
+                if player.place_piece(piece):
+                    self.game.show_pieces_player(player)
+                    player.end_play()
+                    self.draw_pieces()
+
                 redraw = True
 
         elif (self.game.game_state == DominoGame.GAME_STATE_LOCATE_PIECE):

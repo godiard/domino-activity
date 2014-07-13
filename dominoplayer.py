@@ -1,3 +1,4 @@
+import logging
 from gettext import gettext as _
 
 from dominoview import Tile
@@ -73,6 +74,59 @@ class DominoPlayer:
         else:
             return self.name + ' -  ' + _('WIN') + '!!!!.    '
 
+    def test_good_position(self, tile, piece):
+        n, p = tile.n, tile.p
+        original_vertical = piece.vertical
+        original_reversed = piece.reversed
+        # Pruebo con las cuatro posiciones que rodean a n,p
+        # con la pieza en cuatro posiciones
+        for i in range(0, 3):
+            # Combino las cuatro posiciones posibles
+            if i == 0:
+                piece.vertical = False
+                piece.reversed = False
+            if i == 1:
+                piece.vertical = True
+                piece.reversed = False
+            if i == 2:
+                piece.vertical = False
+                piece.reversed = True
+            if i == 3:
+                piece.vertical = True
+                piece.reversed = True
+            if self.game.test_good_position(piece, n + 1, p):
+                return n + 1, p, piece, True
+            if self.game.test_good_position(piece, n, p + 1):
+                return n, p + 1, piece, True
+            if self.game.test_good_position(piece, n - 1, p):
+                return n - 1, p, piece, True
+            if self.game.test_good_position(piece, n, p - 1):
+                return n, p - 1, piece, True
+        # no encuentro ninguna posicion valida
+        piece.vertical = original_vertical
+        piece.reversed = original_reversed
+        return n, p, piece, False
+
+    def _put_piece(self, piece, n, p):
+        self.piece_selected = None
+        x, y = self.game.table.get_tile_position(n, p)
+        self.game.put_piece(self, piece, n, p)
+
+    def place_piece(self, piece):
+        # try with start tile
+        n, p, piece, ok = self.test_good_position(self.game.start, piece)
+        if ok:
+            self._put_piece(piece, n, p)
+        else:
+            # try with end
+            n, p, piece, ok = self.test_good_position(self.game.end, piece)
+            if ok:
+                self._put_piece(piece, n, p)
+            else:
+                logging.error('cant put piece')
+                return False
+        return True
+
 
 class SimpleAutoPlayer(DominoPlayer):
 
@@ -109,15 +163,15 @@ class SimpleAutoPlayer(DominoPlayer):
             ok = False
             piece = self._get_piece_with_value(self.game.start.value)
             if piece is not None:
-                n, p, piece, ok = self._test_good_position(self.game.start,
-                                                           piece)
+                n, p, piece, ok = self.test_good_position(self.game.start,
+                                                          piece)
                 if ok:
                     self._put_piece(piece, n, p)
             if not ok:
                 # en el fin
                 piece = self._get_piece_with_value(self.game.end.value)
                 if piece is not None:
-                    n, p, piece, ok = self._test_good_position(
+                    n, p, piece, ok = self.test_good_position(
                         self.game.end, piece)
                     if ok:
                         self._put_piece(piece, n, p)
@@ -131,13 +185,13 @@ class SimpleAutoPlayer(DominoPlayer):
                         piece = pieces[0]
                         piece.player = self
                         self.get_pieces().append(piece)
-                        n, p, piece, ok = self._test_good_position(
+                        n, p, piece, ok = self.test_good_position(
                             self.game.start, piece)
                         if ok:
                             self._put_piece(piece, n, p)
                         if not ok:
                             # en el fin
-                            n, p, piece, ok = self._test_good_position(
+                            n, p, piece, ok = self.test_good_position(
                                 self.game.end, piece)
                             if ok:
                                 self._put_piece(piece, n, p)
@@ -150,11 +204,6 @@ class SimpleAutoPlayer(DominoPlayer):
         # juega el siguiente jugador
         self.end_play()
 
-    def _put_piece(self, piece, n, p):
-        self.piece_selected = None
-        x, y = self.game.table.get_tile_position(n, p)
-        self.game.put_piece(self, piece, n, p)
-
     # elige una pieza que tenga un valor
     def _get_piece_with_value(self, value):
         for piece in self._pieces:
@@ -163,32 +212,3 @@ class SimpleAutoPlayer(DominoPlayer):
                 if (piece.a == value) or (piece.b == value):
                     return piece
         return None
-
-    def _test_good_position(self, tile, piece):
-        n, p = tile.n, tile.p
-        # Pruebo con las cuatro posiciones que rodean a n,p
-        # con la pieza en cuatro posiciones
-        for i in range(0, 3):
-            # Combino las cuatro posiciones posibles
-            if i == 0:
-                piece.vertical = False
-                piece.reversed = False
-            if i == 1:
-                piece.vertical = True
-                piece.reversed = False
-            if i == 2:
-                piece.vertical = False
-                piece.reversed = True
-            if i == 3:
-                piece.vertical = True
-                piece.reversed = True
-            if self.game.test_good_position(piece, n + 1, p):
-                return n + 1, p, piece, True
-            if self.game.test_good_position(piece, n, p + 1):
-                return n, p + 1, piece, True
-            if self.game.test_good_position(piece, n - 1, p):
-                return n - 1, p, piece, True
-            if self.game.test_good_position(piece, n, p - 1):
-                return n, p - 1, piece, True
-        # Si no encuentro ninguna posicion valida devuelvo None en la piece
-        return n, p, piece, False
