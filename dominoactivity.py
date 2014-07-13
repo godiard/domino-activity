@@ -377,58 +377,6 @@ class Domino(activity.Activity):
                     self.draw_pieces()
 
                 redraw = True
-
-        elif (self.game.game_state == DominoGame.GAME_STATE_LOCATE_PIECE):
-            # Movemos la pieza por el tablero
-            # con space la giramos y con escape la volvemos a la pila
-            # de fichas del jugador
-            player = self.game.ui_player
-            piece = player.get_pieces()[player.order_piece_selected]
-            if key in ('KP_Up', 'KP_Right', 'KP_Down', 'KP_Left', 'Return'):
-                n, p = self.game.table.get_tile_coord(piece.x, piece.y)
-                n_ori, p_ori = n, p
-            if key == 'KP_Up':
-                if p > 0:
-                    p = p - 1
-
-            elif key == 'KP_Down':
-                if p < self.game.table.cantY:
-                    p = p + 1
-
-            elif key == 'KP_Left':
-                if (n > 0):
-                    n = n - 1
-
-            elif key == 'KP_Right':
-                if n < self.game.table.cantX:
-                    n = n + 1
-
-            if key in ('KP_Up', 'KP_Right', 'KP_Down', 'KP_Left'):
-                if self.game.test_in_board(piece, n, p):
-                    piece.x, piece.y = self.game.table.get_tile_position(n, p)
-                    redraw = True
-
-            if key == 'Escape':
-                # volvemos al modo de seleccion de piezas
-                self.game.game_state = DominoGame.GAME_STATE_SELECT_PIECE
-                self.game.show_pieces_player(self.game.ui_player)
-                self.draw_pieces()
-                redraw = True
-
-            if key == 'space':
-                # giro la pieza
-                piece.rotate()
-                redraw = True
-
-            if key == 'Return':
-                # posiciona la pieza si es posible
-                if self.game.test_good_position(piece, n, p):
-                    self.game.put_piece(piece.player, piece, n, p)
-                    self.game.show_pieces_player(piece.player)
-                    piece.player.end_play()
-                    self.draw_pieces()
-                    redraw = True
-
         if redraw:
             self.drawingarea.queue_draw()
         return
