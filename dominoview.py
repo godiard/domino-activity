@@ -13,13 +13,15 @@ from gettext import gettext as _
 
 import cairoutils
 
+from sugar3.graphics import style
+
 # SIZE Es el ancho de una ficha (y la mitads del largo)
 # podemos imaginar el tablero dividido en cuadrados de lado SIZE
 SIZE = 60
 # Si se quiere usar fichas mas grandes, se puede usar SIZE = 70 y
 # cambiar _drawLabel el scale = 3
 
-SCREEN_HEIGHT = Gdk.Screen.height()
+SCREEN_HEIGHT = Gdk.Screen.height() - style.GRID_CELL_SIZE
 SCREEN_WIDTH = Gdk.Screen.width()
 
 
@@ -57,7 +59,7 @@ class DominoTableView():
 
     def __init__(self, **kwargs):
         self.cantX = int(SCREEN_WIDTH / SIZE) - 1
-        self.cantY = int((SCREEN_HEIGHT - (SIZE*3.5)) / SIZE)
+        self.cantY = int((SCREEN_HEIGHT - SIZE * 3) / SIZE)
         self.margenX = int((SCREEN_WIDTH - SIZE * self.cantX) / 2)
         self.limitTable = SIZE * self.cantY
         print "Table cantX", self.cantX, "cantY", self.cantY
