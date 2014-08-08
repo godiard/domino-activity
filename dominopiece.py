@@ -42,7 +42,7 @@ class DominoPiece:
             height = dominoview.SIZE
         return (self.x < x < self.x + width) and (self.y < y < self.y + height)
 
-    def draw(self, ctx, selected):
+    def draw(self, ctx, selected, fipped=False):
         SIZE = dominoview.SIZE
         # if self.vertical:
         #   width = SIZE + SIZE/8 + 2
@@ -101,12 +101,13 @@ class DominoPiece:
             ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
             ctx.stroke()
 
-            if not self.reversed:
-                self._draw_label_a(ctx, 0, 0)
-                self._draw_label_b(ctx, 0, SIZE)
-            else:
-                self._draw_label_b(ctx, 0, 0)
-                self._draw_label_a(ctx, 0, SIZE)
+            if not fipped:
+                if not self.reversed:
+                    self._draw_label_a(ctx, 0, 0)
+                    self._draw_label_b(ctx, 0, SIZE)
+                else:
+                    self._draw_label_b(ctx, 0, 0)
+                    self._draw_label_a(ctx, 0, SIZE)
 
         else:
             cairoutils.draw_round_rect(ctx, -1, -1, SIZE * 2 + 2, SIZE + 2, r)
@@ -141,12 +142,13 @@ class DominoPiece:
             ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
             ctx.stroke()
 
-            if not self.reversed:
-                self._draw_label_a(ctx, 0, 0)
-                self._draw_label_b(ctx, SIZE, 0)
-            else:
-                self._draw_label_b(ctx, 0, 0)
-                self._draw_label_a(ctx, SIZE, 0)
+            if not fipped:
+                if not self.reversed:
+                    self._draw_label_a(ctx, 0, 0)
+                    self._draw_label_b(ctx, SIZE, 0)
+                else:
+                    self._draw_label_b(ctx, 0, 0)
+                    self._draw_label_a(ctx, SIZE, 0)
 
         ctx.restore()
 

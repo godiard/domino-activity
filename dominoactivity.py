@@ -258,6 +258,8 @@ class Domino(activity.Activity):
 
         for player in self.game.players:
             pieces = player.get_pieces()
+            # the first player have the pieces flipped
+            flipped = player == self.game.players[0]
             # TODO: replace for m (m is needed below)
             for m in range(0, len(pieces)):
                 piece = pieces[m]
@@ -265,12 +267,12 @@ class Domino(activity.Activity):
                     if self.game.game_state != \
                             DominoGame.GAME_STATE_LOCATE_PIECE \
                             or (m != self.game.ui_player.order_piece_selected):
-                        piece.draw(surf_ctx, False)
+                        piece.draw(surf_ctx, False, flipped)
 
         # to debug
-        self.game.table.show_values(surf_ctx, self.game.values)
-        self.game.table.mark_tile(surf_ctx, self.game.start)
-        self.game.table.mark_tile(surf_ctx, self.game.end)
+        #self.game.table.show_values(surf_ctx, self.game.values)
+        #self.game.table.mark_tile(surf_ctx, self.game.start)
+        #self.game.table.mark_tile(surf_ctx, self.game.end)
 
     def _start_game(self, button):
         if self.show_scores:
