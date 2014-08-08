@@ -140,7 +140,6 @@ class DominoPlayer:
             self.game.start.n += direction[0] * 2
             self.game.start.p += direction[1] * 2
             self.game.start.direction = direction
-            self.game.start.piece = piece
 
         elif piece.a == self.game.end.value or \
                 piece.b == self.game.end.value:
@@ -152,7 +151,6 @@ class DominoPlayer:
             self.game.end.n += direction[0] * 2
             self.game.end.p += direction[1] * 2
             self.game.end.direction = direction
-            self.game.end.piece = piece
         else:
             return False
 
@@ -179,13 +177,11 @@ class SimpleAutoPlayer(DominoPlayer):
             # seteamos comienzo y fin del domino
             startTile = Tile(n, p)
             startTile.value = piece.a
-            startTile.piece = piece
             startTile.direction = Tile.LEFT
             self.game.start = startTile
 
             endTile = Tile(n + 1, p)
             endTile.value = piece.b
-            endTile.piece = piece
             endTile.direction = Tile.RIGHT
             self.game.end = endTile
 

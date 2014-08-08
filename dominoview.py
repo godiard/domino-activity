@@ -38,7 +38,6 @@ class Tile:
         self.n = n
         self.p = p
         self.value = -1
-        self.piece = None
         self.direction = (0, 0)
         # direction is a pair with the x, y increments where to put the next
         # tile. Then when we put the first tile, the start tile direction

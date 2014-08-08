@@ -73,12 +73,6 @@ class DominoGame:
         else:
             self.values[n + 1][p].value = valueB
 
-        self.values[n][p].piece = piece
-        if piece.vertical:
-            self.values[n][p + 1].piece = piece
-        else:
-            self.values[n + 1][p].piece = piece
-
         piece.state = DominoPiece.PIECE_PLACED
         piece.visible = True
         piece.x, piece.y = self.table.get_tile_position(n, p)
