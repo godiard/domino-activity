@@ -128,7 +128,7 @@ class PieceProcessorFractions:
         return _("Fractions")
 
     def alter_labels(self, pieces):
-        for ppiece in pieces:
+        for piece in pieces:
             # altero textA
             piece.textA = self.alter_label(piece.a)
             # pongo una G al comienzo para saber
