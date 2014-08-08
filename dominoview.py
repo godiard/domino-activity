@@ -29,6 +29,11 @@ class Tile:
     Informacion de cada posicion del tablero
     """
 
+    UP = (0, -1)
+    RIGHT = (1, 0)
+    DOWN = (0, 1)
+    LEFT = (-1, 0)
+
     def __init__(self, n, p):
         self.n = n
         self.p = p
@@ -38,6 +43,7 @@ class Tile:
         # direction is a pair with the x, y increments where to put the next
         # tile. Then when we put the first tile, the start tile direction
         # will be (-1, 0) and the end tile direction will be (1, 0)
+        # there are constants defined with the pairs
 
 
 class DominoTableView():

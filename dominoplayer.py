@@ -106,27 +106,27 @@ class DominoPlayer:
                           tile.value, piece.a, piece.b, tile.direction)
             # define piece orientation
             if tile.value == piece.b:
-                if tile.direction in ((1, 0), (0, 1)):
+                if tile.direction in (Tile.RIGHT, Tile.DOWN):
                     piece.reversed = True
                 new_value = piece.a
             elif tile.value == piece.a:
-                if tile.direction in ((-1, 0), (0, -1)):
+                if tile.direction in (Tile.LEFT, Tile.UP):
                     piece.reversed = True
                 new_value = piece.b
-            piece.vertical = tile.direction in ((0, 1), (0, -1))
+            piece.vertical = tile.direction in (Tile.DOWN, Tile.UP)
             logging.error('test_good_position vertical %s reversed %s',
                           piece.vertical, piece.reversed)
             return new_value, tile.direction, piece, min_n, min_p
         else:
             # rotate the tile direction
-            if tile.direction == (-1, 0):
-                tile.direction = (0, -1)
-            elif tile.direction == (0, -1):
-                tile.direction = (1, 0)
-            elif tile.direction == (1, 0):
-                tile.direction = (0, 1)
-            elif tile.direction == (0, 1):
-                tile.direction = (-1, 0)
+            if tile.direction == Tile.LEFT:
+                tile.direction = Tile.UP
+            elif tile.direction == Tile.UP:
+                tile.direction = Tile.RIGHT
+            elif tile.direction == Tile.RIGHT:
+                tile.direction = Tile.DOWN
+            elif tile.direction == Tile.DOWN:
+                tile.direction = Tile.LEFT
             return self.test_good_position(tile, piece)
 
     def place_piece(self, piece):
@@ -180,13 +180,13 @@ class SimpleAutoPlayer(DominoPlayer):
             startTile = Tile(n, p)
             startTile.value = piece.a
             startTile.piece = piece
-            startTile.direction = (-1, 0)
+            startTile.direction = Tile.LEFT
             self.game.start = startTile
 
             endTile = Tile(n + 1, p)
             endTile.value = piece.b
             endTile.piece = piece
-            endTile.direction = (1, 0)
+            endTile.direction = Tile.RIGHT
             self.game.end = endTile
 
         else:
