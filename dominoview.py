@@ -11,8 +11,6 @@ from gi.repository import Rsvg
 
 from gettext import gettext as _
 
-import cairoutils
-
 from sugar3.graphics import style
 
 # SIZE Es el ancho de una ficha (y la mitads del largo)
@@ -119,32 +117,6 @@ class DominoTableView():
 
     def get_tile_position(self, n, p):
         return self._margin_x + n * SIZE, self._margin_y + p * SIZE
-
-    def get_tile_coord(self, x, y):
-        return (x - self._margin_x) / SIZE, (y / SIZE) + 1
-
-    def show_status(self, ctx, text):
-        xIni = 10
-        yIni = 5
-
-        stroke_r, stroke_g, stroke_b = 0, 0, 0
-        alpha = 0.6
-        ctx.set_source_rgba(stroke_r, stroke_g, stroke_b, alpha)
-
-        ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL,
-                             cairo.FONT_WEIGHT_NORMAL)
-        ctx.set_font_size(12)
-        x_bearing, y_bearing, width, height, x_advance, y_advance = \
-            ctx.text_extents(text)
-
-        radio = 16
-
-        cairoutils.draw_round_rect(ctx, xIni, yIni, width + radio * 2,
-                                   height * 2, radio)
-        ctx.stroke()
-
-        ctx.move_to(xIni + radio + x_bearing, yIni + height)
-        ctx.show_text(text)
 
     def show_scores(self, ctx, score_list):
         alto = 5

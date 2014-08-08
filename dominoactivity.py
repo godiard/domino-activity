@@ -214,9 +214,6 @@ class Domino(activity.Activity):
             if player_with_minus_pieces == player:
                 win = True
 
-        if self.game.table:
-            self.game.table.show_status(ctx, self.game.get_status())
-
         if end_game:
             self.add_points_by_name(self.game.processor.get_name(), win)
             self.game.table.msg_end_game(ctx, win)
@@ -270,9 +267,9 @@ class Domino(activity.Activity):
                         piece.draw(surf_ctx, False, flipped)
 
         # to debug
-        #self.game.table.show_values(surf_ctx, self.game.values)
-        #self.game.table.mark_tile(surf_ctx, self.game.start)
-        #self.game.table.mark_tile(surf_ctx, self.game.end)
+        # self.game.table.show_values(surf_ctx, self.game.values)
+        # self.game.table.mark_tile(surf_ctx, self.game.start)
+        # self.game.table.mark_tile(surf_ctx, self.game.end)
 
     def _start_game(self, button):
         if self.show_scores:

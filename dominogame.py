@@ -1,6 +1,5 @@
 import random
 import logging
-from gettext import gettext as _
 
 from sugar3 import profile
 
@@ -160,16 +159,6 @@ class DominoGame:
 
                 x = x + dominoview.SIZE + separacion_x
                 piece.visible = True
-
-    def get_status(self):
-        players_status = ''
-        for player in self.players:
-            players_status = players_status + player.get_status()
-
-        if len(self.pieces) > 0:
-            players_status = players_status + _("Stack")+" : " + \
-                str(len(self.pieces))
-        return players_status
 
 
 class DominoGamePoints:

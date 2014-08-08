@@ -70,13 +70,6 @@ class DominoPlayer:
                 self._pieces.remove(cantPieces)
                 return
 
-    def get_status(self):
-        if (len(self._pieces) > 0):
-            return self.name + ' - ' + str(len(self._pieces)) + \
-                ' ' + _('pieces') + '.    '
-        else:
-            return self.name + ' -  ' + _('WIN') + '!!!!.    '
-
     def test_good_position(self, tile, piece):
         n, p = tile.n, tile.p
         logging.error('tile value %s direction %s piece a %s piece b %s',
