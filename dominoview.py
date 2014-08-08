@@ -59,36 +59,40 @@ class DominoTableView():
 
     def __init__(self, **kwargs):
         self.cantX = int(SCREEN_WIDTH / SIZE) - 1
-        self.cantY = int((SCREEN_HEIGHT - SIZE * 3) / SIZE)
-        self.margenX = int((SCREEN_WIDTH - SIZE * self.cantX) / 2)
-        self.limitTable = SIZE * self.cantY
+        self.cantY = int((SCREEN_HEIGHT - SIZE * 4) / SIZE)
+        self._margin_x = int((SCREEN_WIDTH - SIZE * self.cantX) / 2)
+        self._margin_y = SIZE * 2
+
+        self.bottom_limit = self._margin_y + SIZE * self.cantY
         print "Table cantX", self.cantX, "cantY", self.cantY
 
     def paint(self, ctx):
 
-        # agrego 2,2 para que la grilla quede en la base de las piezas
+        # agrego 5,5 para que la grilla quede en la base de las piezas
         # (por la perspectiva)
         alto = 5
-        ctx.move_to(alto, alto)
 
-        ctx.rectangle(self.margenX + alto, 0 + alto, SIZE * self.cantX + alto,
-                      SIZE * (self.cantY) + alto)
+        ctx.rectangle(self._margin_x + alto, self._margin_y + alto,
+                      SIZE * self.cantX + alto,
+                      SIZE * self.cantY + alto)
         ctx.set_source_rgb(204.0/255.0, 204.0/255.0, 204.0/255.0)
         ctx.fill()
 
         ctx.set_line_width(1)
         ctx.set_source_rgb(1, 1, 0)
 
-        for n in range(0, self.cantY + 1):
-            ctx.move_to(self.margenX + alto, n * SIZE + alto)
-            ctx.line_to(SCREEN_WIDTH - self.margenX + alto, n * SIZE + alto)
+        for n in range(0, self.cantY):
+            ctx.move_to(self._margin_x + alto,
+                        self._margin_y + alto + n * SIZE)
+            ctx.line_to(self._margin_x + alto + SIZE * self.cantX,
+                        self._margin_y + alto + n * SIZE)
             ctx.stroke()
 
-        ctx.move_to(0, 0)
-        for n in range(0, self.cantX + 1):
-            ctx.move_to(self.margenX + n * SIZE + alto, 0 + alto)
-            ctx.line_to(self.margenX + n * SIZE + alto,
-                        self.limitTable + alto)
+        for n in range(0, self.cantX):
+            ctx.move_to(self._margin_x + n * SIZE + alto,
+                        self._margin_y + alto)
+            ctx.line_to(self._margin_x + n * SIZE + alto,
+                        self.bottom_limit + alto)
             ctx.stroke()
 
     def show_values(self, ctx, tiles):
@@ -97,7 +101,8 @@ class DominoTableView():
         """
         for n in range(0, self.cantX):
             for p in range(0, self.cantY):
-                ctx.move_to(self.margenX + n * SIZE + SIZE / 4, p * SIZE)
+                ctx.move_to(self._margin_x + n * SIZE + SIZE / 4,
+                            self._margin_y + (p + 1) * SIZE)
                 ctx.set_source_rgb(1, 0, 0)
                 ctx.show_text(str(tiles[n][p].value))
 
@@ -107,15 +112,16 @@ class DominoTableView():
         """
         ctx.set_source_rgb(0, 1, 0)
         ctx.set_line_width(3)
-        ctx.rectangle(self.margenX + tile.n * SIZE, (tile.p - 1) * SIZE,
+        ctx.rectangle(self._margin_x + tile.n * SIZE,
+                      self._margin_y + tile.p * SIZE,
                       SIZE, SIZE)
         ctx.stroke()
 
     def get_tile_position(self, n, p):
-        return self.margenX + n * SIZE, (p - 1) * SIZE
+        return self._margin_x + n * SIZE, self._margin_y + p * SIZE
 
     def get_tile_coord(self, x, y):
-        return (x - self.margenX) / SIZE, (y / SIZE) + 1
+        return (x - self._margin_x) / SIZE, (y / SIZE) + 1
 
     def show_status(self, ctx, text):
         xIni = 10
@@ -144,15 +150,15 @@ class DominoTableView():
         alto = 5
         ctx.move_to(alto, alto)
 
-        ctx.rectangle(self.margenX + alto, 0 + alto, SIZE * self.cantX + alto,
-                      SIZE * (self.cantY) + alto)
+        ctx.rectangle(self._margin_x + alto, 0 + alto,
+                      SIZE * self.cantX + alto, SIZE * (self.cantY) + alto)
         ctx.set_source_rgb(204.0 / 255.0, 204.0 / 255.0, 204.0 / 255.0)
         ctx.fill()
 
         ctx.set_line_width(1)
         ctx.set_source_rgb(1, 1, 0)
-        ctx.rectangle(self.margenX + alto, 0 + alto, SIZE * self.cantX + alto,
-                      SIZE * (self.cantY) + alto)
+        ctx.rectangle(self._margin_x + alto, 0 + alto,
+                      SIZE * self.cantX + alto, SIZE * (self.cantY) + alto)
         ctx.stroke()
 
         altoRenglon = 40
@@ -164,7 +170,7 @@ class DominoTableView():
                              cairo.FONT_WEIGHT_NORMAL)
         ctx.set_font_size(30)
 
-        x = self.margenX + 200
+        x = self._margin_x + 200
         y = altoRenglon * 2
         ctx.move_to(x, y)
 
@@ -190,11 +196,11 @@ class DominoTableView():
 
     def help(self, ctx):
         altoRenglon = 45
-        x = self.margenX + 20
+        x = self._margin_x + 20
         y = altoRenglon * 4
         ctx.set_line_width(1)
         ctx.set_source_rgb(1, 1, 0)
-        ctx.rectangle(self.margenX + 10, altoRenglon * 3,
+        ctx.rectangle(self._margin_x + 10, altoRenglon * 3,
                       SIZE * self.cantX - 10, y + altoRenglon * 4)
         ctx.stroke()
 

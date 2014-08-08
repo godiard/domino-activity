@@ -21,6 +21,8 @@ class DominoPlayer:
         self.color = None
         # se usa para saber si este usuario paso la ultima vuelta
         self.has_passed = False
+        # where are displayed the pieces for this player
+        self.pieces_y_position = self.game.table.bottom_limit
 
     def set_pieces(self, pieces):
         self._pieces = pieces
@@ -55,6 +57,7 @@ class DominoPlayer:
             self.game.btnNew.props.sensitive = False
         # "End player",self.number
         self.playing = False
+
         self.game.next_player(self.number).play()
 
     def remove_piece(self, piece):
@@ -154,6 +157,7 @@ class DominoPlayer:
         else:
             return False
 
+        self.game.show_pieces_player(self)
         return True
 
 
@@ -165,6 +169,10 @@ class SimpleAutoPlayer(DominoPlayer):
     si no encuentra una pide
     NO TIENE NINGUNA ESTRATEGIA
     """
+
+    def __init__(self, game, number):
+        DominoPlayer.__init__(self, game, number)
+        self.pieces_y_position = 0
 
     def play(self):
         # "Jugando automatico"
@@ -184,6 +192,7 @@ class SimpleAutoPlayer(DominoPlayer):
             endTile.value = piece.b
             endTile.direction = Tile.RIGHT
             self.game.end = endTile
+            self.game.show_pieces_player(self)
 
         else:
             # "automatica siguiente"

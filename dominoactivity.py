@@ -250,23 +250,22 @@ class Domino(activity.Activity):
         # para que se encimen bien cuando se dibujan
         self.game.placed_pieces.sort(
             lambda pieceA,
-            pieceB: pieceA.x - pieceB.x + pieceA.y * 100 - pieceB.y * 100)
+            pieceB: int(pieceA.x - pieceB.x + pieceA.y * 100 - pieceB.y * 100))
 
         for piece in self.game.placed_pieces:
             if piece.visible:
                 piece.draw(surf_ctx, False)
 
-        # for n in range(0,len(self.game.players)):
-        # dibujo las piezas del jugador
-        player = self.game.ui_player
-        pieces = player.get_pieces()
-        # TODO: replace for m (m is needed below)
-        for m in range(0, len(pieces)):
-            piece = pieces[m]
-            if piece.visible:
-                if self.game.game_state != DominoGame.GAME_STATE_LOCATE_PIECE \
-                        or (m != self.game.ui_player.order_piece_selected):
-                    piece.draw(surf_ctx, False)
+        for player in self.game.players:
+            pieces = player.get_pieces()
+            # TODO: replace for m (m is needed below)
+            for m in range(0, len(pieces)):
+                piece = pieces[m]
+                if piece.visible:
+                    if self.game.game_state != \
+                            DominoGame.GAME_STATE_LOCATE_PIECE \
+                            or (m != self.game.ui_player.order_piece_selected):
+                        piece.draw(surf_ctx, False)
 
         # to debug
         self.game.table.show_values(surf_ctx, self.game.values)
@@ -377,7 +376,6 @@ class Domino(activity.Activity):
                 piece = player.get_pieces()[player.order_piece_selected]
 
                 if player.place_piece(piece):
-                    self.game.show_pieces_player(player)
                     player.end_play()
                     self.draw_pieces()
 
