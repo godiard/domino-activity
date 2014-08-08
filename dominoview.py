@@ -34,6 +34,10 @@ class Tile:
         self.p = p
         self.value = -1
         self.piece = None
+        self.direction = (0, 0)
+        # direction is a pair with the x, y increments where to put the next
+        # tile. Then when we put the first tile, the start tile direction
+        # will be (-1, 0) and the end tile direction will be (1, 0)
 
 
 class DominoTableView():
@@ -79,6 +83,26 @@ class DominoTableView():
             ctx.line_to(self.margenX + n * SIZE + alto,
                         self.limitTable + alto)
             ctx.stroke()
+
+    def show_values(self, ctx, tiles):
+        """
+        To debug: display the value in every tile off the table matrix
+        """
+        for n in range(0, self.cantX):
+            for p in range(0, self.cantY):
+                ctx.move_to(self.margenX + n * SIZE + SIZE / 4, p * SIZE)
+                ctx.set_source_rgb(1, 0, 0)
+                ctx.show_text(str(tiles[n][p].value))
+
+    def mark_tile(self, ctx, tile):
+        """
+        To debug: used to show the position of the start and end tiles
+        """
+        ctx.set_source_rgb(0, 1, 0)
+        ctx.set_line_width(3)
+        ctx.rectangle(self.margenX + tile.n * SIZE, (tile.p - 1) * SIZE,
+                      SIZE, SIZE)
+        ctx.stroke()
 
     def get_tile_position(self, n, p):
         return self.margenX + n * SIZE, (p - 1) * SIZE
