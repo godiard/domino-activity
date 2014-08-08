@@ -47,6 +47,11 @@ class DominoGame:
         self.drawingarea = drawingarea
 
     def next_player(self, num_player):
+        logging.debug('START n %s p %s direction %s value %s', self.start.n,
+                      self.start.p, self.start.direction, self.start.value)
+        logging.debug('END n %s p %s direction %s value %s', self.end.n,
+                      self.end.p, self.end.direction, self.end.value)
+
         if num_player >= len(self.players) - 1:
             return self.players[0]
         else:
@@ -82,164 +87,21 @@ class DominoGame:
         player.has_passed = False
         self.drawingarea.queue_draw()
 
-    def test_in_board(self, dominoPiece, n, p):
-        n1 = n
-        p1 = p
-        n2 = n
-        p2 = p
-        if not dominoPiece.vertical:
-            n2 = n2 + 1
-        else:
-            p2 = p2 + 1
-
-        test = not ((n1 < 0) or (p1 < 1) or (n2 > self.cantX-1) or (
-            p2 > self.cantY))
-        return test
-
-    def test_good_position(self, dominoPiece, n, p):
-        try:
-            if (n < 0) or (p < 0) or (n > self.cantX) or (p > self.cantY):
-                # "Fuera de los limites"
-                return False
-            if dominoPiece.vertical:
-                if (p + 1) > self.cantY:
-                    # "Fuera de los limites"
-                    return False
-            else:
-                if (n + 1) > self.cantX:
-                    # "Fuera de los limites"
-                    return False
-
-            # "testeando posicion correcta",n,p
-            if self.start is None and self.end is None:
-                # "No hay start o end"
-                return True
-            # "chequea que no este ocupada esa posicion"
-            if self.values[n][p].value != -1:
-                # "N,P ocupada"
-                return False
-            # "chequear la otra posicion ocupada por la pieza,
-            # segun este vertical u horizontal"
-            try:
-                if dominoPiece.vertical:
-                    if self.values[n][p + 1].value != -1:
-                        # "N,P+1 ocupada"
-                        return False
-                else:
-                    if self.values[n + 1][p].value != -1:
-                        # "N+1,P ocupada"
-                        return False
-
-            except IndexError:
-                return False
-
-            valueA = dominoPiece.a
-            valueB = dominoPiece.b
-            if dominoPiece.reversed:
-                valueA = dominoPiece.b
-                valueB = dominoPiece.a
-
-            bad = self._test_invalid(valueA, n, p)
-            if dominoPiece.vertical:
-                bad = bad or self._test_invalid(valueB, n, p + 1)
-            else:
-                bad = bad or self._test_invalid(valueB, n + 1, p)
-            if bad:
-                # "BAD posiciones laterales"
-                return False
-
-            # "# hago test contra start"
-            ok = self.test_valid(self.start, valueA, n, p)
-            if ok:
-                n2, p2 = self._get_oposite_corner(dominoPiece, n, p, n, p)
-                value2 = valueB
-            else:
-                if dominoPiece.vertical:
-                    ok = ok or self.test_valid(self.start, valueB, n, p + 1)
-                else:
-                    ok = ok or self.test_valid(self.start,  valueB, n + 1, p)
-                if ok:
-                    n2, p2 = n, p
-                    value2 = valueA
-            if ok:
-                # "Coincide start",n2,p2,value2
-                if self.start is None:
-                    self.start = Tile(n2, p2)
-                self.start.n, self.start.p = n2, p2
-                self.start.value = value2
-                self.start.piece = dominoPiece
-                return True
-
-            # "# hago test contra end"
-            ok = self.test_valid(self.end, valueA, n, p)
-            if ok:
-                n2, p2 = self._get_oposite_corner(dominoPiece, n, p, n, p)
-                value2 = valueB
-            else:
-                if dominoPiece.vertical:
-                    ok = ok or self.test_valid(self.end, valueB, n, p + 1)
-                else:
-                    ok = ok or self.test_valid(self.end, valueB, n + 1, p)
-                if ok:
-                    n2, p2 = n, p
-                    value2 = valueA
-            if ok:
-                # "Coincide end",n2,p2,value2
-                if self.end is None:
-                    self.end = Tile(n2, p2)
-                self.end.n, self.end.p = n2, p2
-                self.end.value = value2
-                self.end.piece = dominoPiece
-                return True
-        except IndexError:
-            logging.error("Fuera de rango * test_good_position")
-
-        return False
-
-    def _get_oposite_corner(self, piece, nPiece, pPiece, nTest, pTest):
-        if (nPiece == nTest) and (pPiece == pTest):
-            if piece.vertical:
-                return nPiece, pPiece + 1
-            else:
-                return nPiece + 1, pPiece
-        else:
-            return nPiece, pPiece
-
-    def _test_invalid(self, value, n, p):
-        # "test invalid value",value,"n=",n,"p=",p
-        try:
-            if (self.values[n + 1][p].value != -1) and \
-                    (self.values[n + 1][p].value != value):
-                return True
-            if (self.values[n - 1][p].value != -1) and \
-                    (self.values[n - 1][p].value != value):
-                return True
-            if (self.values[n][p + 1].value != -1) and \
-                    (self.values[n][p + 1].value != value):
-                return True
-            if (self.values[n][p - 1].value != -1) and \
-                    (self.values[n][p - 1].value != value):
-                return True
-        except IndexError:
-            logging.error("index error _test_invalid")
-        return False
-
-    def test_valid(self, tile, value, n, p):
-        if tile is None:
+    def test_free_position(self, n, p):
+        logging.debug('test_free_position %s %s', n, p)
+        if (n < 0) or (p < 0) or (n > self.cantX) or (p > self.cantY):
+            # Out of limits
+            logging.debug('Out of limits cantX %s catY %s',
+                          self.cantX, self.cantY)
             return False
-        # no anda bien y hay que chequear contra start y end
-        # "test valid n=",n,"p=",p,"value", value
-        # "tile n",tile.n,"p",tile.p,"value",tile.value
-
-        if (tile.n == n - 1) and (tile.p == p):
-            return tile.value == value
-        if (tile.n == n + 1) and (tile.p == p):
-            return tile.value == value
-        if (tile.n == n) and (tile.p - 1 == p):
-            return tile.value == value
-        if (tile.n == n) and (tile.p + 1 == p):
-            return tile.value == value
-        return False
+        try:
+            if self.values[n][p].value != -1:
+                # N,P position have a piece
+                logging.debug('Tile busy n %s p %s', n, p)
+                return False
+        except IndexError:
+            return False
+        return True
 
     def _create_domino(self):
         for n in range(0, 7):

@@ -76,55 +76,86 @@ class DominoPlayer:
 
     def test_good_position(self, tile, piece):
         n, p = tile.n, tile.p
-        original_vertical = piece.vertical
-        original_reversed = piece.reversed
-        # Pruebo con las cuatro posiciones que rodean a n,p
-        # con la pieza en cuatro posiciones
+        logging.error('tile value %s direction %s piece a %s piece b %s',
+                      tile.value, tile.direction, piece.a, piece.b)
+        # check using the tile direction if the next 3 spaces are free
+        # (2 for the piece, and 1 more)
+        ok = True
         for i in range(0, 3):
-            # Combino las cuatro posiciones posibles
-            if i == 0:
-                piece.vertical = False
-                piece.reversed = False
-            if i == 1:
-                piece.vertical = True
-                piece.reversed = False
-            if i == 2:
-                piece.vertical = False
-                piece.reversed = True
-            if i == 3:
-                piece.vertical = True
-                piece.reversed = True
-            if self.game.test_good_position(piece, n + 1, p):
-                return n + 1, p, piece, True
-            if self.game.test_good_position(piece, n, p + 1):
-                return n, p + 1, piece, True
-            if self.game.test_good_position(piece, n - 1, p):
-                return n - 1, p, piece, True
-            if self.game.test_good_position(piece, n, p - 1):
-                return n, p - 1, piece, True
-        # no encuentro ninguna posicion valida
-        piece.vertical = original_vertical
-        piece.reversed = original_reversed
-        return n, p, piece, False
+            n = n + tile.direction[0]
+            p = p + tile.direction[1]
+            if not self.game.test_free_position(n, p):
+                ok = False
+                break
 
-    def _put_piece(self, piece, n, p):
-        self.piece_selected = None
-        x, y = self.game.table.get_tile_position(n, p)
-        self.game.put_piece(self, piece, n, p)
+        if ok:
+            logging.error('3 spaces free')
+            # define piece position
+            # substract one to n, p. (we added 3 to have one more free
+            n = n - tile.direction[0]
+            p = p - tile.direction[1]
+            logging.error('piece position n %s, p %s', n, p)
+            # get the minimal between the original tile + 1 and
+            # the final n, p values calculated
+            ori_n = tile.n + tile.direction[0]
+            ori_p = tile.p + tile.direction[1]
+            min_n, min_p = min(n, ori_n), min(p, ori_p)
+            logging.error('piece position n %s, p %s', min_n, min_p)
+
+            logging.error('tile.value %s piece a %s b %s direction %s',
+                          tile.value, piece.a, piece.b, tile.direction)
+            # define piece orientation
+            if tile.value == piece.b:
+                if tile.direction in ((1, 0), (0, 1)):
+                    piece.reversed = True
+                new_value = piece.a
+            elif tile.value == piece.a:
+                if tile.direction in ((-1, 0), (0, -1)):
+                    piece.reversed = True
+                new_value = piece.b
+            piece.vertical = tile.direction in ((0, 1), (0, -1))
+            logging.error('test_good_position vertical %s reversed %s',
+                          piece.vertical, piece.reversed)
+            return new_value, tile.direction, piece, min_n, min_p
+        else:
+            # rotate the tile direction
+            if tile.direction == (-1, 0):
+                tile.direction = (0, -1)
+            elif tile.direction == (0, -1):
+                tile.direction = (1, 0)
+            elif tile.direction == (1, 0):
+                tile.direction = (0, 1)
+            elif tile.direction == (0, 1):
+                tile.direction = (-1, 0)
+            return self.test_good_position(tile, piece)
 
     def place_piece(self, piece):
-        # try with start tile
-        n, p, piece, ok = self.test_good_position(self.game.start, piece)
-        if ok:
-            self._put_piece(piece, n, p)
-        else:
+        if piece.a == self.game.start.value or \
+                piece.b == self.game.start.value:
+            # try with start tile
+            new_tile_value, direction, piece, piece_n, piece_p = \
+                self.test_good_position(self.game.start, piece)
+            self.game.put_piece(self, piece, piece_n, piece_p)
+            self.game.start.value = new_tile_value
+            self.game.start.n += direction[0] * 2
+            self.game.start.p += direction[1] * 2
+            self.game.start.direction = direction
+            self.game.start.piece = piece
+
+        elif piece.a == self.game.end.value or \
+                piece.b == self.game.end.value:
             # try with end
-            n, p, piece, ok = self.test_good_position(self.game.end, piece)
-            if ok:
-                self._put_piece(piece, n, p)
-            else:
-                logging.error('cant put piece')
-                return False
+            new_tile_value, direction, piece, piece_n, piece_p = \
+                self.test_good_position(self.game.end, piece)
+            self.game.put_piece(self, piece, piece_n, piece_p)
+            self.game.end.value = new_tile_value
+            self.game.end.n += direction[0] * 2
+            self.game.end.p += direction[1] * 2
+            self.game.end.direction = direction
+            self.game.end.piece = piece
+        else:
+            return False
+
         return True
 
 
@@ -143,38 +174,27 @@ class SimpleAutoPlayer(DominoPlayer):
             # si no hay ninguna pieza en el tablero ponemos la primera
             piece = self._pieces[0]
             n, p = self.game.cantX / 2 - 1, self.game.cantY / 2
-            self._put_piece(piece, n, p)
+            self.game.put_piece(self, piece, n, p)
 
             # seteamos comienzo y fin del domino
             startTile = Tile(n, p)
             startTile.value = piece.a
             startTile.piece = piece
+            startTile.direction = (-1, 0)
             self.game.start = startTile
 
             endTile = Tile(n + 1, p)
             endTile.value = piece.b
             endTile.piece = piece
+            endTile.direction = (1, 0)
             self.game.end = endTile
 
         else:
             # "automatica siguiente"
             # buscamos si tenemos alguna ficha que corresponda
             # en el comienzo
-            ok = False
-            piece = self._get_piece_with_value(self.game.start.value)
-            if piece is not None:
-                n, p, piece, ok = self.test_good_position(self.game.start,
-                                                          piece)
-                if ok:
-                    self._put_piece(piece, n, p)
-            if not ok:
-                # en el fin
-                piece = self._get_piece_with_value(self.game.end.value)
-                if piece is not None:
-                    n, p, piece, ok = self.test_good_position(
-                        self.game.end, piece)
-                    if ok:
-                        self._put_piece(piece, n, p)
+            ok = self.check_put_piece()
+
             if not ok:
                 # pido una hasta que sea valida o no hayan mas disponibles
                 # si no encontramos pedimos hasta que alguna sirva
@@ -185,16 +205,7 @@ class SimpleAutoPlayer(DominoPlayer):
                         piece = pieces[0]
                         piece.player = self
                         self.get_pieces().append(piece)
-                        n, p, piece, ok = self.test_good_position(
-                            self.game.start, piece)
-                        if ok:
-                            self._put_piece(piece, n, p)
-                        if not ok:
-                            # en el fin
-                            n, p, piece, ok = self.test_good_position(
-                                self.game.end, piece)
-                            if ok:
-                                self._put_piece(piece, n, p)
+                        ok = self.check_put_piece()
                     else:
                         ok = True  # No hay mas piezas
                         self.has_passed = True
@@ -203,6 +214,15 @@ class SimpleAutoPlayer(DominoPlayer):
 
         # juega el siguiente jugador
         self.end_play()
+
+    def check_put_piece(self):
+        for tile in (self.game.start, self.game.end):
+            # look for a piece with the value
+            piece = self._get_piece_with_value(tile.value)
+            if piece is not None:
+                self.place_piece(piece)
+                return True
+        return False
 
     # elige una pieza que tenga un valor
     def _get_piece_with_value(self, value):

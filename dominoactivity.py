@@ -268,6 +268,11 @@ class Domino(activity.Activity):
                         or (m != self.game.ui_player.order_piece_selected):
                     piece.draw(surf_ctx, False)
 
+        # to debug
+        self.game.table.show_values(surf_ctx, self.game.values)
+        self.game.table.mark_tile(surf_ctx, self.game.start)
+        self.game.table.mark_tile(surf_ctx, self.game.end)
+
     def _start_game(self, button):
         if self.show_scores:
             self.show_scores = False

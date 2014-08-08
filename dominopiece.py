@@ -155,14 +155,3 @@ class DominoPiece:
 
     def _draw_label_b(self, ctx, x, y):
         self.player.game.processor.draw_label(ctx, self, self.textB, x, y)
-
-    def rotate(self):
-        vertical_ini = self.vertical
-        reversed_ini = self.reversed
-        if self.vertical:
-            self.reversed = not self.reversed
-        self.vertical = not self.vertical
-        n, p = self.player.game.table.get_tile_coord(self.x, self.y)
-        if not self.player.game.test_in_board(self, n, p):
-            self.vertical = vertical_ini
-            self.reversed = reversed_ini
