@@ -39,7 +39,7 @@ class Domino(activity.Activity):
     """
 
     def __init__(self, handle):
-        activity.Activity.__init__(self, handle, create_jobject=False)
+        activity.Activity.__init__(self, handle)
 
         toolbar_box = ToolbarBox()
         self.set_toolbar_box(toolbar_box)
@@ -70,8 +70,6 @@ class Domino(activity.Activity):
         # agrego combo para tipo de juego
         cmbItem = Gtk.ToolItem()
         self.cmbTipoPiezas = Gtk.ComboBoxText()
-
-        self.read_file()
 
         for processor in self.list_processors:
             # inicializo puntajes
@@ -383,11 +381,7 @@ class Domino(activity.Activity):
             self.drawingarea.queue_draw()
         return
 
-    def can_close(self):
-        # save the file itself
-        act_root = self.get_activity_root()
-        file_name = os.path.join(act_root, "data", "Scores.json")
-
+    def write_file(self, file_name):
         data_points = []
         for points in self.list_points:
             data = {}
@@ -406,26 +400,22 @@ class Domino(activity.Activity):
 
         return True
 
-    def read_file(self):
-        act_root = self.get_activity_root()
-        file_name = os.path.join(act_root, "data", "Scores.json")
+    def read_file(self, file_name):
+        fd = open(file_name, 'rt')
+        try:
+            # lo meto en una variable intermedia por si hay problemas
+            data_points = json.load(fd)
 
-        if os.path.exists(file_name):
-            fd = open(file_name, 'rt')
-            try:
-                # lo meto en una variable intermedia por si hay problemas
-                data_points = json.load(fd)
-
-                self.list_points = []
-                for data in data_points:
-                    # inicializo puntajes
-                    points = DominoGamePoints()
-                    points.name = data["name"]
-                    points.played = data["played"]
-                    points.win = data["win"]
-                    points.lost = data["lost"]
-                    self.list_points.append(points)
-            except:
-                logging.error("Error leyendo puntajes %s", sys.exc_info()[0])
-            finally:
-                fd.close()
+            self.list_points = []
+            for data in data_points:
+                # inicializo puntajes
+                points = DominoGamePoints()
+                points.name = data["name"]
+                points.played = data["played"]
+                points.win = data["win"]
+                points.lost = data["lost"]
+                self.list_points.append(points)
+        except:
+            logging.error("Error leyendo puntajes %s", sys.exc_info()[0])
+        finally:
+            fd.close()
