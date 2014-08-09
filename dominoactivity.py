@@ -168,12 +168,27 @@ class Domino(activity.Activity):
         ctx.paint()
 
         # test end game (se puede poner en otro metodo)
+        end_game, win = self.check_game_end()
+
+        if end_game:
+            self.add_points_by_name(self.game.processor.get_name(), win)
+            self.game.table.msg_end_game(ctx, win)
+        else:
+            player = self.game.ui_player
+            # Dibujo la pieza seleccionada
+            player.get_pieces()[player.order_piece_selected].draw(ctx, True)
+
+    def check_game_end(self):
         end_game = False
         win = False
 
-        # Dibujo la pieza seleccionada
         player = self.game.ui_player
-        player.get_pieces()[player.order_piece_selected].draw(ctx, True)
+
+        if len(player.get_pieces()) == 0:
+            return True, True
+
+        if len(self.game.players[0].get_pieces()) == 0:
+            return True, False
 
         for player in self.game.players:
             # dibujo las piezas del jugador
@@ -207,9 +222,7 @@ class Domino(activity.Activity):
             if player_with_minus_pieces == player:
                 win = True
 
-        if end_game:
-            self.add_points_by_name(self.game.processor.get_name(), win)
-            self.game.table.msg_end_game(ctx, win)
+        return end_game, win
 
     def __event_cb(self, widget, event):
         if event.type in (Gdk.EventType.TOUCH_BEGIN,
