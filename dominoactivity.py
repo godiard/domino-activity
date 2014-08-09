@@ -218,13 +218,18 @@ class Domino(activity.Activity):
             y = int(event.get_coords()[2])
 
             if self.game.game_state == DominoGame.GAME_STATE_SELECT_PIECE:
-                for player in self.game.players:
-                    i = 0
-                    for piece in player.get_pieces():
-                        if piece.visible and piece.check_touched(x, y):
-                            player.order_piece_selected = i
-                            self.drawingarea.queue_draw()
-                        i += 1
+                player = self.game.ui_player
+                i = 0
+                for piece in player.get_pieces():
+                    if piece.visible and piece.check_touched(x, y):
+                        player.order_piece_selected = i
+
+                        if player.place_piece(piece):
+                            player.end_play()
+                            self.draw_pieces()
+
+                        self.drawingarea.queue_draw()
+                    i += 1
 
     def draw_pieces(self):
         self.surface = cairo.ImageSurface(
