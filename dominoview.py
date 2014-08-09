@@ -7,7 +7,6 @@
 
 from gi.repository import Gdk
 import cairo
-from gi.repository import Rsvg
 
 from gettext import gettext as _
 
@@ -165,66 +164,6 @@ class DominoTableView():
             ctx.show_text(str(game_points.lost))
             y = y + altoRenglon
             ctx.move_to(x, y)
-
-    def help(self, ctx):
-        altoRenglon = 45
-        x = self._margin_x + 20
-        y = altoRenglon * 4
-        ctx.set_line_width(1)
-        ctx.set_source_rgb(1, 1, 0)
-        ctx.rectangle(self._margin_x + 10, altoRenglon * 3,
-                      SIZE * self.cantX - 10, y + altoRenglon * 4)
-        ctx.stroke()
-
-        stroke_r, stroke_g, stroke_b = 0, 0, 0
-        ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
-
-        ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL,
-                             cairo.FONT_WEIGHT_NORMAL)
-        ctx.set_font_size(30)
-
-        ctx.move_to(x, y)
-        ctx.show_text(_("You can select a piece with the arrow keys "
-                        "and use it with enter."))
-
-        y = y + altoRenglon
-        ctx.move_to(x, y)
-        ctx.show_text(_("When you selected the piece, you can move it "
-                        "to the place "))
-
-        y = y + altoRenglon
-        ctx.move_to(x, y)
-        ctx.show_text(_("with the arrows , turn it with space and place "
-                        "it with enter."))
-
-        y = y + altoRenglon
-        ctx.move_to(x, y)
-        ctx.show_text(_("If you want use another piece, press escape."))
-
-        y = y + altoRenglon
-        ctx.move_to(x + 80, y)
-        ctx.show_text(_("You can use the cursors to move too."))
-
-        y = y + altoRenglon
-        ctx.move_to(x + 80, y)
-        ctx.show_text(_("And use check to select, circle to rotate"))
-
-        y = y + altoRenglon
-        ctx.move_to(x + 80, y)
-        ctx.show_text(_("and X to use another piece."))
-
-        self.show_svg(ctx, "icons/cursors.svg", x, y - (altoRenglon * 2.75))
-        self.show_svg(ctx, "icons/gamekeys.svg", x, y - (altoRenglon * 1.25))
-
-    def show_svg(self, ctx, file_name, x, y):
-        h = Rsvg.Handle.new_from_file(file_name)
-        surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, 100, 100)
-        temp_ctx = cairo.Context(surf)
-        h.render_cairo(temp_ctx)
-        ctx.translate(x, y)
-        ctx.set_source_surface(surf)
-        ctx.paint()
-        ctx.translate(-x, -y)
 
     def msg_end_game(self, ctx, win):
         ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL,

@@ -7,7 +7,6 @@
 from gi.repository import Gtk
 from gi.repository import Gdk
 import cairo
-import os
 import sys
 
 import json
@@ -140,6 +139,7 @@ class Domino(activity.Activity):
         self.game = None
         self.show_scores = False
         self.surface = None
+        self._start_game(None)
         self.drawingarea.queue_draw()
 
     def get_points_by_name(self, game_processor_name):
@@ -162,11 +162,6 @@ class Domino(activity.Activity):
         if (self.show_scores):
             table = DominoTableView()
             table.show_scores(ctx, self.list_points)
-            return
-
-        if self.game is None:
-            table = DominoTableView()
-            table.help(ctx)
             return
 
         ctx.set_source_surface(self.surface)
