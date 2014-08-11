@@ -11,6 +11,7 @@ import sys
 
 import json
 import logging
+from operator import attrgetter
 
 from gettext import gettext as _
 from sugar3.activity import activity
@@ -253,14 +254,8 @@ class Domino(activity.Activity):
         if (self.game.table):
             self.game.table.paint(surf_ctx)
 
-        # ordeno la lista de las fichas puestas desde arriba a la izq
-        # hacia abajo a la derecha
-        # para que se encimen bien cuando se dibujan
-        self.game.placed_pieces.sort(
-            lambda pieceA,
-            pieceB: int(pieceA.x - pieceB.x + pieceA.y * 100 - pieceB.y * 100))
-
-        for piece in self.game.placed_pieces:
+        # sort from top left, to bottom right to not overdraw visually
+        for piece in sorted(self.game.placed_pieces, key=attrgetter('x', 'y')):
             if piece.visible:
                 piece.draw(surf_ctx, False)
 
