@@ -63,35 +63,6 @@ class DominoTableView():
         self.bottom_limit = self._margin_y + SIZE * self.cantY
         print "Table cantX", self.cantX, "cantY", self.cantY
 
-    def paint(self, ctx):
-
-        # agrego 5,5 para que la grilla quede en la base de las piezas
-        # (por la perspectiva)
-        alto = 5
-
-        ctx.rectangle(self._margin_x + alto, self._margin_y + alto,
-                      SIZE * self.cantX + alto,
-                      SIZE * self.cantY + alto)
-        ctx.set_source_rgb(204.0/255.0, 204.0/255.0, 204.0/255.0)
-        ctx.fill()
-
-        ctx.set_line_width(1)
-        ctx.set_source_rgb(1, 1, 0)
-
-        for n in range(0, self.cantY):
-            ctx.move_to(self._margin_x + alto,
-                        self._margin_y + alto + n * SIZE)
-            ctx.line_to(self._margin_x + alto + SIZE * self.cantX,
-                        self._margin_y + alto + n * SIZE)
-            ctx.stroke()
-
-        for n in range(0, self.cantX):
-            ctx.move_to(self._margin_x + n * SIZE + alto,
-                        self._margin_y + alto)
-            ctx.line_to(self._margin_x + n * SIZE + alto,
-                        self.bottom_limit + alto)
-            ctx.stroke()
-
     def show_values(self, ctx, tiles):
         """
         To debug: display the value in every tile off the table matrix

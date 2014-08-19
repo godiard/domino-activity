@@ -1,3 +1,21 @@
+DONE 2014
+* Ported to gtk3
+* Reworked game use
+* Remove Help screen
+* Try place piece on click
+* Fix piece LEFT drawn over DOWN
+
+TODO 2014:
+
+* When game finish, disable pass and add buttons
+* Fix: Check end game
+* Fix Show points
+* Fix Pass button is disabled
+* Replace combo
+* Save state?
+* Implement collab
+
+
 
 HECHO:
 1er etapa: juego funcional para un usuario

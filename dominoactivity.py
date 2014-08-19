@@ -251,8 +251,14 @@ class Domino(activity.Activity):
             dominoview.SCREEN_HEIGHT)
         surf_ctx = cairo.Context(self.surface)
 
-        if (self.game.table):
-            self.game.table.paint(surf_ctx)
+        wood_surf = cairo.ImageSurface.create_from_png("images/wood.png")
+
+        back_pattern = cairo.SurfacePattern(wood_surf)
+        back_pattern.set_extend(cairo.EXTEND_REPEAT)
+        surf_ctx.rectangle(0, 0, dominoview.SCREEN_WIDTH,
+                           dominoview.SCREEN_HEIGHT)
+        surf_ctx.set_source(back_pattern)
+        surf_ctx.fill()
 
         # sort from top left, to bottom right to not overdraw visually
         for piece in sorted(self.game.placed_pieces, key=attrgetter('x', 'y')):
