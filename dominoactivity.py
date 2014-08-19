@@ -174,6 +174,8 @@ class Domino(activity.Activity):
         if end_game:
             self.add_points_by_name(self.game.processor.get_name(), win)
             self.game.table.msg_end_game(ctx, win)
+            self.btnNew.props.sensitive = False
+            self.btnPass.props.sensitive = False
         else:
             player = self.game.ui_player
             # Dibujo la pieza seleccionada
