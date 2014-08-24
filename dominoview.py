@@ -90,54 +90,6 @@ class DominoTableView():
     def get_tile_position(self, n, p):
         return self._margin_x + n * SIZE, self._margin_y + p * SIZE
 
-    def show_scores(self, ctx, score_list):
-        alto = 5
-        ctx.move_to(alto, alto)
-
-        ctx.rectangle(self._margin_x + alto, 0 + alto,
-                      SIZE * self.cantX + alto, SIZE * (self.cantY) + alto)
-        ctx.set_source_rgb(204.0 / 255.0, 204.0 / 255.0, 204.0 / 255.0)
-        ctx.fill()
-
-        ctx.set_line_width(1)
-        ctx.set_source_rgb(1, 1, 0)
-        ctx.rectangle(self._margin_x + alto, 0 + alto,
-                      SIZE * self.cantX + alto, SIZE * (self.cantY) + alto)
-        ctx.stroke()
-
-        altoRenglon = 40
-
-        stroke_r, stroke_g, stroke_b = 0, 0, 0
-        ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
-
-        ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL,
-                             cairo.FONT_WEIGHT_NORMAL)
-        ctx.set_font_size(30)
-
-        x = self._margin_x + 200
-        y = altoRenglon * 2
-        ctx.move_to(x, y)
-
-        ctx.move_to(x + 300, y)
-        ctx.show_text(_("Played"))
-        ctx.move_to(x + 450, y)
-        ctx.show_text(_("Win"))
-        ctx.move_to(x + 600, y)
-        ctx.show_text(_("Lost"))
-        y = y + altoRenglon
-        ctx.move_to(x, y)
-
-        for game_points in score_list:
-            ctx.show_text(game_points.name)
-            ctx.move_to(x + 350, y)
-            ctx.show_text(str(game_points.played))
-            ctx.move_to(x + 500, y)
-            ctx.show_text(str(game_points.win))
-            ctx.move_to(x + 650, y)
-            ctx.show_text(str(game_points.lost))
-            y = y + altoRenglon
-            ctx.move_to(x, y)
-
     def msg_player_pass(self, ctx):
         ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL,
                              cairo.FONT_WEIGHT_BOLD)

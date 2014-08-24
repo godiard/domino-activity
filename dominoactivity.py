@@ -20,13 +20,13 @@ from operator import attrgetter
 from gettext import gettext as _
 from sugar3.activity import activity
 from sugar3.graphics.toolbutton import ToolButton
+from sugar3.graphics import style
 
 from sugar3.graphics.toolbarbox import ToolbarBox
 from sugar3.activity.widgets import ActivityToolbarButton
 from sugar3.activity.widgets import StopButton
 
 import dominoview
-from dominoview import DominoTableView
 from dominogame import DominoGame
 from dominogame import DominoGamePoints
 from dominopieceprocessor import PieceProcessorMathSimple
@@ -144,7 +144,6 @@ class Domino(activity.Activity):
         self.set_canvas(self.drawingarea)
 
         self.game = None
-        self.show_scores = False
         self.surface = None
         self._start_game(None)
         self.drawingarea.queue_draw()
@@ -166,12 +165,6 @@ class Domino(activity.Activity):
                     points.lost = points.lost + 1
 
     def __draw_cb(self, drawingarea, ctx):
-
-        if (self.show_scores):
-            table = DominoTableView()
-            table.show_scores(ctx, self.list_points)
-            return
-
         ctx.set_source_surface(self.surface)
         ctx.paint()
 
@@ -250,9 +243,6 @@ class Domino(activity.Activity):
         # self.game.table.mark_tile(surf_ctx, self.game.end)
 
     def _start_game(self, button):
-        if self.show_scores:
-            self.show_scores = False
-
         # Aqui comienza el juego
         processor = self.list_processors[self.cmbTipoPiezas.get_active()]
 
@@ -276,17 +266,14 @@ class Domino(activity.Activity):
             self.btnPass.props.sensitive = True
 
     def _pass_next_player(self, button):
-        if (self.show_scores):
-            self.show_scores = False
-        else:
-            self.game.ui_player.has_passed = True
-            self.game.ui_player.end_play()
+        self.game.ui_player.has_passed = True
+        self.game.ui_player.end_play()
 
         self.drawingarea.queue_draw()
 
     def _show_scores(self, button):
-        self.show_scores = True
-        self.drawingarea.queue_draw()
+        scores_window = ScoresWindow(self, self.list_points)
+        scores_window.show_all()
 
     def __piece_placed_cb(self, game):
         self.draw_pieces()
@@ -358,10 +345,6 @@ class Domino(activity.Activity):
 
     def key_action(self, key):
         redraw = False
-        if self.show_scores:
-            self.show_scores = False
-            redraw = True
-
         if self.game.game_state == DominoGame.GAME_STATE_SELECT_PIECE:
             # Seleccionamos las distintas piezas
             if key == 'KP_Up' or key == 'KP_Right':
@@ -433,3 +416,124 @@ class Domino(activity.Activity):
             logging.error("Error leyendo puntajes %s", sys.exc_info()[0])
         finally:
             fd.close()
+
+
+class ScoresWindow(Gtk.Window):
+
+    def __init__(self, parent_xid, score_list):
+        Gtk.Window.__init__(self)
+        self._parent_window_xid = parent_xid
+
+        self.set_border_width(style.LINE_WIDTH)
+        self.set_position(Gtk.WindowPosition.CENTER_ALWAYS)
+        self.set_decorated(False)
+        self.set_resizable(False)
+        self.connect('realize', self.__realize_cb)
+
+        vbox = Gtk.VBox()
+        toolbar = BasicToolbar()
+        toolbar.stop.connect('clicked', self.__stop_clicked_cb)
+        vbox.pack_start(toolbar, False, False, 0)
+
+        text_font_size = style.FONT_SIZE * 2
+
+        scores_grid = Gtk.Grid()
+        scores_grid.set_column_spacing(style.DEFAULT_PADDING * 3)
+        scores_grid.set_row_spacing(style.DEFAULT_PADDING)
+        scores_grid.set_border_width(style.DEFAULT_SPACING)
+        row = 0
+
+        name = Gtk.Label()
+        name.set_markup('<span font="%d" color="white">%s</span>' %
+                        (text_font_size, _('Games')))
+        name.set_halign(Gtk.Align.START)
+        scores_grid.attach(name, 0, row, 1, 1)
+
+        played = Gtk.Label()
+        played.set_markup('<span font="%d" color="white">%s</span>' %
+                          (text_font_size, _('Played')))
+        played.set_halign(Gtk.Align.CENTER)
+        played.props.margin_left = style.GRID_CELL_SIZE / 2
+        played.props.margin_right = style.GRID_CELL_SIZE / 2
+
+        scores_grid.attach(played, 1, row, 1, 1)
+
+        win = Gtk.Label()
+        win.set_markup('<span font="%d" color="white">%s</span>' %
+                       (text_font_size, _('Won')))
+        win.set_halign(Gtk.Align.CENTER)
+        win.props.margin_left = style.GRID_CELL_SIZE / 2
+        win.props.margin_right = style.GRID_CELL_SIZE / 2
+        scores_grid.attach(win, 2, row, 1, 1)
+
+        lost = Gtk.Label()
+        lost.set_markup('<span font="%d" color="white">%s</span>' %
+                        (text_font_size, _('Lost')))
+        lost.set_halign(Gtk.Align.CENTER)
+        lost.props.margin_left = style.GRID_CELL_SIZE / 2
+        lost.props.margin_right = style.GRID_CELL_SIZE / 2
+        scores_grid.attach(lost, 3, row, 1, 1)
+
+        row += 1
+
+        for game_points in score_list:
+            name = Gtk.Label()
+            name.set_markup('<span font="%d" color="white">%s</span>' %
+                            (text_font_size, game_points.name))
+            name.set_halign(Gtk.Align.START)
+            scores_grid.attach(name, 0, row, 1, 1)
+
+            played = Gtk.Label()
+            played.set_markup('<span font="%d" color="white">%s</span>' %
+                              (text_font_size, str(game_points.played)))
+            played.set_halign(Gtk.Align.END)
+            scores_grid.attach(played, 1, row, 1, 1)
+
+            win = Gtk.Label()
+            win.set_markup('<span font="%d" color="white">%s</span>' %
+                           (text_font_size, str(game_points.win)))
+            win.set_halign(Gtk.Align.END)
+            scores_grid.attach(win, 2, row, 1, 1)
+
+            lost = Gtk.Label()
+            lost.set_markup('<span font="%d" color="white">%s</span>' %
+                            (text_font_size, str(game_points.lost)))
+            lost.set_halign(Gtk.Align.END)
+            scores_grid.attach(lost, 3, row, 1, 1)
+
+            row += 1
+
+        vbox.pack_start(scores_grid, False, False, 0)
+
+        self.add(vbox)
+
+        self.modify_bg(Gtk.StateType.NORMAL,
+                       style.COLOR_TOOLBAR_GREY.get_gdk_color())
+
+        self.show_all()
+
+    def __stop_clicked_cb(self, button):
+        self.destroy()
+
+    def __realize_cb(self, widget):
+        self.get_window().set_type_hint(Gdk.WindowTypeHint.DIALOG)
+        self.get_window().set_decorations(Gdk.WMDecoration.BORDER)
+        self.get_window().set_transient_for(self._parent_window_xid)
+
+
+class BasicToolbar(Gtk.Toolbar):
+
+    def __init__(self):
+        GObject.GObject.__init__(self)
+        self.modify_bg(Gtk.StateType.NORMAL,
+                       style.COLOR_BLACK.get_gdk_color())
+
+        self.separator = Gtk.SeparatorToolItem()
+        self.separator.props.draw = False
+        self.separator.set_expand(True)
+        self.insert(self.separator, -1)
+
+        self.stop = ToolButton(icon_name='dialog-cancel')
+        self.stop.set_tooltip(_('Cancel'))
+        self.insert(self.stop, -1)
+        self.stop.show()
