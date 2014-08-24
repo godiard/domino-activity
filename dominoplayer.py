@@ -168,6 +168,8 @@ class SimpleAutoPlayer(DominoPlayer):
         self.pieces_y_position = self.game.table.top_player_position
 
     def play(self):
+        if self.game.is_finished():
+            return
         # "Jugando automatico"
         if self.game.start is None:
             # si no hay ninguna pieza en el tablero ponemos la primera

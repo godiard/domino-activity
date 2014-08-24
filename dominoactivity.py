@@ -175,10 +175,8 @@ class Domino(activity.Activity):
         ctx.set_source_surface(self.surface)
         ctx.paint()
 
-        # test end game (se puede poner en otro metodo)
-        end_game, win = self.check_game_end()
-
-        if end_game:
+        if self.game.is_finished():
+            win = (self.game.winner == self.game.ui_player)
             self.add_points_by_name(self.game.processor.get_name(), win)
             self.game.table.msg_end_game(ctx, win)
             self.btnNew.props.sensitive = False
@@ -188,53 +186,10 @@ class Domino(activity.Activity):
             # Dibujo la pieza seleccionada
             player.get_pieces()[player.order_piece_selected].draw(ctx, True)
 
-    def check_game_end(self):
-        end_game = False
-        win = False
-
-        player = self.game.ui_player
-
-        if len(player.get_pieces()) == 0:
-            return True, True
-
-        if len(self.game.players[0].get_pieces()) == 0:
-            return True, False
-
-        for player in self.game.players:
-            # dibujo las piezas del jugador
-            pieces = player.get_pieces()
-            if len(pieces) == 0:
-                end_game = True
-                if self.game.ui_player == player:
-                    win = True
-
-        # Chequeo si todos los jugadores pasaron
-
-        all_has_passed = True
-        for player in self.game.players:
-            if (not player.has_passed):
-                all_has_passed = False
-
-        # si todos pasaron veo quien tiene menos fichas
-        if all_has_passed:
-            min_cant_pieces = 100
-            player_with_minus_pieces = None
-            for player in self.game.players:
-                if len(player.get_pieces()) < min_cant_pieces:
-                    min_cant_pieces = len(player.get_pieces())
-                    player_with_minus_pieces = player
-
-            end_game = True
-
-            # no estoy manejando un empate
-            # (ambos jugadores con la misma cantidad de piezas)
-
-            if player_with_minus_pieces == player:
-                win = True
-
-        return end_game, win
-
     def __event_cb(self, widget, event):
+        if self.game.is_finished():
+            return
+
         if event.type in (Gdk.EventType.TOUCH_BEGIN,
                           Gdk.EventType.BUTTON_PRESS):
             x = int(event.get_coords()[1])
@@ -355,7 +310,10 @@ class Domino(activity.Activity):
         self.pipeline.set_state(Gst.State.NULL)
 
     def __player_ended_cb(self, game):
-        GObject.timeout_add_seconds(2, game.start_next_player)
+        if not self.game.is_finished():
+            GObject.timeout_add_seconds(2, game.start_next_player)
+        else:
+            self.drawingarea.queue_draw()
 
     def on_keypress(self, widget, event):
         key = Gdk.keyval_name(event.keyval)

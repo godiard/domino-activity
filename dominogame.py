@@ -51,13 +51,9 @@ class DominoGame(GObject.GObject):
         self.end = None
 
         self.processor = processor
+        self.winner = None
 
     def next_player(self, num_player):
-        logging.debug('START n %s p %s direction %s value %s', self.start.n,
-                      self.start.p, self.start.direction, self.start.value)
-        logging.debug('END n %s p %s direction %s value %s', self.end.n,
-                      self.end.p, self.end.direction, self.end.value)
-
         if num_player >= len(self.players) - 1:
             return self.players[0]
         else:
@@ -65,11 +61,59 @@ class DominoGame(GObject.GObject):
 
     def player_ended(self, num_player):
         self._actual_player = num_player
+        player = self.players[num_player]
+        end_game, win = self._verify_end_of_game(player)
+        if end_game:
+            self.game_state = DominoGame.GAME_STATE_FINISH_GAME
+            if win:
+                self.winner = player
+            else:
+                self.winner = self.next_player(num_player)
         self.emit('player-ended')
+
+    def _verify_end_of_game(self, player):
+        end_game = False
+        win = False
+
+        if len(player.get_pieces()) == 0:
+            return True, True
+
+        # Chequeo si todos los jugadores pasaron
+
+        all_has_passed = True
+        for player in self.players:
+            if not player.has_passed:
+                all_has_passed = False
+        logging.error('all_has_passed %s', all_has_passed)
+        # si todos pasaron veo quien tiene menos fichas
+        if all_has_passed:
+            if len(self.players[0].get_pieces()) == \
+                    len(self.players[1].get_pieces()):
+                # both player have same number of pieces
+                # win second player
+                logging.error('both player have same number of pieces')
+                win = player != self.players[0]
+            else:
+                min_cant_pieces = 100
+                player_with_minus_pieces = None
+                for p in self.players:
+                    if len(p.get_pieces()) < min_cant_pieces:
+                        min_cant_pieces = len(p.get_pieces())
+                        player_with_minus_pieces = p
+
+                if player_with_minus_pieces == player:
+                    win = True
+
+            end_game = True
+
+        return end_game, win
 
     def start_next_player(self):
         self.next_player(self._actual_player).play()
         return False
+
+    def is_finished(self):
+        return self.game_state == DominoGame.GAME_STATE_FINISH_GAME
 
     # Posiciona una pieza en el tablero
     def put_piece(self, player, piece, n, p):
