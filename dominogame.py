@@ -76,6 +76,9 @@ class DominoGame(GObject.GObject):
         return self._actual_player == 0 and \
             self.players[0].has_passed
 
+    def player_automatic_playing(self):
+        return self._actual_player == 0
+
     def _verify_end_of_game(self, player):
         end_game = False
         win = False

@@ -260,11 +260,9 @@ class Domino(activity.Activity):
         self.game.connect('piece-placed', self.__piece_placed_cb)
         self.game.connect('player-ended', self.__player_ended_cb)
 
-        self.game.btnPass = self.btnPass
-        self.game.btnNew = self.btnNew
         # Al principio se puede pedir pero no pasar
-        self.game.btnNew.props.sensitive = True
-        self.game.btnPass.props.sensitive = False
+        self.btnNew.props.sensitive = True
+        self.btnPass.props.sensitive = False
 
         self.game.start_game(2)
         self.draw_pieces()
@@ -274,8 +272,8 @@ class Domino(activity.Activity):
         if self.game.request_one_piece(self.game.ui_player):
             self.draw_pieces()
         else:
-            self.game.btnNew.props.sensitive = False
-            self.game.btnPass.props.sensitive = True
+            self.btnNew.props.sensitive = False
+            self.btnPass.props.sensitive = True
 
     def _pass_next_player(self, button):
         if (self.show_scores):
@@ -316,6 +314,19 @@ class Domino(activity.Activity):
     def __player_ended_cb(self, game):
         self.draw_pieces()
         self.drawingarea.queue_draw()
+
+        if len(self.game.pieces) > 0:
+            # si hay piezas puede pedir pero no pasar
+            self.btnNew.props.sensitive = True
+            self.btnPass.props.sensitive = False
+        else:
+            # si no hay piezas no puede pedir pero si pasar
+            self.btnNew.props.sensitive = False
+            self.btnPass.props.sensitive = True
+
+        if not self.game.player_automatic_playing():
+            self.btnNew.props.sensitive = False
+            self.btnPass.props.sensitive = False
 
         if not self.game.is_finished():
             GObject.timeout_add_seconds(2, game.start_next_player)

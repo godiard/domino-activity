@@ -42,20 +42,8 @@ class DominoPlayer:
         if self == self.game.ui_player:
             # "Abilitando botones"
             self.game.game_state = self.game.GAME_STATE_SELECT_PIECE
-            if len(self.game.pieces) > 0:
-                # si hay piezas puede pedir pero no pasar
-                self.game.btnNew.props.sensitive = True
-                self.game.btnPass.props.sensitive = False
-            else:
-                # si no hay piezas no puede pedir pero si pasar
-                self.game.btnNew.props.sensitive = False
-                self.game.btnPass.props.sensitive = True
 
     def end_play(self):
-        if self == self.game.ui_player:
-            # "Deshabilitando botones"
-            self.game.btnPass.props.sensitive = False
-            self.game.btnNew.props.sensitive = False
         # "End player",self.number
         self.playing = False
         self.game.player_ended(self.number)
