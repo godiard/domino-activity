@@ -1,4 +1,3 @@
-import logging
 from gettext import gettext as _
 
 from gi.repository import GObject
@@ -73,8 +72,8 @@ class DominoPlayer:
 
     def test_good_position(self, tile, piece):
         n, p = tile.n, tile.p
-        logging.error('tile value %s direction %s piece a %s piece b %s',
-                      tile.value, tile.direction, piece.a, piece.b)
+        # logging.error('tile value %s direction %s piece a %s piece b %s',
+        #               tile.value, tile.direction, piece.a, piece.b)
         # check using the tile direction if the next 3 spaces are free
         # (2 for the piece, and 1 more)
         ok = True
@@ -86,21 +85,21 @@ class DominoPlayer:
                 break
 
         if ok:
-            logging.error('3 spaces free')
+            # logging.error('3 spaces free')
             # define piece position
             # substract one to n, p. (we added 3 to have one more free
             n = n - tile.direction[0]
             p = p - tile.direction[1]
-            logging.error('piece position n %s, p %s', n, p)
+            # logging.error('piece position n %s, p %s', n, p)
             # get the minimal between the original tile + 1 and
             # the final n, p values calculated
             ori_n = tile.n + tile.direction[0]
             ori_p = tile.p + tile.direction[1]
             min_n, min_p = min(n, ori_n), min(p, ori_p)
-            logging.error('piece position n %s, p %s', min_n, min_p)
+            # logging.error('piece position n %s, p %s', min_n, min_p)
 
-            logging.error('tile.value %s piece a %s b %s direction %s',
-                          tile.value, piece.a, piece.b, tile.direction)
+            # logging.error('tile.value %s piece a %s b %s direction %s',
+            #               tile.value, piece.a, piece.b, tile.direction)
             # define piece orientation
             if tile.value == piece.b:
                 if tile.direction in (Tile.RIGHT, Tile.DOWN):
@@ -111,8 +110,8 @@ class DominoPlayer:
                     piece.reversed = True
                 new_value = piece.b
             piece.vertical = tile.direction in (Tile.DOWN, Tile.UP)
-            logging.error('test_good_position vertical %s reversed %s',
-                          piece.vertical, piece.reversed)
+            # logging.error('test_good_position vertical %s reversed %s',
+            #               piece.vertical, piece.reversed)
             return new_value, tile.direction, piece, min_n, min_p
         else:
             # rotate the tile direction
