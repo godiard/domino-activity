@@ -60,7 +60,9 @@ class DominoTableView():
         self._margin_x = int((SCREEN_WIDTH - SIZE * self.cantX) / 2)
         self._margin_y = SIZE * 2
 
-        self.bottom_limit = self._margin_y + SIZE * self.cantY
+        self.top_player_position = SIZE / 2
+        self.bottom_player_position = SCREEN_HEIGHT - SIZE * 2.5
+
         print "Table cantX", self.cantX, "cantY", self.cantY
 
     def show_values(self, ctx, tiles):

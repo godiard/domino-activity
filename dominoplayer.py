@@ -22,7 +22,7 @@ class DominoPlayer:
         # se usa para saber si este usuario paso la ultima vuelta
         self.has_passed = False
         # where are displayed the pieces for this player
-        self.pieces_y_position = self.game.table.bottom_limit
+        self.pieces_y_position = self.game.table.bottom_player_position
 
     def set_pieces(self, pieces):
         self._pieces = pieces
@@ -165,7 +165,7 @@ class SimpleAutoPlayer(DominoPlayer):
 
     def __init__(self, game, number):
         DominoPlayer.__init__(self, game, number)
-        self.pieces_y_position = 0
+        self.pieces_y_position = self.game.table.top_player_position
 
     def play(self):
         # "Jugando automatico"
