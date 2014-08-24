@@ -25,20 +25,25 @@
    id="rect2208"
    width="25.102291"
    height="40.128311"
+   ry="2.2754195"
    x="10.694989"
-   y="2.8990984" /><path
-   style="fill:&fill_color;;fill-opacity:1;stroke:&stroke_color;;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.94117647"
+   y="2.8990984" />
+
+<path style="stroke:&stroke_color;;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;"
+     d="m 11.851479,22.96054 22.789311,0.0054"
+     id="line" />
+
+<g style="fill:&stroke_color;;fill-opacity:1;stroke:&stroke_color;;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.94117647">
+<path
    id="path2210"
    d="M 18.73833 9.2630596 A 1.1490486 0.9722718 0 1 1  16.440233,9.2630596 A 1.1490486 0.9722718 0 1 1  18.73833 9.2630596 z"
-   transform="matrix(0.7722429,0,0,0.9126507,9.6629373,24.276228)" /><path
-   style="fill:&fill_color;;fill-rule:evenodd;stroke:&stroke_color;;stroke-width:1.01488268px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-   d="M 11.851479,22.96054 L 34.64079,22.965968"
-   id="path3188" /><path
-   style="fill:&fill_color;;fill-opacity:1;stroke:&stroke_color;;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.94117647"
+   transform="matrix(0.7722429,0,0,0.9126507,9.6629373,24.276228)" />
+<path
    id="path3192"
    d="M 18.73833 9.2630596 A 1.1490486 0.9722718 0 1 1  16.440233,9.2630596 A 1.1490486 0.9722718 0 1 1  18.73833 9.2630596 z"
    transform="matrix(0.7722429,0,0,0.9126507,3.9176947,0.8975099)" /><path
-   style="fill:&fill_color;;fill-opacity:1;stroke:&stroke_color;;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.94117647"
    id="path3194"
    d="M 18.73833 9.2630596 A 1.1490486 0.9722718 0 1 1  16.440233,9.2630596 A 1.1490486 0.9722718 0 1 1  18.73833 9.2630596 z"
-   transform="matrix(0.7722429,0,0,0.9126507,15.584956,9.4711795)" /></svg>
+   transform="matrix(0.7722429,0,0,0.9126507,15.584956,9.4711795)" />
+</g>
+</svg>

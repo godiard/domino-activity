@@ -86,7 +86,7 @@ class Domino(activity.Activity):
         cmbItem.show()
         self.cmbTipoPiezas.set_active(0)
 
-        self.btnStart = ToolButton('dialog-ok')
+        self.btnStart = ToolButton('domino-new')
         self.btnStart.connect('clicked', self._start_game)
         self.btnStart.set_tooltip(_('Start'))
         toolbar_box.toolbar.insert(self.btnStart, -1)
