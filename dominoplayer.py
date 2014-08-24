@@ -1,6 +1,8 @@
 import logging
 from gettext import gettext as _
 
+from gi.repository import GObject
+
 from dominoview import Tile
 from dominopiece import DominoPiece
 
@@ -188,27 +190,19 @@ class SimpleAutoPlayer(DominoPlayer):
             # "automatica siguiente"
             # buscamos si tenemos alguna ficha que corresponda
             # en el comienzo
-            ok = self.check_put_piece()
-
-            if not ok:
+            if not self.check_put_piece():
                 # pido una hasta que sea valida o no hayan mas disponibles
                 # si no encontramos pedimos hasta que alguna sirva
-                while not ok:
-                    # "Pido pieza"
-                    pieces = self.game.request_one_piece()
-                    if len(pieces) > 0:
-                        piece = pieces[0]
-                        piece.player = self
-                        self.get_pieces().append(piece)
-                        ok = self.check_put_piece()
-                    else:
-                        ok = True  # No hay mas piezas
-                        self.has_passed = True
-            if not ok:
-                self.has_passed = True
+                # "Pido pieza"
+                if self.game.request_one_piece(self):
+                    GObject.timeout_add_seconds(1, self.play)
+                    return
+                else:
+                    self.has_passed = True
 
         # juega el siguiente jugador
         self.end_play()
+        return False
 
     def check_put_piece(self):
         for tile in (self.game.start, self.game.end):

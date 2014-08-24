@@ -95,9 +95,17 @@ class DominoGame(GObject.GObject):
         player.has_passed = False
         self.emit('piece-placed')
 
-    def request_one_piece(self):
-        self.emit('piece-placed')
-        return self.take_pieces(1)
+    def request_one_piece(self, player):
+        pieces = self.take_pieces(1)
+        if len(pieces) > 0:
+            piece = pieces[0]
+            piece.player = player
+            piece.state = DominoPiece.PIECE_PLAYER
+            player.get_pieces().append(piece)
+            self.emit('piece-placed')
+            return True
+        else:
+            return False
 
     def test_free_position(self, n, p):
         logging.debug('test_free_position %s %s', n, p)

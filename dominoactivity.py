@@ -29,7 +29,6 @@ import dominoview
 from dominoview import DominoTableView
 from dominogame import DominoGame
 from dominogame import DominoGamePoints
-from dominopiece import DominoPiece
 from dominopieceprocessor import PieceProcessorMathSimple
 from dominopieceprocessor import PieceProcessorProductTable
 from dominopieceprocessor import PieceProcessorPoints
@@ -313,13 +312,7 @@ class Domino(activity.Activity):
         self.drawingarea.queue_draw()
 
     def _add_piece(self, button):
-        pieces = self.game.request_one_piece()
-        if (len(pieces) > 0):
-            piece = pieces[0]
-            self.game.ui_player.get_pieces().append(piece)
-            # esto no es mejor hay que hacerlo en la creacion?
-            piece.player = self.game.ui_player
-            piece.state = DominoPiece.PIECE_PLAYER
+        if self.game.request_one_piece(self.game.ui_player):
             self.draw_pieces()
         else:
             self.game.btnNew.props.sensitive = False

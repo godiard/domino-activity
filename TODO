@@ -5,6 +5,11 @@ DONE 2014
 * Try place piece on click
 * Fix piece LEFT drawn over DOWN
 
+---------------
+* Add margin at bottom and top of players pieces
+* Improve icons
+* play sound
+
 TODO 2014:
 
 * When game finish, disable pass and add buttons
