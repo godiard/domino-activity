@@ -21,6 +21,7 @@ class DominoGame(GObject.GObject):
 
     __gsignals__ = {
         'piece-placed': (GObject.SignalFlags.RUN_FIRST, None, []),
+        'player-ended': (GObject.SignalFlags.RUN_FIRST, None, []),
     }
 
     # estados del juego
@@ -61,6 +62,14 @@ class DominoGame(GObject.GObject):
             return self.players[0]
         else:
             return self.players[num_player + 1]
+
+    def player_ended(self, num_player):
+        self._actual_player = num_player
+        self.emit('player-ended')
+
+    def start_next_player(self):
+        self.next_player(self._actual_player).play()
+        return False
 
     # Posiciona una pieza en el tablero
     def put_piece(self, player, piece, n, p):

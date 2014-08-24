@@ -57,8 +57,7 @@ class DominoPlayer:
             self.game.btnNew.props.sensitive = False
         # "End player",self.number
         self.playing = False
-
-        self.game.next_player(self.number).play()
+        self.game.player_ended(self.number)
 
     def remove_piece(self, piece):
         cantPieces = len(self._pieces)
@@ -150,7 +149,6 @@ class DominoPlayer:
         else:
             return False
 
-        self.game.show_pieces_player(self)
         return True
 
 
@@ -185,7 +183,6 @@ class SimpleAutoPlayer(DominoPlayer):
             endTile.value = piece.b
             endTile.direction = Tile.RIGHT
             self.game.end = endTile
-            self.game.show_pieces_player(self)
 
         else:
             # "automatica siguiente"

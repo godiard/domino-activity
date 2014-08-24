@@ -250,9 +250,6 @@ class Domino(activity.Activity):
 
                         if player.place_piece(piece):
                             player.end_play()
-                            self.draw_pieces()
-
-                        self.drawingarea.queue_draw()
                     i += 1
 
     def draw_pieces(self):
@@ -276,6 +273,7 @@ class Domino(activity.Activity):
                 piece.draw(surf_ctx, False)
 
         for player in self.game.players:
+            self.game.show_pieces_player(player)
             pieces = player.get_pieces()
             # the first player have the pieces flipped
             flipped = player == self.game.players[0]
@@ -302,6 +300,7 @@ class Domino(activity.Activity):
 
         self.game = DominoGame(processor)
         self.game.connect('piece-placed', self.__piece_placed_cb)
+        self.game.connect('player-ended', self.__player_ended_cb)
 
         self.game.btnPass = self.btnPass
         self.game.btnNew = self.btnNew
@@ -310,7 +309,6 @@ class Domino(activity.Activity):
         self.game.btnPass.props.sensitive = False
 
         self.game.start_game(2)
-        self.game.show_pieces_player(self.game.ui_player)
         self.draw_pieces()
         self.drawingarea.queue_draw()
 
@@ -322,7 +320,6 @@ class Domino(activity.Activity):
             # esto no es mejor hay que hacerlo en la creacion?
             piece.player = self.game.ui_player
             piece.state = DominoPiece.PIECE_PLAYER
-            self.game.show_pieces_player(self.game.ui_player)
             self.draw_pieces()
         else:
             self.game.btnNew.props.sensitive = False
@@ -342,8 +339,9 @@ class Domino(activity.Activity):
         self.drawingarea.queue_draw()
 
     def __piece_placed_cb(self, game):
+        self.draw_pieces()
         self.drawingarea.queue_draw()
-        self.tick()
+        GObject.idle_add(self.tick)
 
     def tick(self):
         if self.pipeline is None:
@@ -362,6 +360,9 @@ class Domino(activity.Activity):
 
     def __on_eos_message(self, bus, msg):
         self.pipeline.set_state(Gst.State.NULL)
+
+    def __player_ended_cb(self, game):
+        GObject.timeout_add_seconds(2, game.start_next_player)
 
     def on_keypress(self, widget, event):
         key = Gdk.keyval_name(event.keyval)
