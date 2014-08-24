@@ -240,6 +240,10 @@ class Domino(activity.Activity):
                             or (m != self.game.ui_player.order_piece_selected):
                         piece.draw(surf_ctx, False, flipped)
 
+        # if the automatic player passed, show  message
+        if self.game.player_automatic_passed():
+            self.game.table.msg_player_pass(surf_ctx)
+
         # to debug
         # self.game.table.show_values(surf_ctx, self.game.values)
         # self.game.table.mark_tile(surf_ctx, self.game.start)
@@ -310,10 +314,11 @@ class Domino(activity.Activity):
         self.pipeline.set_state(Gst.State.NULL)
 
     def __player_ended_cb(self, game):
+        self.draw_pieces()
+        self.drawingarea.queue_draw()
+
         if not self.game.is_finished():
             GObject.timeout_add_seconds(2, game.start_next_player)
-        else:
-            self.drawingarea.queue_draw()
 
     def on_keypress(self, widget, event):
         key = Gdk.keyval_name(event.keyval)

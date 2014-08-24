@@ -138,6 +138,20 @@ class DominoTableView():
             y = y + altoRenglon
             ctx.move_to(x, y)
 
+    def msg_player_pass(self, ctx):
+        ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL,
+                             cairo.FONT_WEIGHT_BOLD)
+        ctx.set_font_size(30)
+        text = _("Player pass, your turn...")
+        x_bearing, y_bearing, width, height, x_advance, y_advance = \
+            ctx.text_extents(text)
+        x = (SCREEN_WIDTH - width) / 2
+        y = SIZE * 2.5
+        ctx.move_to(x, y)
+        ctx.text_path(text)
+        ctx.set_source_rgb(0, 0, 0)
+        ctx.fill()
+
     def msg_end_game(self, ctx, win):
         ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL,
                              cairo.FONT_WEIGHT_BOLD)

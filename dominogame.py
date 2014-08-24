@@ -52,6 +52,7 @@ class DominoGame(GObject.GObject):
 
         self.processor = processor
         self.winner = None
+        self._actual_player = 0
 
     def next_player(self, num_player):
         if num_player >= len(self.players) - 1:
@@ -70,6 +71,10 @@ class DominoGame(GObject.GObject):
             else:
                 self.winner = self.next_player(num_player)
         self.emit('player-ended')
+
+    def player_automatic_passed(self):
+        return self._actual_player == 0 and \
+            self.players[0].has_passed
 
     def _verify_end_of_game(self, player):
         end_game = False
@@ -152,16 +157,16 @@ class DominoGame(GObject.GObject):
             return False
 
     def test_free_position(self, n, p):
-        logging.debug('test_free_position %s %s', n, p)
+        # logging.debug('test_free_position %s %s', n, p)
         if (n < 0) or (p < 0) or (n > self.cantX) or (p > self.cantY):
             # Out of limits
-            logging.debug('Out of limits cantX %s catY %s',
-                          self.cantX, self.cantY)
+            # logging.debug('Out of limits cantX %s catY %s',
+            #               self.cantX, self.cantY)
             return False
         try:
             if self.values[n][p].value != -1:
                 # N,P position have a piece
-                logging.debug('Tile busy n %s p %s', n, p)
+                # logging.debug('Tile busy n %s p %s', n, p)
                 return False
         except IndexError:
             return False
@@ -213,6 +218,7 @@ class DominoGame(GObject.GObject):
         self.ui_player = self.players[1]
         self.ui_player.color = profile.get_color()
         self.ui_player.name = profile.get_nick_name()
+        self._actual_player = 0
 
     def show_pieces_player(self, player):
         pieces = player.get_pieces()
