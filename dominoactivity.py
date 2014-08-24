@@ -6,8 +6,12 @@
 
 from gi.repository import Gtk
 from gi.repository import Gdk
+from gi.repository import GObject
+from gi.repository import Gst
+
 import cairo
 import sys
+import os
 
 import json
 import logging
@@ -30,6 +34,9 @@ from dominopieceprocessor import PieceProcessorMathSimple
 from dominopieceprocessor import PieceProcessorProductTable
 from dominopieceprocessor import PieceProcessorPoints
 from dominopieceprocessor import PieceProcessorFractions
+
+GObject.threads_init()
+Gst.init(None)
 
 
 class Domino(activity.Activity):
@@ -142,6 +149,7 @@ class Domino(activity.Activity):
         self.surface = None
         self._start_game(None)
         self.drawingarea.queue_draw()
+        self.pipeline = None
 
     def get_points_by_name(self, game_processor_name):
         for points in self.list_points:
@@ -292,7 +300,8 @@ class Domino(activity.Activity):
         # Aqui comienza el juego
         processor = self.list_processors[self.cmbTipoPiezas.get_active()]
 
-        self.game = DominoGame(processor, self.drawingarea)
+        self.game = DominoGame(processor)
+        self.game.connect('piece-placed', self.__piece_placed_cb)
 
         self.game.btnPass = self.btnPass
         self.game.btnNew = self.btnNew
@@ -306,7 +315,7 @@ class Domino(activity.Activity):
         self.drawingarea.queue_draw()
 
     def _add_piece(self, button):
-        pieces = self.game.take_pieces(1)
+        pieces = self.game.request_one_piece()
         if (len(pieces) > 0):
             piece = pieces[0]
             self.game.ui_player.get_pieces().append(piece)
@@ -315,7 +324,6 @@ class Domino(activity.Activity):
             piece.state = DominoPiece.PIECE_PLAYER
             self.game.show_pieces_player(self.game.ui_player)
             self.draw_pieces()
-            self.drawingarea.queue_draw()
         else:
             self.game.btnNew.props.sensitive = False
             self.game.btnPass.props.sensitive = True
@@ -332,6 +340,28 @@ class Domino(activity.Activity):
     def _show_scores(self, button):
         self.show_scores = True
         self.drawingarea.queue_draw()
+
+    def __piece_placed_cb(self, game):
+        self.drawingarea.queue_draw()
+        self.tick()
+
+    def tick(self):
+        if self.pipeline is None:
+            self.pipeline = Gst.Pipeline()
+            self.player = Gst.ElementFactory.make('playbin', None)
+            self.pipeline.add(self.player)
+            sound_path = os.path.join(activity.get_bundle_path(), 'sounds',
+                                      'tick.wav')
+            self.player.set_property('uri', 'file://%s' % sound_path)
+            self.bus = self.pipeline.get_bus()
+            self.bus.add_signal_watch()
+
+            self.bus.connect('message::eos', self.__on_eos_message)
+
+        self.pipeline.set_state(Gst.State.PLAYING)
+
+    def __on_eos_message(self, bus, msg):
+        self.pipeline.set_state(Gst.State.NULL)
 
     def on_keypress(self, widget, event):
         key = Gdk.keyval_name(event.keyval)

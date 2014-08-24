@@ -1,6 +1,8 @@
 import random
 import logging
 
+from gi.repository import GObject
+
 from sugar3 import profile
 
 from dominopiece import DominoPiece
@@ -11,11 +13,15 @@ from dominoplayer import DominoPlayer
 from dominoplayer import SimpleAutoPlayer
 
 
-class DominoGame:
+class DominoGame(GObject.GObject):
 
     """
     Esta es la clase principal del juego
     """
+
+    __gsignals__ = {
+        'piece-placed': (GObject.SignalFlags.RUN_FIRST, None, []),
+    }
 
     # estados del juego
     GAME_STATE_SELECT_PIECE = 1
@@ -23,7 +29,8 @@ class DominoGame:
     GAME_STATE_ANOTHER_USER = 3
     GAME_STATE_FINISH_GAME = 4
 
-    def __init__(self, processor, drawingarea):
+    def __init__(self, processor):
+        GObject.GObject.__init__(self)
         self.ui_player = None
         self.table = DominoTableView()
         self.pieces = []
@@ -43,7 +50,6 @@ class DominoGame:
         self.end = None
 
         self.processor = processor
-        self.drawingarea = drawingarea
 
     def next_player(self, num_player):
         logging.debug('START n %s p %s direction %s value %s', self.start.n,
@@ -78,7 +84,11 @@ class DominoGame:
         self.placed_pieces.append(piece)
         player.order_piece_selected = 0
         player.has_passed = False
-        self.drawingarea.queue_draw()
+        self.emit('piece-placed')
+
+    def request_one_piece(self):
+        self.emit('piece-placed')
+        return self.take_pieces(1)
 
     def test_free_position(self, n, p):
         logging.debug('test_free_position %s %s', n, p)

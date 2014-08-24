@@ -198,7 +198,7 @@ class SimpleAutoPlayer(DominoPlayer):
                 # si no encontramos pedimos hasta que alguna sirva
                 while not ok:
                     # "Pido pieza"
-                    pieces = self.game.take_pieces(1)
+                    pieces = self.game.request_one_piece()
                     if len(pieces) > 0:
                         piece = pieces[0]
                         piece.player = self
