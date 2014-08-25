@@ -64,7 +64,7 @@ class PieceProcessorProductTable:
         self.product = n
 
     def get_name(self):
-        return _("Table of") + " " + str(self.product)
+        return _("%s Times Tables") % str(self.product)
 
     """
     Este es un procesor para las tablas de multiplicar
@@ -253,7 +253,7 @@ class PieceProcessorPoints:
     """
 
     def get_name(self):
-        return _("Points")
+        return _("Classic")
 
     def alter_labels(self, pieces):
         pass
