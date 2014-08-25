@@ -44,6 +44,8 @@ class DominoPiece:
 
     def draw(self, ctx, selected, fipped=False):
         SIZE = dominoview.SIZE
+        if fipped:
+            SIZE = SIZE * 0.75
 
         ctx.save()
         ctx.translate(self.x, self.y)

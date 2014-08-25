@@ -62,10 +62,9 @@ class DominoPlayer:
         n, p = tile.n, tile.p
         # logging.error('tile value %s direction %s piece a %s piece b %s',
         #               tile.value, tile.direction, piece.a, piece.b)
-        # check using the tile direction if the next 3 spaces are free
-        # (2 for the piece, and 1 more)
+        # check using the tile direction if the next 2 spaces are free
         ok = True
-        for i in range(0, 3):
+        for i in range(0, 2):
             n = n + tile.direction[0]
             p = p + tile.direction[1]
             if not self.game.test_free_position(n, p):
@@ -75,9 +74,6 @@ class DominoPlayer:
         if ok:
             # logging.error('3 spaces free')
             # define piece position
-            # substract one to n, p. (we added 3 to have one more free
-            n = n - tile.direction[0]
-            p = p - tile.direction[1]
             # logging.error('piece position n %s, p %s', n, p)
             # get the minimal between the original tile + 1 and
             # the final n, p values calculated
