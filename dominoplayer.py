@@ -1,4 +1,5 @@
 from gettext import gettext as _
+import random
 
 from gi.repository import GObject
 
@@ -193,7 +194,13 @@ class SimpleAutoPlayer(DominoPlayer):
         return False
 
     def check_put_piece(self):
-        for tile in (self.game.start, self.game.end):
+        # use random to balance what end check first
+        if random.random() > .5:
+            ends = (self.game.start, self.game.end)
+        else:
+            ends = (self.game.end, self.game.start)
+
+        for tile in ends:
             # look for a piece with the value
             piece = self._get_piece_with_value(tile.value)
             if piece is not None:
