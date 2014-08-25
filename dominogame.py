@@ -32,6 +32,11 @@ class DominoGame(GObject.GObject):
 
     def __init__(self, processor):
         GObject.GObject.__init__(self)
+
+        # TO DEBUG you can set this variable on True
+        # and make the computer play against himself.
+        self.ENABLE_AUTO_MODE = False
+
         self.ui_player = None
         self.table = DominoTableView()
         self.pieces = []
@@ -211,10 +216,17 @@ class DominoGame(GObject.GObject):
         auto_player = SimpleAutoPlayer(self, 0)
         auto_player.set_pieces(self.take_pieces(7))
         self.players.append(auto_player)
-        for n in range(1, numPlayers):
-            player = DominoPlayer(self, n)
-            player.set_pieces(self.take_pieces(7))
-            self.players.append(player)
+
+        if self.ENABLE_AUTO_MODE:
+            auto_player2 = SimpleAutoPlayer(self, 1)
+            auto_player2.set_pieces(self.take_pieces(7))
+            auto_player2.pieces_y_position = self.table.bottom_player_position
+            self.players.append(auto_player2)
+        else:
+            for n in range(1, numPlayers):
+                player = DominoPlayer(self, n)
+                player.set_pieces(self.take_pieces(7))
+                self.players.append(player)
 
         # comienza a jugar el primer jugador
         self.players[0].play()

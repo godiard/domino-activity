@@ -184,7 +184,10 @@ class SimpleAutoPlayer(DominoPlayer):
                 # si no encontramos pedimos hasta que alguna sirva
                 # "Pido pieza"
                 if self.game.request_one_piece(self):
-                    GObject.timeout_add_seconds(1, self.play)
+                    if self.game.ENABLE_AUTO_MODE:
+                        GObject.timeout_add(300, self.play)
+                    else:
+                        GObject.timeout_add_seconds(1, self.play)
                     return False
                 else:
                     self.has_passed = True

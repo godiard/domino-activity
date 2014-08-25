@@ -319,7 +319,10 @@ class Domino(activity.Activity):
             self.btnPass.props.sensitive = False
 
         if not self.game.is_finished():
-            GObject.timeout_add_seconds(2, game.start_next_player)
+            if self.game.ENABLE_AUTO_MODE:
+                GObject.timeout_add(300, game.start_next_player)
+            else:
+                GObject.timeout_add_seconds(2, game.start_next_player)
 
     def on_keypress(self, widget, event):
         key = Gdk.keyval_name(event.keyval)
