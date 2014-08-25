@@ -156,7 +156,7 @@ class SimpleAutoPlayer(DominoPlayer):
 
     def play(self):
         if self.game.is_finished():
-            return
+            return False
         # "Jugando automatico"
         if self.game.start is None:
             # si no hay ninguna pieza en el tablero ponemos la primera
@@ -185,7 +185,7 @@ class SimpleAutoPlayer(DominoPlayer):
                 # "Pido pieza"
                 if self.game.request_one_piece(self):
                     GObject.timeout_add_seconds(1, self.play)
-                    return
+                    return False
                 else:
                     self.has_passed = True
 
