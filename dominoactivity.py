@@ -21,6 +21,7 @@ from gettext import gettext as _
 from sugar3.activity import activity
 from sugar3.graphics.toolbutton import ToolButton
 from sugar3.graphics import style
+from sugar3 import profile
 
 from sugar3.graphics.toolbarbox import ToolbarBox
 from sugar3.activity.widgets import ActivityToolbarButton
@@ -148,6 +149,7 @@ class Domino(activity.Activity):
         self._start_game(None)
         self.drawingarea.queue_draw()
         self.pipeline = None
+        self._last_game_type = None
 
     def get_points_by_name(self, game_processor_name):
         for points in self.list_points:
@@ -170,14 +172,18 @@ class Domino(activity.Activity):
 
         if self.game.is_finished():
             win = (self.game.winner == self.game.ui_player)
-            self.add_points_by_name(self.game.processor.get_name(), win)
             self.game.table.msg_end_game(ctx, win)
-            self.btnNew.props.sensitive = False
-            self.btnPass.props.sensitive = False
+            self._finish_game(win)
         else:
             player = self.game.ui_player
             # Dibujo la pieza seleccionada
             player.get_pieces()[player.order_piece_selected].draw(ctx, True)
+
+    def _finish_game(self, win):
+        self.add_points_by_name(self.game.processor.get_name(), win)
+        self.btnNew.props.sensitive = False
+        self.btnPass.props.sensitive = False
+        self._last_game_type = self.game.processor.get_name()
 
     def __event_cb(self, widget, event):
         if self.game.is_finished():
@@ -272,7 +278,8 @@ class Domino(activity.Activity):
         self.drawingarea.queue_draw()
 
     def _show_scores(self, button):
-        scores_window = ScoresWindow(self, self.list_points)
+        scores_window = ScoresWindow(self.get_window(), self.list_points,
+                                     self._last_game_type)
         scores_window.show_all()
 
     def __piece_placed_cb(self, game):
@@ -420,7 +427,7 @@ class Domino(activity.Activity):
 
 class ScoresWindow(Gtk.Window):
 
-    def __init__(self, parent_xid, score_list):
+    def __init__(self, parent_xid, score_list, last_game_played):
         Gtk.Window.__init__(self)
         self._parent_window_xid = parent_xid
 
@@ -481,27 +488,31 @@ class ScoresWindow(Gtk.Window):
         row += 1
 
         for game_points in score_list:
+            if game_points.name == last_game_played:
+                color = profile.get_color().get_stroke_color()
+            else:
+                color = 'white'
             name = Gtk.Label()
-            name.set_markup('<span font="%d" color="white">%s</span>' %
-                            (text_font_size, game_points.name))
+            name.set_markup('<span font="%d" color="%s">%s</span>' %
+                            (text_font_size, color, game_points.name))
             name.set_halign(Gtk.Align.START)
             scores_grid.attach(name, 0, row, 1, 1)
 
             played = Gtk.Label()
-            played.set_markup('<span font="%d" color="white">%s</span>' %
-                              (text_font_size, str(game_points.played)))
+            played.set_markup('<span font="%d" color="%s">%s</span>' %
+                              (text_font_size, color, str(game_points.played)))
             played.set_halign(Gtk.Align.END)
             scores_grid.attach(played, 1, row, 1, 1)
 
             win = Gtk.Label()
-            win.set_markup('<span font="%d" color="white">%s</span>' %
-                           (text_font_size, str(game_points.win)))
+            win.set_markup('<span font="%d" color="%s">%s</span>' %
+                           (text_font_size, color, str(game_points.win)))
             win.set_halign(Gtk.Align.END)
             scores_grid.attach(win, 2, row, 1, 1)
 
             lost = Gtk.Label()
-            lost.set_markup('<span font="%d" color="white">%s</span>' %
-                            (text_font_size, str(game_points.lost)))
+            lost.set_markup('<span font="%d" color="%s">%s</span>' %
+                            (text_font_size, color, str(game_points.lost)))
             lost.set_halign(Gtk.Align.END)
             scores_grid.attach(lost, 3, row, 1, 1)
 
