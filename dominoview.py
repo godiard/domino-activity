@@ -99,7 +99,7 @@ class DominoTableView():
         x_bearing, y_bearing, width, height, x_advance, y_advance = \
             ctx.text_extents(text)
         x = (SCREEN_WIDTH - width) / 2
-        y = SIZE * 2.5
+        y = SIZE * 1.8
         ctx.move_to(x, y)
         ctx.text_path(text)
         ctx.set_source_rgb(0, 0, 0)
