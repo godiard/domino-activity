@@ -61,7 +61,7 @@ class DominoTableView():
         self._margin_y = SIZE * 2
 
         self.top_player_position = SIZE / 4
-        self.bottom_player_position = SCREEN_HEIGHT - SIZE * 2.25
+        self.bottom_player_position = SCREEN_HEIGHT - SIZE * 2.10
 
         print "Table cantX", self.cantX, "cantY", self.cantY
 
