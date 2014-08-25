@@ -55,7 +55,7 @@ class DominoTableView():
     __gtype_name__ = 'DominoTableView'
 
     def __init__(self, **kwargs):
-        self.cantX = int(SCREEN_WIDTH / SIZE) - 1
+        self.cantX = int(SCREEN_WIDTH / SIZE)
         self.cantY = int((SCREEN_HEIGHT - SIZE * 4) / SIZE)
         self._margin_x = int((SCREEN_WIDTH - SIZE * self.cantX) / 2)
         self._margin_y = SIZE * 2
