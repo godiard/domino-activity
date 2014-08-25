@@ -20,6 +20,9 @@ class PieceProcessorMathSimple:
     def get_name(self):
         return _("Simple")
 
+    def get_icon(self):
+        return 'plus'
+
     def alter_labels(self, pieces):
         for piece in pieces:
             # altero textA
@@ -65,6 +68,9 @@ class PieceProcessorProductTable:
 
     def get_name(self):
         return _("%s Times Tables") % str(self.product)
+
+    def get_icon(self):
+        return str(self.product)
 
     """
     Este es un procesor para las tablas de multiplicar
@@ -126,6 +132,9 @@ class PieceProcessorFractions:
 
     def get_name(self):
         return _("Fractions")
+
+    def get_icon(self):
+        return 'fractions'
 
     def alter_labels(self, pieces):
         for piece in pieces:
@@ -254,6 +263,9 @@ class PieceProcessorPoints:
 
     def get_name(self):
         return _("Classic")
+
+    def get_icon(self):
+        return 'classic'
 
     def alter_labels(self, pieces):
         pass

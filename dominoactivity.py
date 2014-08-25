@@ -34,6 +34,7 @@ from dominopieceprocessor import PieceProcessorMathSimple
 from dominopieceprocessor import PieceProcessorProductTable
 from dominopieceprocessor import PieceProcessorPoints
 from dominopieceprocessor import PieceProcessorFractions
+from palettebox import PaletteBox
 
 GObject.threads_init()
 Gst.init(None)
@@ -60,38 +61,33 @@ class Domino(activity.Activity):
         self.list_points = []
 
         # lista de los processors
-        self.list_processors = []
+        self._processors = {}
+        names = []
 
-        self.list_processors.append(PieceProcessorMathSimple())
-        self.list_processors.append(PieceProcessorProductTable(2))
-        self.list_processors.append(PieceProcessorProductTable(3))
-        self.list_processors.append(PieceProcessorProductTable(4))
-        self.list_processors.append(PieceProcessorProductTable(5))
-        self.list_processors.append(PieceProcessorProductTable(6))
-        self.list_processors.append(PieceProcessorProductTable(7))
-        self.list_processors.append(PieceProcessorProductTable(8))
-        self.list_processors.append(PieceProcessorProductTable(9))
-        self.list_processors.append(PieceProcessorPoints())
-        self.list_processors.append(PieceProcessorFractions())
+        proc = PieceProcessorMathSimple()
+        self._processors[proc.get_name()] = proc
+        names.append([proc.get_name(), proc.get_icon()])
+        for number in range(2, 10):
+            proc = PieceProcessorProductTable(number)
+            self._processors[proc.get_name()] = proc
+            names.append([proc.get_name(), proc.get_icon()])
+        proc = PieceProcessorPoints()
+        self._processors[proc.get_name()] = proc
+        names.append([proc.get_name(), proc.get_icon()])
+        proc = PieceProcessorFractions()
+        self._processors[proc.get_name()] = proc
+        names.append([proc.get_name(), proc.get_icon()])
 
-        # agrego combo para tipo de juego
-        cmbItem = Gtk.ToolItem()
-        self.cmbTipoPiezas = Gtk.ComboBoxText()
-
-        for processor in self.list_processors:
-            # inicializo puntajes
-            name = processor.get_name()
-            self.cmbTipoPiezas.append_text(name)
-            if self.get_points_by_name(name) is None:
+        for name in names:
+            # initialize points
+            if self.get_points_by_name(name[0]) is None:
                 game_points = DominoGamePoints()
-                game_points.name = name
+                game_points.name = name[0]
                 self.list_points.append(game_points)
 
-        cmbItem.add(self.cmbTipoPiezas)
-        toolbar_box.toolbar.insert(cmbItem, -1)
-        self.cmbTipoPiezas.show()
-        cmbItem.show()
-        self.cmbTipoPiezas.set_active(0)
+        self._type_game_box = PaletteBox(names[0], names)
+
+        toolbar_box.toolbar.insert(self._type_game_box, -1)
 
         self.btnStart = ToolButton('domino-new')
         self.btnStart.connect('clicked', self._start_game)
@@ -250,7 +246,7 @@ class Domino(activity.Activity):
 
     def _start_game(self, button):
         # Aqui comienza el juego
-        processor = self.list_processors[self.cmbTipoPiezas.get_active()]
+        processor = self._processors[self._type_game_box.get_value()[0]]
 
         self.game = DominoGame(processor)
         self.game.connect('piece-placed', self.__piece_placed_cb)
