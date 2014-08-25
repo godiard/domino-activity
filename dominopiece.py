@@ -44,20 +44,13 @@ class DominoPiece:
 
     def draw(self, ctx, selected, fipped=False):
         SIZE = dominoview.SIZE
-        # if self.vertical:
-        #   width = SIZE + SIZE/8 + 2
-        #   height = SIZE*2 + SIZE/8 + 2
-        # else:
-        #   width = SIZE*2 + SIZE/8 + 2
-        #   height = SIZE + SIZE/8 + 2
 
         ctx.save()
         ctx.translate(self.x, self.y)
         ctx.move_to(self.x, self.y)
-        # ctx.translate(1,1)
-        # ctx.move_to(1, 1)
-        r = 10
-        stroke_r, stroke_g, stroke_b = 0, 0, 0
+        ctx.set_line_width(3)
+        r = dominoview.SIZE / 3
+        stroke_r, stroke_g, stroke_b = 0.9, 0.9, 0.9
         fill_r, fill_g, fill_b = 1, 1, 1
         alpha = 1
         if self.player.color is not None:
@@ -68,40 +61,23 @@ class DominoPiece:
                 xocolor.get_fill_color(), 1.0).get_rgba()
 
         if self.vertical:
-            cairoutils.draw_round_rect(ctx, -1, -1, SIZE + 2, SIZE * 2 + 2, r)
-
-            ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
-            ctx.fill()
 
             cairoutils.draw_round_rect(ctx, 0, 0, SIZE, SIZE * 2, r)
             if selected:
                 ctx.set_source_rgb(1, 1, 204.0 / 255.0)
             else:
                 ctx.set_source_rgb(fill_r, fill_g, fill_b)
-            ctx.fill()
-
-            ctx.move_to(SIZE, 0)
-            ctx.rel_line_to((SIZE / 8), (SIZE / 8))
-            ctx.rel_line_to(0, SIZE * 2)
-            ctx.rel_line_to(-(SIZE / 8), -(SIZE / 8))
-            ctx.rel_line_to(0, -SIZE * 2)
-            ctx.close_path()
-            ctx.fill_preserve()
-            ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
-            ctx.stroke()
-
-            ctx.move_to(0, SIZE * 2)
-            ctx.rel_line_to((SIZE / 8), (SIZE / 8))
-            ctx.rel_line_to(SIZE, 0)
-            ctx.rel_line_to(- (SIZE / 8), -(SIZE / 8))
-            ctx.rel_line_to(-SIZE, 0)
-            ctx.close_path()
-            ctx.set_source_rgb(fill_r, fill_g, fill_b)
             ctx.fill_preserve()
             ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
             ctx.stroke()
 
             if not fipped:
+
+                ctx.move_to(SIZE / 5, SIZE)
+                ctx.line_to(SIZE / 5 * 4, SIZE)
+                ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
+                ctx.stroke()
+
                 if not self.reversed:
                     self._draw_label_a(ctx, 0, 0)
                     self._draw_label_b(ctx, 0, SIZE)
@@ -110,39 +86,22 @@ class DominoPiece:
                     self._draw_label_a(ctx, 0, SIZE)
 
         else:
-            cairoutils.draw_round_rect(ctx, -1, -1, SIZE * 2 + 2, SIZE + 2, r)
-            ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
-            ctx.fill()
-
             cairoutils.draw_round_rect(ctx, 0, 0, SIZE * 2, SIZE, r)
             if selected:
                 ctx.set_source_rgb(1, 1, 204.0 / 255.0)
             else:
                 ctx.set_source_rgb(fill_r, fill_g, fill_b)
-            ctx.fill()
-
-            ctx.move_to(SIZE * 2, 0)
-            ctx.rel_line_to((SIZE / 8), (SIZE / 8))
-            ctx.rel_line_to(0, SIZE)
-            ctx.rel_line_to(-(SIZE / 8), -(SIZE / 8))
-            ctx.rel_line_to(0, -SIZE)
-            ctx.close_path()
-            ctx.fill_preserve()
-            ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
-            ctx.stroke()
-
-            ctx.move_to(0, SIZE)
-            ctx.rel_line_to((SIZE / 8), (SIZE / 8))
-            ctx.rel_line_to(SIZE * 2, 0)
-            ctx.rel_line_to(-(SIZE / 8), -(SIZE / 8))
-            ctx.rel_line_to(-SIZE * 2, 0)
-            ctx.close_path()
-            ctx.set_source_rgb(fill_r, fill_g, fill_b)
             ctx.fill_preserve()
             ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
             ctx.stroke()
 
             if not fipped:
+
+                ctx.move_to(SIZE, SIZE / 5)
+                ctx.line_to(SIZE, SIZE / 5 * 4)
+                ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
+                ctx.stroke()
+
                 if not self.reversed:
                     self._draw_label_a(ctx, 0, 0)
                     self._draw_label_b(ctx, SIZE, 0)
