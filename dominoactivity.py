@@ -431,7 +431,7 @@ class ScoresWindow(Gtk.Window):
         self.connect('realize', self.__realize_cb)
 
         vbox = Gtk.VBox()
-        toolbar = BasicToolbar()
+        toolbar = BasicToolbar(_('Scoreboard'))
         toolbar.stop.connect('clicked', self.__stop_clicked_cb)
         vbox.pack_start(toolbar, False, False, 0)
 
@@ -447,6 +447,7 @@ class ScoresWindow(Gtk.Window):
         name.set_markup('<span font="%d" color="white">%s</span>' %
                         (text_font_size, _('Games')))
         name.set_halign(Gtk.Align.START)
+        name.props.margin_bottom = style.DEFAULT_PADDING * 3
         scores_grid.attach(name, 0, row, 1, 1)
 
         played = Gtk.Label()
@@ -455,6 +456,7 @@ class ScoresWindow(Gtk.Window):
         played.set_halign(Gtk.Align.CENTER)
         played.props.margin_left = style.GRID_CELL_SIZE / 2
         played.props.margin_right = style.GRID_CELL_SIZE / 2
+        played.props.margin_bottom = style.DEFAULT_PADDING * 3
 
         scores_grid.attach(played, 1, row, 1, 1)
 
@@ -464,6 +466,7 @@ class ScoresWindow(Gtk.Window):
         win.set_halign(Gtk.Align.CENTER)
         win.props.margin_left = style.GRID_CELL_SIZE / 2
         win.props.margin_right = style.GRID_CELL_SIZE / 2
+        win.props.margin_bottom = style.DEFAULT_PADDING * 3
         scores_grid.attach(win, 2, row, 1, 1)
 
         lost = Gtk.Label()
@@ -472,6 +475,7 @@ class ScoresWindow(Gtk.Window):
         lost.set_halign(Gtk.Align.CENTER)
         lost.props.margin_left = style.GRID_CELL_SIZE / 2
         lost.props.margin_right = style.GRID_CELL_SIZE / 2
+        lost.props.margin_bottom = style.DEFAULT_PADDING * 3
         scores_grid.attach(lost, 3, row, 1, 1)
 
         row += 1
@@ -523,10 +527,20 @@ class ScoresWindow(Gtk.Window):
 
 class BasicToolbar(Gtk.Toolbar):
 
-    def __init__(self):
+    def __init__(self, title):
         GObject.GObject.__init__(self)
         self.modify_bg(Gtk.StateType.NORMAL,
                        style.COLOR_BLACK.get_gdk_color())
+
+        label = Gtk.Label()
+        label.set_markup('<b>%s</b>' % title)
+        label.set_halign(Gtk.Align.START)
+        tool_item = Gtk.ToolItem()
+        tool_item.set_expand(True)
+        tool_item.add(label)
+        tool_item.show_all()
+        tool_item.props.margin_left = style.GRID_CELL_SIZE / 2
+        self.insert(tool_item, -1)
 
         self.separator = Gtk.SeparatorToolItem()
         self.separator.props.draw = False
