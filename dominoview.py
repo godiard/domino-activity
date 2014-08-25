@@ -91,6 +91,7 @@ class DominoTableView():
         return self._margin_x + n * SIZE, self._margin_y + p * SIZE
 
     def msg_player_pass(self, ctx):
+        ctx.save()
         ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL,
                              cairo.FONT_WEIGHT_BOLD)
         ctx.set_font_size(30)
@@ -103,6 +104,7 @@ class DominoTableView():
         ctx.text_path(text)
         ctx.set_source_rgb(0, 0, 0)
         ctx.fill()
+        ctx.restore()
 
     def msg_end_game(self, ctx, win):
         ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL,
