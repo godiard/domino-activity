@@ -180,6 +180,22 @@ class DominoGame(GObject.GObject):
             return False
         return True
 
+    def test_out_or_free_position(self, n, p):
+        # logging.debug('test_free_position %s %s', n, p)
+        if (n < 0) or (p < 0) or (n > self.cantX) or (p > self.cantY):
+            # Out of limits
+            # logging.debug('Out of limits cantX %s catY %s',
+            #               self.cantX, self.cantY)
+            return True
+        try:
+            if self.values[n][p].value != -1:
+                # N,P position have a piece
+                # logging.debug('Tile busy n %s p %s', n, p)
+                return False
+        except IndexError:
+            return True
+        return True
+
     def _create_domino(self):
         for n in range(0, 7):
             for p in range(n, 7):

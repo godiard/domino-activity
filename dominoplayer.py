@@ -72,6 +72,13 @@ class DominoPlayer:
                 ok = False
                 break
 
+        # check a 3 tile in the same direction
+        # can be out of the table, but can't be busy
+        n3 = n + tile.direction[0]
+        p3 = p + tile.direction[1]
+        if not self.game.test_out_or_free_position(n3, p3):
+            ok = False
+
         if ok:
             # logging.error('3 spaces free')
             # define piece position
