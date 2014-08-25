@@ -86,7 +86,7 @@ class DominoGame(GObject.GObject):
 
     def _verify_end_of_game(self, player):
         end_game = False
-        win = False
+        player_win = False
 
         if len(player.get_pieces()) == 0:
             return True, True
@@ -94,8 +94,8 @@ class DominoGame(GObject.GObject):
         # Chequeo si todos los jugadores pasaron
 
         all_has_passed = True
-        for player in self.players:
-            if not player.has_passed:
+        for p in self.players:
+            if not p.has_passed:
                 all_has_passed = False
         logging.error('all_has_passed %s', all_has_passed)
         # si todos pasaron veo quien tiene menos fichas
@@ -105,21 +105,21 @@ class DominoGame(GObject.GObject):
                 # both player have same number of pieces
                 # win second player
                 logging.error('both player have same number of pieces')
-                win = player != self.players[0]
+                player_win = player != self.players[0]
             else:
                 min_cant_pieces = 100
                 player_with_minus_pieces = None
                 for p in self.players:
                     if len(p.get_pieces()) < min_cant_pieces:
+                        logging.error('minimum')
                         min_cant_pieces = len(p.get_pieces())
                         player_with_minus_pieces = p
 
-                if player_with_minus_pieces == player:
-                    win = True
+                player_win = player_with_minus_pieces == player
 
             end_game = True
 
-        return end_game, win
+        return end_game, player_win
 
     def start_next_player(self):
         self.next_player(self._actual_player).play()
