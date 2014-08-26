@@ -207,7 +207,7 @@ class Domino(activity.Activity):
             dominoview.SCREEN_HEIGHT)
         surf_ctx = cairo.Context(self.surface)
 
-        wood_surf = cairo.ImageSurface.create_from_png("images/wood.png")
+        wood_surf = cairo.ImageSurface.create_from_png("images/wood2.png")
 
         back_pattern = cairo.SurfacePattern(wood_surf)
         back_pattern.set_extend(cairo.EXTEND_REPEAT)
