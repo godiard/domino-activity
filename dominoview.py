@@ -12,6 +12,8 @@ from gettext import gettext as _
 
 from sugar3.graphics import style
 
+import cairoutils
+
 # SIZE Es el ancho de una ficha (y la mitads del largo)
 # podemos imaginar el tablero dividido en cuadrados de lado SIZE
 SIZE = 60
@@ -110,22 +112,49 @@ class DominoTableView():
         ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL,
                              cairo.FONT_WEIGHT_BOLD)
         text = ""
+        ctx.set_font_size(40)
         if (win):
-            ctx.set_font_size(100)
-            text = _("You win!!!")
+            text = _("You win!")
+            face_filename = 'images/happy.png'
         else:
-            ctx.set_font_size(60)
-            text = _("Sorry, you lost")
+            text = _("You Lost")
+            face_filename = 'images/sad.png'
+
+        face_surf = cairo.ImageSurface.create_from_png(face_filename)
 
         x_bearing, y_bearing, width, height, x_advance, y_advance = \
             ctx.text_extents(text)
-        x = (SCREEN_WIDTH - width) / 2
-        y = (SCREEN_HEIGHT - height) / 2
-        ctx.move_to(x, y)
 
-        ctx.text_path(text)
-        ctx.set_source_rgb(0.5, 0.5, 1)
-        ctx.fill_preserve()
+        piece_height = face_surf.get_height() + height * 4
+        piece_width = piece_height * 2
+        piece_radio = piece_height / 4
+
+        # draw piece
+        ctx.save()
+        piece_x = (SCREEN_WIDTH - piece_width) / 2
+        piece_y = (SCREEN_HEIGHT - piece_height) / 2
+        cairoutils.draw_round_rect(
+            ctx, piece_x, piece_y,
+            piece_width, piece_height, piece_radio)
         ctx.set_source_rgb(0, 0, 0)
-        ctx.set_line_width(2)
+        ctx.fill_preserve()
+        ctx.set_source_rgb(1, 1, 1)
+        ctx.set_line_width(5)
         ctx.stroke()
+        ctx.restore()
+
+        # draw the face
+        ctx.save()
+        ctx.translate((SCREEN_WIDTH - face_surf.get_width()) / 2,
+                      (piece_y + height))
+        ctx.set_source_surface(face_surf)
+        ctx.paint()
+        ctx.restore()
+
+        # draw text
+        x = (SCREEN_WIDTH - width) / 2
+        y = piece_y + face_surf.get_height() + height * 3
+        ctx.move_to(x, y)
+        ctx.text_path(text)
+        ctx.set_source_rgb(1, 1, 1)
+        ctx.fill()
