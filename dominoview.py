@@ -59,15 +59,54 @@ class DominoTableView():
     def configure(self):
         self.screen_height = Gdk.Screen.height() - style.GRID_CELL_SIZE
         self.screen_width = Gdk.Screen.width()
-        self.cantX = int(self.screen_width / SIZE)
-        self.cantY = int((self.screen_height - SIZE * 4) / SIZE)
-        self._margin_x = int((self.screen_width - SIZE * self.cantX) / 2)
-        self._margin_y = SIZE * 2
+        self.horizontal = self.screen_width > self.screen_height
 
-        self.top_player_position = SIZE / 4
-        self.bottom_player_position = self.screen_height - SIZE * 2.10
+        if self.horizontal:
+            self.cantX = int(self.screen_width / SIZE)
+            self.cantY = int((self.screen_height - SIZE * 4) / SIZE)
+
+            self._margin_x = int((self.screen_width - SIZE * self.cantX) / 2)
+            self._margin_y = SIZE * 2
+            self.first_player_position = SIZE / 4
+            self.second_player_position = self.screen_height - SIZE * 2.10
+        else:
+            self.cantX = int((self.screen_width - SIZE * 4) / SIZE)
+            self.cantY = int(self.screen_height / SIZE)
+
+            self._margin_x = SIZE * 2
+            self._margin_y = int((self.screen_height - SIZE * self.cantY) / 2)
+            self.first_player_position = SIZE / 4
+            self.second_player_position = self.screen_width - SIZE * 2.10
 
         print "Table cantX", self.cantX, "cantY", self.cantY
+
+    def arrange_pieces_player(self, player):
+        pieces = player.get_pieces()
+
+        if len(pieces) > 0:
+            if self.horizontal:
+                gap = int((self.screen_width - SIZE * len(pieces))
+                          / len(pieces))
+                x = gap / 2
+                y = player.pieces_position
+            else:
+                gap = int((self.screen_height - SIZE * len(pieces))
+                          / len(pieces))
+                x = player.pieces_position
+                y = gap / 2
+
+            for piece in pieces:
+                piece.x = x
+                piece.y = y
+
+                if self.horizontal:
+                    piece.vertical = True
+                    x = x + SIZE + gap
+                else:
+                    piece.vertical = False
+                    y = y + SIZE + gap
+
+                piece.visible = True
 
     def show_values(self, ctx, tiles):
         """

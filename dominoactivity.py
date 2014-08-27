@@ -144,6 +144,16 @@ class Domino(activity.Activity):
         self.pipeline = None
         self._last_game_type = None
 
+        # Handle screen rotation
+        Gdk.Screen.get_default().connect('size-changed', self.__configure_cb)
+
+    def __configure_cb(self, event):
+        if self.game:
+            self.game.table.configure()
+            self.drawingarea.set_size_request(
+                self.game.table.screen_width, self.game.table.screen_height)
+        self._start_game(None)
+
     def get_points_by_name(self, game_processor_name):
         for points in self.list_points:
             if points == game_processor_name:
@@ -219,7 +229,7 @@ class Domino(activity.Activity):
                 piece.draw(surf_ctx, False)
 
         for player in self.game.players:
-            self.game.show_pieces_player(player)
+            self.game.table.arrange_pieces_player(player)
             pieces = player.get_pieces()
             # the first player have the pieces flipped
             flipped = player == self.game.players[0]
@@ -272,7 +282,8 @@ class Domino(activity.Activity):
 
     def _show_scores(self, button):
         scores_window = ScoresWindow(self.get_window(), self.list_points,
-                                     self._last_game_type)
+                                     self._last_game_type,
+                                     self.game.table.horizontal)
         scores_window.show_all()
 
     def __piece_placed_cb(self, game):
@@ -423,7 +434,7 @@ class Domino(activity.Activity):
 
 class ScoresWindow(Gtk.Window):
 
-    def __init__(self, parent_xid, score_list, last_game_played):
+    def __init__(self, parent_xid, score_list, last_game_played, horizontal):
         Gtk.Window.__init__(self)
         self._parent_window_xid = parent_xid
 
@@ -438,7 +449,12 @@ class ScoresWindow(Gtk.Window):
         toolbar.stop.connect('clicked', self.__stop_clicked_cb)
         vbox.pack_start(toolbar, False, False, 0)
 
-        text_font_size = style.FONT_SIZE * 2
+        if horizontal:
+            text_font_size = style.FONT_SIZE * 2
+            hmargin = style.GRID_CELL_SIZE / 2
+        else:
+            text_font_size = style.FONT_SIZE * 1.5
+            hmargin = style.GRID_CELL_SIZE / 3
 
         scores_grid = Gtk.Grid()
         scores_grid.set_column_spacing(style.DEFAULT_PADDING * 3)
@@ -457,8 +473,8 @@ class ScoresWindow(Gtk.Window):
         played.set_markup('<span font="%d" color="white">%s</span>' %
                           (text_font_size, _('Played')))
         played.set_halign(Gtk.Align.CENTER)
-        played.props.margin_left = style.GRID_CELL_SIZE / 2
-        played.props.margin_right = style.GRID_CELL_SIZE / 2
+        played.props.margin_left = hmargin
+        played.props.margin_right = hmargin
         played.props.margin_bottom = style.DEFAULT_PADDING * 3
 
         scores_grid.attach(played, 1, row, 1, 1)
@@ -467,8 +483,8 @@ class ScoresWindow(Gtk.Window):
         win.set_markup('<span font="%d" color="white">%s</span>' %
                        (text_font_size, _('Won')))
         win.set_halign(Gtk.Align.CENTER)
-        win.props.margin_left = style.GRID_CELL_SIZE / 2
-        win.props.margin_right = style.GRID_CELL_SIZE / 2
+        win.props.margin_left = hmargin
+        win.props.margin_right = hmargin
         win.props.margin_bottom = style.DEFAULT_PADDING * 3
         scores_grid.attach(win, 2, row, 1, 1)
 
@@ -476,8 +492,8 @@ class ScoresWindow(Gtk.Window):
         lost.set_markup('<span font="%d" color="white">%s</span>' %
                         (text_font_size, _('Lost')))
         lost.set_halign(Gtk.Align.CENTER)
-        lost.props.margin_left = style.GRID_CELL_SIZE / 2
-        lost.props.margin_right = style.GRID_CELL_SIZE / 2
+        lost.props.margin_left = hmargin
+        lost.props.margin_right = hmargin
         lost.props.margin_bottom = style.DEFAULT_PADDING * 3
         scores_grid.attach(lost, 3, row, 1, 1)
 

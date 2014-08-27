@@ -6,7 +6,7 @@ from gi.repository import GObject
 from sugar3 import profile
 
 from dominopiece import DominoPiece
-import dominoview
+
 from dominoview import Tile
 from dominoview import DominoTableView
 from dominoplayer import DominoPlayer
@@ -236,7 +236,7 @@ class DominoGame(GObject.GObject):
         if self.ENABLE_AUTO_MODE:
             auto_player2 = SimpleAutoPlayer(self, 1)
             auto_player2.set_pieces(self.take_pieces(7))
-            auto_player2.pieces_y_position = self.table.bottom_player_position
+            auto_player2.pieces_position = self.table.second_player_position
             self.players.append(auto_player2)
         else:
             for n in range(1, numPlayers):
@@ -250,24 +250,6 @@ class DominoGame(GObject.GObject):
         self.ui_player.color = profile.get_color()
         self.ui_player.name = profile.get_nick_name()
         self._actual_player = 0
-
-    def show_pieces_player(self, player):
-        pieces = player.get_pieces()
-
-        if len(pieces) > 0:
-            separacion_x = \
-                int((self.table.screen_width - dominoview.SIZE *
-                     len(pieces)) / len(pieces))
-            x = separacion_x / 2
-            y = player.pieces_y_position
-
-            for piece in pieces:
-                piece.x = x
-                piece.y = y
-                piece.vertical = True
-
-                x = x + dominoview.SIZE + separacion_x
-                piece.visible = True
 
 
 class DominoGamePoints:
