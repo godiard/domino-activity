@@ -5,45 +5,44 @@
 ]>
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    version="1.1"
+   width="55"
+   height="55"
+   viewBox="0 0 55.000001 55.000002"
    id="Icon"
-   width="46.119"
-   height="46.121"
-   viewBox="0 0 46.119 46.121"
-   overflow="visible"
-   enable-background="new 0 0 46.119 46.121"
-   xml:space="preserve">
-<path
-   style="fill:&fill_color;;fill-rule:evenodd;stroke:&stroke_color;;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-   d="M -14.278246,-46.460958 C -14.391566,-46.460958 -14.051608,-46.460958 -14.278246,-46.460958 z "
-   id="path3281" /><rect
-   style="fill:&fill_color;;fill-opacity:1;stroke:&stroke_color;;stroke-width:3.50000012;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.94117647"
-   id="rect2208"
-   width="25.102291"
-   height="40.128311"
-   ry="2.2754195"
-   x="10.694989"
-   y="2.8990984" />
+   xml:space="preserve"
+   style="overflow:visible">
+<defs id="defs3058" />
+<path style="fill:&fill_color;;fill-rule:evenodd;stroke:&stroke_color;;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="m -14.278246,-37.581956 c -0.11332,0 0.226638,0 0,0 z"
+     id="path3281" />
+<rect style="fill:&fill_color;;fill-opacity:1;stroke:&stroke_color;;stroke-width:3.50000012;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;"
+     width="28.949095"
+     height="46.277779"
+     ry="2.6241164"
+     x="13.025454"
+     y="4.3611116"
+     id="rect2208" />
 
-<path style="stroke:&stroke_color;;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;"
-     d="m 11.851479,22.96054 22.789311,0.0054"
+<path  style="stroke:&stroke_color;;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;"
+     d="m 18.274039,27.496901 18.451923,0.0062"
      id="line" />
 
-<g style="fill:&stroke_color;;fill-opacity:1;stroke:&stroke_color;;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.94117647">
-<path
-   id="path2210"
-   d="M 18.73833 9.2630596 A 1.1490486 0.9722718 0 1 1  16.440233,9.2630596 A 1.1490486 0.9722718 0 1 1  18.73833 9.2630596 z"
-   transform="matrix(0.7722429,0,0,0.9126507,9.6629373,24.276228)" />
-<path
-   id="path3192"
-   d="M 18.73833 9.2630596 A 1.1490486 0.9722718 0 1 1  16.440233,9.2630596 A 1.1490486 0.9722718 0 1 1  18.73833 9.2630596 z"
-   transform="matrix(0.7722429,0,0,0.9126507,3.9176947,0.8975099)" /><path
-   id="path3194"
-   d="M 18.73833 9.2630596 A 1.1490486 0.9722718 0 1 1  16.440233,9.2630596 A 1.1490486 0.9722718 0 1 1  18.73833 9.2630596 z"
-   transform="matrix(0.7722429,0,0,0.9126507,15.584956,9.4711795)" />
-</g>
+<g style="fill:&stroke_color;;fill-opacity:1;stroke:none;stroke-width:5;"
+     id="g3051"><g
+     transform="translate(-0.18098355,0)"
+     id="g3236"><path
+       d="m 23.522905,12.86628 a 2.5595163,2.5595161 0 1 1 -5.119032,0 2.5595163,2.5595161 0 1 1 5.119032,0 z"
+       id="path3192" /><path
+       d="m 36.958095,22.33096 a 2.5595164,2.5595162 0 1 1 -5.119032,0 2.5595164,2.5595162 0 1 1 5.119032,0 z"
+       id="path3192-1"
+       style="overflow:visible" /></g><path
+     d="m 30.059517,40.395019 a 2.5595164,2.5595162 0 1 1 -5.119032,0 2.5595164,2.5595162 0 1 1 5.119032,0 z"
+     id="path3192-3"
+     style="overflow:visible" /></g>
+
 </svg>
