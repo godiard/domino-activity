@@ -92,36 +92,31 @@ class Domino(activity.Activity):
         self.btnStart.connect('clicked', self._start_game)
         self.btnStart.set_tooltip(_('Start'))
         toolbar_box.toolbar.insert(self.btnStart, -1)
-        self.btnStart.show()
+
+        toolbar_box.toolbar.insert(Gtk.SeparatorToolItem(), -1)
 
         self.btnNew = ToolButton('list-add')
         self.btnNew.connect('clicked', self._add_piece)
         self.btnNew.set_tooltip(_('Get piece'))
         toolbar_box.toolbar.insert(self.btnNew, -1)
-        self.btnNew.show()
 
-        self.btnPass = ToolButton('go-next')
+        self.btnPass = ToolButton('media-seek-forward')
         self.btnPass.connect('clicked', self._pass_next_player)
         self.btnPass.set_tooltip(_('Pass'))
         toolbar_box.toolbar.insert(self.btnPass, -1)
-        self.btnPass.show()
 
         self.btnScores = ToolButton('scores')
         self.btnScores.connect('clicked', self._show_scores)
         self.btnScores.set_tooltip(_('Scores'))
         toolbar_box.toolbar.insert(self.btnScores, -1)
-        self.btnScores.show()
 
         separator = Gtk.SeparatorToolItem()
         separator.props.draw = False
         separator.set_size_request(0, -1)
         separator.set_expand(True)
         toolbar_box.toolbar.insert(separator, -1)
-        separator.show()
 
-        stop_button = StopButton(self)
-        toolbar_box.toolbar.insert(stop_button, -1)
-        stop_button.show()
+        toolbar_box.toolbar.insert(StopButton(self), -1)
 
         toolbar_box.show_all()
 
