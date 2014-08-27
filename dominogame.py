@@ -255,8 +255,9 @@ class DominoGame(GObject.GObject):
         pieces = player.get_pieces()
 
         if len(pieces) > 0:
-            separacion_x = int((dominoview.SCREEN_WIDTH - dominoview.SIZE *
-                               len(pieces)) / len(pieces))
+            separacion_x = \
+                int((self.table.screen_width - dominoview.SIZE *
+                     len(pieces)) / len(pieces))
             x = separacion_x / 2
             y = player.pieces_y_position
 

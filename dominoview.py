@@ -20,9 +20,6 @@ SIZE = 60
 # Si se quiere usar fichas mas grandes, se puede usar SIZE = 70 y
 # cambiar _drawLabel el scale = 3
 
-SCREEN_HEIGHT = Gdk.Screen.height() - style.GRID_CELL_SIZE
-SCREEN_WIDTH = Gdk.Screen.width()
-
 
 class Tile:
 
@@ -57,13 +54,18 @@ class DominoTableView():
     __gtype_name__ = 'DominoTableView'
 
     def __init__(self, **kwargs):
-        self.cantX = int(SCREEN_WIDTH / SIZE)
-        self.cantY = int((SCREEN_HEIGHT - SIZE * 4) / SIZE)
-        self._margin_x = int((SCREEN_WIDTH - SIZE * self.cantX) / 2)
+        self.configure()
+
+    def configure(self):
+        self.screen_height = Gdk.Screen.height() - style.GRID_CELL_SIZE
+        self.screen_width = Gdk.Screen.width()
+        self.cantX = int(self.screen_width / SIZE)
+        self.cantY = int((self.screen_height - SIZE * 4) / SIZE)
+        self._margin_x = int((self.screen_width - SIZE * self.cantX) / 2)
         self._margin_y = SIZE * 2
 
         self.top_player_position = SIZE / 4
-        self.bottom_player_position = SCREEN_HEIGHT - SIZE * 2.10
+        self.bottom_player_position = self.screen_height - SIZE * 2.10
 
         print "Table cantX", self.cantX, "cantY", self.cantY
 
@@ -100,7 +102,7 @@ class DominoTableView():
         text = _("Player pass, your turn...")
         x_bearing, y_bearing, width, height, x_advance, y_advance = \
             ctx.text_extents(text)
-        x = (SCREEN_WIDTH - width) / 2
+        x = (self.screen_width - width) / 2
         y = SIZE * 1.8
         ctx.move_to(x, y)
         ctx.text_path(text)
@@ -131,8 +133,8 @@ class DominoTableView():
 
         # draw piece
         ctx.save()
-        piece_x = (SCREEN_WIDTH - piece_width) / 2
-        piece_y = (SCREEN_HEIGHT - piece_height) / 2
+        piece_x = (self.screen_width - piece_width) / 2
+        piece_y = (self.screen_height - piece_height) / 2
         cairoutils.draw_round_rect(
             ctx, piece_x, piece_y,
             piece_width, piece_height, piece_radio)
@@ -145,14 +147,14 @@ class DominoTableView():
 
         # draw the face
         ctx.save()
-        ctx.translate((SCREEN_WIDTH - face_surf.get_width()) / 2,
+        ctx.translate((self.screen_width - face_surf.get_width()) / 2,
                       (piece_y + height))
         ctx.set_source_surface(face_surf)
         ctx.paint()
         ctx.restore()
 
         # draw text
-        x = (SCREEN_WIDTH - width) / 2
+        x = (self.screen_width - width) / 2
         y = piece_y + face_surf.get_height() + height * 3
         ctx.move_to(x, y)
         ctx.text_path(text)

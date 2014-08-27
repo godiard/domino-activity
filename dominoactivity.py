@@ -27,7 +27,6 @@ from sugar3.graphics.toolbarbox import ToolbarBox
 from sugar3.activity.widgets import ActivityToolbarButton
 from sugar3.activity.widgets import StopButton
 
-import dominoview
 from dominogame import DominoGame
 from dominogame import DominoGamePoints
 from dominopieceprocessor import PieceProcessorMathSimple
@@ -127,8 +126,6 @@ class Domino(activity.Activity):
         toolbar_box.show_all()
 
         self.drawingarea = Gtk.DrawingArea()
-        self.drawingarea.set_size_request(dominoview.SCREEN_WIDTH,
-                                          dominoview.SCREEN_HEIGHT)
         self.drawingarea.show()
         self.drawingarea.set_events(Gdk.EventMask.BUTTON_PRESS_MASK |
                                     Gdk.EventMask.EXPOSURE_MASK |
@@ -203,16 +200,16 @@ class Domino(activity.Activity):
 
     def draw_pieces(self):
         self.surface = cairo.ImageSurface(
-            cairo.FORMAT_ARGB32, dominoview.SCREEN_WIDTH,
-            dominoview.SCREEN_HEIGHT)
+            cairo.FORMAT_ARGB32, self.game.table.screen_width,
+            self.game.table.screen_height)
         surf_ctx = cairo.Context(self.surface)
 
         wood_surf = cairo.ImageSurface.create_from_png("images/wood2.png")
 
         back_pattern = cairo.SurfacePattern(wood_surf)
         back_pattern.set_extend(cairo.EXTEND_REPEAT)
-        surf_ctx.rectangle(0, 0, dominoview.SCREEN_WIDTH,
-                           dominoview.SCREEN_HEIGHT)
+        surf_ctx.rectangle(0, 0, self.game.table.screen_width,
+                           self.game.table.screen_height)
         surf_ctx.set_source(back_pattern)
         surf_ctx.fill()
 
