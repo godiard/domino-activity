@@ -276,10 +276,8 @@ class Domino(activity.Activity):
         self.drawingarea.queue_draw()
 
     def _show_scores(self, button):
-        scores_window = ScoresWindow(self.get_window(), self.list_points,
-                                     self._last_game_type,
-                                     self.game.table.horizontal)
-        scores_window.show_all()
+        ScoresWindow(self.get_window(), self.list_points,
+                     self._last_game_type, self.game.table.horizontal)
 
     def __piece_placed_cb(self, game):
         self.draw_pieces()
@@ -433,12 +431,19 @@ class ScoresWindow(Gtk.Window):
         Gtk.Window.__init__(self)
         self._parent_window_xid = parent_xid
 
+        self._score_list = score_list
+        self._last_game_played = last_game_played
+
         self.set_border_width(style.LINE_WIDTH)
         self.set_position(Gtk.WindowPosition.CENTER_ALWAYS)
         self.set_decorated(False)
         self.set_resizable(False)
         self.connect('realize', self.__realize_cb)
+        # Handle screen rotation
+        Gdk.Screen.get_default().connect('size-changed', self.__size_change_cb)
+        self._init(horizontal)
 
+    def _init(self, horizontal):
         vbox = Gtk.VBox()
         toolbar = BasicToolbar(_('Scoreboard'))
         toolbar.stop.connect('clicked', self.__stop_clicked_cb)
@@ -494,8 +499,8 @@ class ScoresWindow(Gtk.Window):
 
         row += 1
 
-        for game_points in score_list:
-            if game_points.name == last_game_played:
+        for game_points in self._score_list:
+            if game_points.name == self._last_game_played:
                 color = profile.get_color().get_stroke_color()
             else:
                 color = 'white'
@@ -533,6 +538,11 @@ class ScoresWindow(Gtk.Window):
                        style.COLOR_TOOLBAR_GREY.get_gdk_color())
 
         self.show_all()
+
+    def __size_change_cb(self, event):
+        horizontal = Gdk.Screen.width() > Gdk.Screen.height()
+        self.remove(self.get_children()[0])
+        self._init(horizontal)
 
     def __stop_clicked_cb(self, button):
         self.destroy()
