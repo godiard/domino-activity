@@ -6,6 +6,7 @@
 
 from gi.repository import Gtk
 from gi.repository import Gdk
+from gi.repository import GdkPixbuf
 from gi.repository import GObject
 from gi.repository import Gst
 
@@ -134,6 +135,7 @@ class Domino(activity.Activity):
 
         self.game = None
         self.surface = None
+        self._pattern_surf = None
         self._start_game(None)
         self.drawingarea.queue_draw()
         self.pipeline = None
@@ -147,7 +149,28 @@ class Domino(activity.Activity):
             self.game.table.configure()
             self.drawingarea.set_size_request(
                 self.game.table.screen_width, self.game.table.screen_height)
+            self._pattern_surf = None
         self._start_game(None)
+
+    def _create_backgroud_pattern(self):
+        # read the image to paint the background
+        if self.game.table.horizontal:
+            background_file = "images/Wood.jpg"
+        else:
+            background_file = "images/Wood2.jpg"
+        wood_pxb = GdkPixbuf.Pixbuf.new_from_file(background_file)
+
+        # paint it over the pattern surface
+        self._pattern_surf = cairo.ImageSurface(
+            cairo.FORMAT_ARGB32,
+            wood_pxb.get_width(), wood_pxb.get_height())
+        pattern_ctx = cairo.Context(self._pattern_surf)
+
+        pattern_ctx.rectangle(0, 0, wood_pxb.get_width(),
+                              wood_pxb.get_height())
+        Gdk.cairo_set_source_pixbuf(pattern_ctx, wood_pxb, 0, 0)
+        pattern_ctx.fill()
+        self._pattern_surf.flush()
 
     def get_points_by_name(self, game_processor_name):
         for points in self.list_points:
@@ -209,9 +232,10 @@ class Domino(activity.Activity):
             self.game.table.screen_height)
         surf_ctx = cairo.Context(self.surface)
 
-        wood_surf = cairo.ImageSurface.create_from_png("images/wood2.png")
-
-        back_pattern = cairo.SurfacePattern(wood_surf)
+        # paint the background
+        if self._pattern_surf is None:
+            self._create_backgroud_pattern()
+        back_pattern = cairo.SurfacePattern(self._pattern_surf)
         back_pattern.set_extend(cairo.EXTEND_REPEAT)
         surf_ctx.rectangle(0, 0, self.game.table.screen_width,
                            self.game.table.screen_height)
