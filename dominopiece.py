@@ -9,6 +9,30 @@ import dominoview
 import cairoutils
 
 
+def _luminance(color):
+    ''' Calculate luminance value '''
+    return int(color[1:3], 16) * 0.3 + int(color[3:5], 16) * 0.6 + \
+        int(color[5:7], 16) * 0.1
+
+
+def lighter_color(colors):
+    ''' Which color is lighter?
+            colors: array of str with two colors in #rrggbb format
+            returns index of the color in the array
+    '''
+    if _luminance(colors[0]) > _luminance(colors[1]):
+        return 0
+    return 1
+
+
+def darker_color(colors):
+    ''' Which color is darker?
+            colors: array of str with two colors in #rrggbb format
+            returns index of the color in the array
+    '''
+    return 1 - lighter_color(colors)
+
+
 class DominoPiece:
     """ Informacion de cada pieza del juego (visible o no) """
 
@@ -61,14 +85,18 @@ class DominoPiece:
                 xocolor.get_stroke_color(), 1.0).get_rgba()
             fill_r, fill_g, fill_b, alpha = style.Color(
                 xocolor.get_fill_color(), 1.0).get_rgba()
+            if selected:
+                fill_r, fill_g, fill_b = 1, 1, 1
+                my_colors = [xocolor.get_stroke_color(),
+                             xocolor.get_fill_color()]
+                darker_color_str = my_colors[darker_color(my_colors)]
+                stroke_r, stroke_g, stroke_b, alpha = style.Color(
+                    darker_color_str).get_rgba()
 
         if self.vertical:
 
             cairoutils.draw_round_rect(ctx, 0, 0, SIZE, SIZE * 2, r)
-            if selected:
-                ctx.set_source_rgb(1, 1, 204.0 / 255.0)
-            else:
-                ctx.set_source_rgb(fill_r, fill_g, fill_b)
+            ctx.set_source_rgb(fill_r, fill_g, fill_b)
             ctx.fill_preserve()
             ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
             ctx.stroke()
@@ -89,10 +117,7 @@ class DominoPiece:
 
         else:
             cairoutils.draw_round_rect(ctx, 0, 0, SIZE * 2, SIZE, r)
-            if selected:
-                ctx.set_source_rgb(1, 1, 204.0 / 255.0)
-            else:
-                ctx.set_source_rgb(fill_r, fill_g, fill_b)
+            ctx.set_source_rgb(fill_r, fill_g, fill_b)
             ctx.fill_preserve()
             ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
             ctx.stroke()
