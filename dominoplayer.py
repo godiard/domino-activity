@@ -197,7 +197,7 @@ class SimpleAutoPlayer(DominoPlayer):
                     self.has_passed = True
 
         # juega el siguiente jugador
-        self.end_play()
+        GObject.idle_add(self.end_play)
         return False
 
     def check_put_piece(self):
