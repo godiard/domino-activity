@@ -118,31 +118,59 @@ class DominoPlayer:
             return self.test_good_position(tile, piece)
 
     def place_piece(self, piece):
-        if piece.a == self.game.start.value or \
-                piece.b == self.game.start.value:
-            # try with start tile
-            new_tile_value, direction, piece, piece_n, piece_p = \
-                self.test_good_position(self.game.start, piece)
-            self.game.put_piece(self, piece, piece_n, piece_p)
-            self.game.start.value = new_tile_value
-            self.game.start.n += direction[0] * 2
-            self.game.start.p += direction[1] * 2
-            self.game.start.direction = direction
+        start_value = self.game.start.value
+        end_value = self.game.end.value
+        ends = [self.game.start, self.game.end]
 
-        elif piece.a == self.game.end.value or \
-                piece.b == self.game.end.value:
-            # try with end
-            new_tile_value, direction, piece, piece_n, piece_p = \
-                self.test_good_position(self.game.end, piece)
-            self.game.put_piece(self, piece, piece_n, piece_p)
-            self.game.end.value = new_tile_value
-            self.game.end.n += direction[0] * 2
-            self.game.end.p += direction[1] * 2
-            self.game.end.direction = direction
-        else:
-            return False
+        if (piece.a == start_value and piece.b == end_value) or \
+                (piece.a == end_value and piece.b == start_value):
+            # if the piece can be put in any end, select a end where
+            # you have more posibilities
+            # create a dict with the values in my other pieces and how many
+            # pieces have that value
+            values = {}
+            for p in self._pieces:
+                if p != piece:
+                    if p.a in values:
+                        values[p.a] = values[p.a] + 1
+                    else:
+                        values[p.a] = 1
+                    if p.b in values:
+                        values[p.b] = values[p.b] + 1
+                    else:
+                        values[p.b] = 1
+            if piece.a not in values:
+                values[piece.a] = 0
+            if piece.b not in values:
+                values[piece.b] = 0
 
-        return True
+            # compare how many values have to put after this piece
+            if values[piece.a] > values[piece.b]:
+                # attach piece.b
+                if piece.b == start_value:
+                    ends = [self.game.start]
+                else:
+                    ends = [self.game.end]
+            else:
+                # attach piece.a
+                if piece.a == start_value:
+                    ends = [self.game.start]
+                else:
+                    ends = [self.game.end]
+
+        for end in ends:
+            if piece.a == end.value or piece.b == end.value:
+                # try with start tile
+                new_tile_value, direction, piece, piece_n, piece_p = \
+                    self.test_good_position(end, piece)
+                self.game.put_piece(self, piece, piece_n, piece_p)
+                end.value = new_tile_value
+                end.n += direction[0] * 2
+                end.p += direction[1] * 2
+                end.direction = direction
+                return True
+
+        return False
 
 
 class SimpleAutoPlayer(DominoPlayer):
