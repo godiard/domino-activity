@@ -411,8 +411,8 @@ class Domino(activity.Activity):
                 if player.place_piece(piece):
                     player.end_play()
                     self.draw_pieces()
+                    redraw = True
 
-                redraw = True
         if redraw:
             self.drawingarea.queue_draw()
         return
