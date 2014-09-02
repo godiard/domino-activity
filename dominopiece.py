@@ -66,9 +66,9 @@ class DominoPiece:
             height = dominoview.SIZE
         return (self.x < x < self.x + width) and (self.y < y < self.y + height)
 
-    def draw(self, ctx, selected, fipped=False):
+    def draw(self, ctx, selected, flipped=False):
         SIZE = dominoview.SIZE
-        if fipped:
+        if flipped:
             SIZE = SIZE * 0.75
 
         ctx.save()
@@ -101,7 +101,7 @@ class DominoPiece:
             ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
             ctx.stroke()
 
-            if not fipped:
+            if not flipped:
 
                 ctx.move_to(SIZE / 5, SIZE)
                 ctx.line_to(SIZE / 5 * 4, SIZE)
@@ -122,7 +122,7 @@ class DominoPiece:
             ctx.set_source_rgb(stroke_r, stroke_g, stroke_b)
             ctx.stroke()
 
-            if not fipped:
+            if not flipped:
 
                 ctx.move_to(SIZE, SIZE / 5)
                 ctx.line_to(SIZE, SIZE / 5 * 4)
