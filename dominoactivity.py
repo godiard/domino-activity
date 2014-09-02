@@ -355,6 +355,9 @@ class Domino(activity.Activity):
         if self._activity_toolbar_button.page.title.has_focus():
             return False
 
+        if self.game.is_finished():
+            return False
+
         key = Gdk.keyval_name(event.keyval)
         # Agrego las teclas de juego de la XO (Circulo arriba = KP_Page_Up,
         # X  = KP_Page_Down, Check = KP_End
