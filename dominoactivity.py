@@ -194,7 +194,6 @@ class Domino(activity.Activity):
         if self.game.is_finished():
             win = (self.game.winner == self.game.ui_player)
             self.game.table.msg_end_game(ctx, win)
-            self._finish_game(win)
         else:
             player = self.game.ui_player
             # Dibujo la pieza seleccionada
@@ -348,6 +347,9 @@ class Domino(activity.Activity):
                 GObject.timeout_add(300, game.start_next_player)
             else:
                 GObject.timeout_add_seconds(2, game.start_next_player)
+        else:
+            win = (self.game.winner == self.game.ui_player)
+            self._finish_game(win)
 
     def on_keypress(self, widget, event):
         if self._activity_toolbar_button.page.title.has_focus():
