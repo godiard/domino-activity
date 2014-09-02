@@ -5,3 +5,4 @@ icon = domino-icon
 exec = sugar-activity dominoactivity.Domino
 activity_version = 8
 host_version = 1
+max_participants = 1
