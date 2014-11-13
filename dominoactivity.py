@@ -51,7 +51,7 @@ class Domino(activity.Activity):
 
         toolbar_box = ToolbarBox()
         self.set_toolbar_box(toolbar_box)
-        self.set_max_participants = 1
+        self.max_participants = 1
         self._activity_toolbar_button = ActivityToolbarButton(self)
 
         toolbar_box.toolbar.insert(self._activity_toolbar_button, 0)
