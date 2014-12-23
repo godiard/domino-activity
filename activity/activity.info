@@ -6,3 +6,4 @@ exec = sugar-activity dominoactivity.Domino
 activity_version = 10
 host_version = 1
 max_participants = 1
+repository = git@github.com:godiard/domino-activity.git
