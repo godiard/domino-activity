@@ -1,1 +1,8 @@
-repository = git@github.com:godiard/domino-activity.git
+[Activity]
+name = Domino
+bundle_id = org.laptop.Domino
+icon = domino-icon
+exec = sugar-activity dominoactivity.Domino
+activity_version = 10
+host_version = 1
+max_participants = 1
