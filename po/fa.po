@@ -2,124 +2,122 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-12-18 01:10-0500\n"
-"PO-Revision-Date: 2016-05-16 16:53+0000\n"
+"PO-Revision-Date: 2016-05-16 16:55+0000\n"
 "Last-Translator: Chris <cjl@sugarlabs.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: pl\n"
+"Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Pootle 2.5.1.1\n"
-"X-POOTLE-MTIME: 1463417617.000000\n"
+"X-POOTLE-MTIME: 1463417707.000000\n"
 
 #. TRANS: "name" option from activity.info file
 #. TRANS: "summary" option from activity.info file
 #. TRANS: "description" option from activity.info file
 #: dominoactivity.py:123
 msgid "Domino"
-msgstr "Domino"
+msgstr ""
 
 #: dominoactivity.py:100
 msgid "Start"
-msgstr "Start"
+msgstr "شروع"
 
 #: dominoactivity.py:106
 msgid "Get piece"
-msgstr "Weź kolcek"
+msgstr ""
 
 #: dominoactivity.py:112
 msgid "Pass"
-msgstr "Pasuj"
+msgstr ""
 
 #: dominoactivity.py:118
 msgid "Scores"
-msgstr "Wyniki"
+msgstr "امتیازها"
 
 #: dominogame.py:346
 msgid "Stack"
-msgstr "Stos"
+msgstr ""
 
 #: dominopieceprocessor.py:29
 msgid "Simple"
-msgstr "Proste"
+msgstr ""
 
 #: dominopieceprocessor.py:75
 msgid "Table of"
-msgstr "Tabela"
+msgstr ""
 
 #: dominopieceprocessor.py:135
 msgid "Fractions"
-msgstr "Ułamki"
+msgstr ""
 
 #: dominopieceprocessor.py:267
 msgid "Points"
-msgstr "Punkty"
+msgstr ""
 
 #: dominoplayer.py:29
 msgid "Player "
-msgstr "Gracz "
+msgstr "بازیکنان "
 
 #: dominoplayer.py:87
 msgid "pieces"
-msgstr "klocki"
+msgstr "قطعات"
 
 #: dominoplayer.py:89
 msgid "WIN"
-msgstr "WYGRANA"
+msgstr ""
 
 #: dominoview.py:147
 msgid "Played"
-msgstr "Zagrane"
+msgstr ""
 
 #: dominoview.py:149
 msgid "Win"
-msgstr "Wygrane"
+msgstr ""
 
 #: dominoview.py:151
 msgid "Lost"
-msgstr "Przegrane"
+msgstr ""
 
 #: dominoview.py:191
 msgid "You can select a piece with the arrow keys and use it with enter."
-msgstr "Zaznacz klocek za pomocą klawiszy strzałek i wciśnij enter."
+msgstr ""
 
 #: dominoview.py:195
 msgid "When you selected the piece, you can move it to the place "
-msgstr "Po zaznaczeniu klocka możesz go przenieść "
+msgstr ""
 
 #: dominoview.py:199
 msgid "with the arrows , turn it with space and place it with enter."
 msgstr ""
-"za pomocą strzałek, odwrócić go przy użyciu klawisza spacji i zatwierdzić "
-"enterem."
 
 #: dominoview.py:203
 msgid "If you want use another piece, press escape."
-msgstr "Jeśli chcesz użyć innego klocka wciśnij escape."
+msgstr ""
 
 #: dominoview.py:207
 msgid "You can use the cursors to move too."
-msgstr "W celu przeniesienia możesz użyć również kursora."
+msgstr ""
 
 #: dominoview.py:211
 msgid "And use check to select, circle to rotate"
-msgstr "I użyj sprawdzenia, żeby wybrać koło do obrócenia"
+msgstr ""
 
 #: dominoview.py:215
 msgid "and X to use another piece."
-msgstr "oraz X aby wybrać inny klocek."
+msgstr ""
 
 #: dominoview.py:243
 msgid "You win!!!"
-msgstr "Wygrałeś!!!"
+msgstr "بردی!"
 
 #: dominoview.py:246
 msgid "Sorry, you lost"
-msgstr "Niestety przegrałeś"
+msgstr "با تأسف، باختی!"
