@@ -2,29 +2,28 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-12-18 01:10-0500\n"
-"PO-Revision-Date: 2016-05-16 16:55+0000\n"
+"PO-Revision-Date: 2017-03-18 19:38+0000\n"
 "Last-Translator: Chris <cjl@sugarlabs.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 2.5.1.1\n"
-"X-POOTLE-MTIME: 1463417707.000000\n"
+"X-POOTLE-MTIME: 1489865926.000000\n"
 
 #. TRANS: "name" option from activity.info file
 #. TRANS: "summary" option from activity.info file
 #. TRANS: "description" option from activity.info file
 #: dominoactivity.py:123
 msgid "Domino"
-msgstr ""
+msgstr "مهره های بازی دومینو"
 
 #: dominoactivity.py:100
 msgid "Start"
@@ -32,11 +31,11 @@ msgstr "شروع"
 
 #: dominoactivity.py:106
 msgid "Get piece"
-msgstr ""
+msgstr "از قطعه"
 
 #: dominoactivity.py:112
 msgid "Pass"
-msgstr ""
+msgstr "گذر کردن (پشت سر گذاشتن)"
 
 #: dominoactivity.py:118
 msgid "Scores"
@@ -44,23 +43,23 @@ msgstr "امتیازها"
 
 #: dominogame.py:346
 msgid "Stack"
-msgstr ""
+msgstr "دسته"
 
 #: dominopieceprocessor.py:29
 msgid "Simple"
-msgstr ""
+msgstr "ساده"
 
 #: dominopieceprocessor.py:75
 msgid "Table of"
-msgstr ""
+msgstr "جدول"
 
 #: dominopieceprocessor.py:135
 msgid "Fractions"
-msgstr ""
+msgstr "بخش ، قسمت"
 
 #: dominopieceprocessor.py:267
 msgid "Points"
-msgstr ""
+msgstr "نکته"
 
 #: dominoplayer.py:29
 msgid "Player "
@@ -72,47 +71,51 @@ msgstr "قطعات"
 
 #: dominoplayer.py:89
 msgid "WIN"
-msgstr ""
+msgstr "پیروزی"
 
 #: dominoview.py:147
 msgid "Played"
-msgstr ""
+msgstr "بازی"
 
 #: dominoview.py:149
 msgid "Win"
-msgstr ""
+msgstr "پیروز شدن"
 
 #: dominoview.py:151
 msgid "Lost"
-msgstr ""
+msgstr "شکست خوردن"
 
 #: dominoview.py:191
 msgid "You can select a piece with the arrow keys and use it with enter."
 msgstr ""
+"میتوانید یک بخش را با استفاده از کلیدهای راهنما (فلش) انتخاب کرده و بر روی "
+"آن کلیک کنید"
 
 #: dominoview.py:195
 msgid "When you selected the piece, you can move it to the place "
-msgstr ""
+msgstr "بعد از انتخاب یک قطعه، میتوانید آن را به جای دیگر منتقل کنید "
 
 #: dominoview.py:199
 msgid "with the arrows , turn it with space and place it with enter."
 msgstr ""
+"با کمک فلش ها، با استفاده از دکمه فاصله (space) بچرخانید و با کمک دکمه enter "
+"در محل مربوطه قرار دهید"
 
 #: dominoview.py:203
 msgid "If you want use another piece, press escape."
-msgstr ""
+msgstr "اگر میخواهید از قطعه دیگری استفاده کنید، دکمه escape را فشار دهید"
 
 #: dominoview.py:207
 msgid "You can use the cursors to move too."
-msgstr ""
+msgstr "از مکان نما (نشانگر) هم میتوانید برای جابجا کردن استفاده کنید"
 
 #: dominoview.py:211
 msgid "And use check to select, circle to rotate"
-msgstr ""
+msgstr "و از دکمه check برای انتخاب کردن و circle برای چرخاندن استفاده کنید"
 
 #: dominoview.py:215
 msgid "and X to use another piece."
-msgstr ""
+msgstr "و از X برای استفاده از قطعه دیگر کمک بگیرید"
 
 #: dominoview.py:243
 msgid "You win!!!"

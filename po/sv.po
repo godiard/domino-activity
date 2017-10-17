@@ -2,124 +2,123 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-12-18 01:10-0500\n"
-"PO-Revision-Date: 2017-10-15 19:11+0000\n"
-"Last-Translator: Chris <cjl@sugarlabs.org>\n"
+"PO-Revision-Date: 2017-04-01 20:09+0000\n"
+"Last-Translator: Anders <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: ayc\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.1.1\n"
-"X-POOTLE-MTIME: 1508094706.000000\n"
+"X-POOTLE-MTIME: 1491077384.000000\n"
 
 #. TRANS: "name" option from activity.info file
 #. TRANS: "summary" option from activity.info file
 #. TRANS: "description" option from activity.info file
 #: dominoactivity.py:123
 msgid "Domino"
-msgstr "Domino anataña"
+msgstr "Domino"
 
 #: dominoactivity.py:100
 msgid "Start"
-msgstr "Qalltaña"
+msgstr "Starta"
 
 #: dominoactivity.py:106
 msgid "Get piece"
-msgstr "Wakisiri mayiña"
+msgstr "Erhåll pjäs"
 
 #: dominoactivity.py:112
 msgid "Pass"
-msgstr "Sarjaña"
+msgstr "Passa"
 
 #: dominoactivity.py:118
 msgid "Scores"
-msgstr "Atipsuta chaninaka"
+msgstr "Poäng"
 
 #: dominogame.py:346
 msgid "Stack"
-msgstr "Phuju"
+msgstr "Hög"
 
 #: dominopieceprocessor.py:29
 msgid "Simple"
-msgstr "Aliqa"
+msgstr "Enkel"
 
+# A solution with %s would be better for this string in Swedish, since we usually put the number in front when descriping the mutiplivative tables.
 #: dominopieceprocessor.py:75
 msgid "Table of"
-msgstr "P'axlapa"
+msgstr "Multiplikation med"
 
 #: dominopieceprocessor.py:135
 msgid "Fractions"
-msgstr "Jaljatanaka"
+msgstr "Bråk"
 
 #: dominopieceprocessor.py:267
 msgid "Points"
-msgstr "Atipsuta chaninaka"
+msgstr "Poäng"
 
 #: dominoplayer.py:29
 msgid "Player "
-msgstr "Anatiri "
+msgstr "Spelare "
 
 #: dominoplayer.py:87
 msgid "pieces"
-msgstr "anataña yänaka"
+msgstr "brickor"
 
 #: dominoplayer.py:89
 msgid "WIN"
-msgstr "Atiptha"
+msgstr "DU VINNER"
 
 #: dominoview.py:147
 msgid "Played"
-msgstr "Anatatanaka"
+msgstr "Spelade"
 
 #: dominoview.py:149
 msgid "Win"
-msgstr "Atipatanaka"
+msgstr "Vunna"
 
 #: dominoview.py:151
 msgid "Lost"
-msgstr "Atipayasitanaka"
+msgstr "Förlorade"
 
 #: dominoview.py:191
 msgid "You can select a piece with the arrow keys and use it with enter."
-msgstr ""
-"Anataña yänaka chiqanchirinakampi chhijllasa \"enter\" limt'asa apnaqasmawa."
+msgstr "Du kan välja en bricka med piltangenterna och använda den med retur."
 
 #: dominoview.py:195
 msgid "When you selected the piece, you can move it to the place "
-msgstr "Anataña maya yäpa chhijllasa, kawkharu uchañti munsta uka unxtayma "
+msgstr "Då du valt brickan kan du flytta den till platsen "
 
 #: dominoview.py:199
 msgid "with the arrows , turn it with space and place it with enter."
-msgstr ""
-"chiqachirinakampi, jit'tayaña limt'añampi muyjtayasmawa ukata \"enter\" "
-"limt'asa uchasmawa."
+msgstr "med pilarna, vända den med mellanslag och placera den med enter."
 
 #: dominoview.py:203
 msgid "If you want use another piece, press escape."
-msgstr "Yaqha anataña yäpa apnaqaña munasina, \"escape\" limt'ma."
+msgstr "Om du vill använda ännu en bricka, tryck escape."
 
 #: dominoview.py:207
 msgid "You can use the cursors to move too."
-msgstr "Jithnaqayaña limt'añanaka apnaqarakismawa."
+msgstr "Du kan även använda markörerna för förflyttning."
 
 #: dominoview.py:211
 msgid "And use check to select, circle to rotate"
-msgstr "limt'añaxa chhijllañataki, muyuxa muyjtayañataki"
+msgstr "Och använd bock för att välja, cirkel för att rotera"
 
 #: dominoview.py:215
 msgid "and X to use another piece."
-msgstr "ukata \"X\" qillqaxa yaqha anataña yäpa apnaqañataki."
+msgstr "och X för att använda en annan bricka."
 
 #: dominoview.py:243
 msgid "You win!!!"
-msgstr "Atipstawa!!!"
+msgstr "Du vinner!!!"
 
 #: dominoview.py:246
 msgid "Sorry, you lost"
-msgstr "Awira, atipayastawa"
+msgstr "Tyvärr, du förlorade"
