@@ -2,124 +2,122 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-12-18 01:10-0500\n"
-"PO-Revision-Date: 2017-10-15 19:11+0000\n"
-"Last-Translator: Chris <cjl@sugarlabs.org>\n"
+"PO-Revision-Date: 2016-12-16 00:15+0000\n"
+"Last-Translator: unkuiri <unkuiri@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: ayc\n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.1.1\n"
-"X-POOTLE-MTIME: 1508094706.000000\n"
+"X-POOTLE-MTIME: 1481847322.000000\n"
 
 #. TRANS: "name" option from activity.info file
 #. TRANS: "summary" option from activity.info file
 #. TRANS: "description" option from activity.info file
 #: dominoactivity.py:123
 msgid "Domino"
-msgstr "Domino anataña"
+msgstr "Domino"
 
 #: dominoactivity.py:100
 msgid "Start"
-msgstr "Qalltaña"
+msgstr "Começar"
 
 #: dominoactivity.py:106
 msgid "Get piece"
-msgstr "Wakisiri mayiña"
+msgstr "Pedir Peça"
 
 #: dominoactivity.py:112
 msgid "Pass"
-msgstr "Sarjaña"
+msgstr "Passar"
 
 #: dominoactivity.py:118
 msgid "Scores"
-msgstr "Atipsuta chaninaka"
+msgstr "Pontuações"
 
 #: dominogame.py:346
 msgid "Stack"
-msgstr "Phuju"
+msgstr "Pilha"
 
 #: dominopieceprocessor.py:29
 msgid "Simple"
-msgstr "Aliqa"
+msgstr "Simples"
 
 #: dominopieceprocessor.py:75
 msgid "Table of"
-msgstr "P'axlapa"
+msgstr "Tabela de"
 
 #: dominopieceprocessor.py:135
 msgid "Fractions"
-msgstr "Jaljatanaka"
+msgstr "Frações"
 
 #: dominopieceprocessor.py:267
 msgid "Points"
-msgstr "Atipsuta chaninaka"
+msgstr "Pontos"
 
 #: dominoplayer.py:29
 msgid "Player "
-msgstr "Anatiri "
+msgstr "Jogador "
 
 #: dominoplayer.py:87
 msgid "pieces"
-msgstr "anataña yänaka"
+msgstr "peças"
 
 #: dominoplayer.py:89
 msgid "WIN"
-msgstr "Atiptha"
+msgstr "GANHEI"
 
 #: dominoview.py:147
 msgid "Played"
-msgstr "Anatatanaka"
+msgstr "Jogados"
 
 #: dominoview.py:149
 msgid "Win"
-msgstr "Atipatanaka"
+msgstr "Ganhos"
 
 #: dominoview.py:151
 msgid "Lost"
-msgstr "Atipayasitanaka"
+msgstr "Perdidos"
 
 #: dominoview.py:191
 msgid "You can select a piece with the arrow keys and use it with enter."
-msgstr ""
-"Anataña yänaka chiqanchirinakampi chhijllasa \"enter\" limt'asa apnaqasmawa."
+msgstr "Podes selecionar uma peça com as setas e usá-la com enter."
 
 #: dominoview.py:195
 msgid "When you selected the piece, you can move it to the place "
-msgstr "Anataña maya yäpa chhijllasa, kawkharu uchañti munsta uka unxtayma "
+msgstr "Uma vez selecionada a peça, podes movê-la para o seu lugar "
 
 #: dominoview.py:199
 msgid "with the arrows , turn it with space and place it with enter."
-msgstr ""
-"chiqachirinakampi, jit'tayaña limt'añampi muyjtayasmawa ukata \"enter\" "
-"limt'asa uchasmawa."
+msgstr "com as setas, roda-a com a tecla espaço e coloca-a com enter."
 
 #: dominoview.py:203
 msgid "If you want use another piece, press escape."
-msgstr "Yaqha anataña yäpa apnaqaña munasina, \"escape\" limt'ma."
+msgstr "Se quiseres selecionar outra peça, pressiona escape."
 
 #: dominoview.py:207
 msgid "You can use the cursors to move too."
-msgstr "Jithnaqayaña limt'añanaka apnaqarakismawa."
+msgstr "Também podes usar os cursores."
 
 #: dominoview.py:211
 msgid "And use check to select, circle to rotate"
-msgstr "limt'añaxa chhijllañataki, muyuxa muyjtayañataki"
+msgstr "O til para selecionar, o circulo para rodar"
 
 #: dominoview.py:215
 msgid "and X to use another piece."
-msgstr "ukata \"X\" qillqaxa yaqha anataña yäpa apnaqañataki."
+msgstr "e o X para usar outra peça."
 
 #: dominoview.py:243
 msgid "You win!!!"
-msgstr "Atipstawa!!!"
+msgstr "Venceste!!!"
 
 #: dominoview.py:246
 msgid "Sorry, you lost"
-msgstr "Awira, atipayastawa"
+msgstr "Desculpa, perdeste"
